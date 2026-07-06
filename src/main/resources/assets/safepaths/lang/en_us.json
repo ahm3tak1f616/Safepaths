@@ -1,0 +1,16 @@
+{
+  "config.safepaths.requiredPasses": "Required Footsteps",
+  "config.safepaths.requiredPasses.tooltip": "Number of times you must step on the same block to compress it into a path.",
+  
+  "config.safepaths.constructionTime": "Path Construction Time Limit",
+  "config.safepaths.constructionTime.tooltip": "Time window to reach the required footsteps. If you don't reach the target within this time, your progress resets. (24,000 ticks = 1 Minecraft Day).",
+  
+  "config.safepaths.enableSpeedBoost": "Enable Speed Boost",
+  "config.safepaths.enableSpeedBoost.tooltip": "Grants a speed boost while walking on path blocks.",
+  
+  "config.safepaths.speedMultiplier": "Speed Boost Intensity",
+  "config.safepaths.speedMultiplier.tooltip": "Higher value = faster movement. 0.02 is equivalent to Speed I potion effect.",
+  
+  "config.safepaths.decayTime": "Path Decay Time",
+  "config.safepaths.decayTime.tooltip": "How long an unused path stays before reverting. (24,000 ticks = 1 Minecraft Day | 72,000 ticks = 3 Minecraft Days)."
+}

@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="safepaths"
+version="1.0.0"
+displayName="Safepaths"
+logoFile="icon.png"
+authors="ahm3tak1f616"
+description="Safepaths mod allows players (and friendly NPCs like colonists and visitors from Minecolonies) to naturally create dirt paths simply by walking over the same blocks repeatedly"
+
+[[dependencies.safepaths]]
+modId="neoforge"
+mandatory=true
+versionRange="[21,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.safepaths]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.21.1,)"
+ordering="NONE"
+side="BOTH"
