@@ -20,6 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -45,6 +46,31 @@ public class PathCreationEvent {
     public static void onBlockBreak(BlockEvent.BreakEvent event) { TRAMPLE_MEMORY.remove(event.getPos()); PATH_MEMORY.remove(event.getPos()); }
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) { TRAMPLE_MEMORY.remove(event.getPos()); PATH_MEMORY.remove(event.getPos()); }
+
+    @SubscribeEvent
+    public static void onLevelTick(LevelTickEvent.Post event) {
+        Level level = event.getLevel();
+        if (level.isClientSide()) return;
+
+        long currentTick = level.getGameTime();
+        if (currentTick % 1000 == 0) {
+            TRAMPLE_MEMORY.entrySet().removeIf(entry -> (currentTick - entry.getValue().firstTime) > PathConfig.CONSTRUCTION_TIME.get());
+            PATH_MEMORY.entrySet().removeIf(entry -> {
+                if ((currentTick - entry.getValue().lastTime) > PathConfig.DECAY_TIME.get()) {
+                    BlockPos pos = entry.getKey();
+                    
+                    if (!level.isLoaded(pos)) {
+                        return false; 
+                    }
+
+                    if (level.getBlockState(pos).is(entry.getValue().targetPathBlock)) 
+                        level.setBlockAndUpdate(pos, entry.getValue().originalState);
+                    return true;
+                }
+                return false;
+            });
+        }
+    }
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -92,17 +118,7 @@ public class PathCreationEvent {
         }
 
         long currentTick = level.getGameTime();
-        if (currentTick % 1000 == 0) {
-            TRAMPLE_MEMORY.entrySet().removeIf(entry -> (currentTick - entry.getValue().firstTime) > PathConfig.CONSTRUCTION_TIME.get());
-            PATH_MEMORY.entrySet().removeIf(entry -> {
-                if ((currentTick - entry.getValue().lastTime) > PathConfig.DECAY_TIME.get()) {
-                    if (level.getBlockState(entry.getKey()).is(entry.getValue().targetPathBlock)) 
-                        level.setBlockAndUpdate(entry.getKey(), entry.getValue().originalState);
-                    return true;
-                }
-                return false;
-            });
-        }
+        
 
         if (posBelow.equals(LAST_POSITIONS.get(livingEntity))) return;
         LAST_POSITIONS.put(livingEntity, posBelow);
