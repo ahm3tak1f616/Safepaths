@@ -4,8 +4,8 @@ license="MIT"
 
 [[mods]]
 modId="safepaths"
-version="1.0.1"
-displayName="Safepaths"
+version = "${mod_version}"
+displayName = "${mod_name}"
 logoFile="icon.png"
 authors="ahm3tak1f616"
 description="Safepaths mod allows players (and friendly NPCs like colonists and visitors from Minecolonies) to naturally create dirt paths simply by walking over the same blocks repeatedly"
