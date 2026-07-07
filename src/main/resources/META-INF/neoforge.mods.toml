@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="safepaths"
-version="1.0.0"
+version="1.0.1"
 displayName="Safepaths"
 logoFile="icon.png"
 authors="ahm3tak1f616"
