@@ -3,11 +3,13 @@ package com.ahmetakif.safepaths;
 import com.ahmetakif.safepaths.config.PathConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -20,81 +22,186 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.level.PistonEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 import java.util.Map;
 import java.util.WeakHashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber(modid = "safepaths")
 public class PathCreationEvent {
     public static final TagKey<Block> PATHABLE_BLOCKS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("safepaths", "can_become_path"));
+    public static final TagKey<Block> CANNOT_BECOME_PATH = BlockTags.create(ResourceLocation.fromNamespaceAndPath("safepaths", "cannot_become_path"));
+    public static final TagKey<EntityType<?>> PATH_CREATORS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("safepaths", "path_creators"));
+    public static final TagKey<EntityType<?>> PATH_BLOCKED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("safepaths", "path_blocked"));
+
     private static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("safepaths", "path_speed");
-
-    private record DimPos(ResourceKey<Level> dimension, BlockPos pos) {
-        static DimPos of(Level level, BlockPos pos) {
-            return new DimPos(level.dimension(), pos.immutable());
-        }
-    }
-
-    private static class TrampleData { int count; long firstTime; TrampleData(int count, long firstTime) { this.count = count; this.firstTime = firstTime; } }
-    private static class PathData { BlockState originalState; Block targetPathBlock; long lastTime; PathData(BlockState originalState, Block targetPathBlock, long lastTime) { this.originalState = originalState; this.targetPathBlock = targetPathBlock; this.lastTime = lastTime; } }
-
-    private static final Map<DimPos, TrampleData> TRAMPLE_MEMORY = new ConcurrentHashMap<>();
-    private static final Map<DimPos, PathData> PATH_MEMORY = new ConcurrentHashMap<>();
     private static final Map<Entity, BlockPos> LAST_POSITIONS = new WeakHashMap<>();
 
     private static boolean isPathBlock(BlockState state) {
         return state.is(Blocks.DIRT_PATH);
     }
 
+    /**
+     * Players always qualify. MineColonies (and datapack) entities use tags;
+     * barbarian-named raiders stay blocked even if not listed in the tag.
+     */
+    private static boolean isPathRelevantEntity(LivingEntity livingEntity) {
+        if (livingEntity instanceof Player) {
+            return true;
+        }
+        EntityType<?> type = livingEntity.getType();
+        if (type.is(PATH_BLOCKED)) {
+            return false;
+        }
+        ResourceLocation entityId = BuiltInRegistries.ENTITY_TYPE.getKey(type);
+        if (entityId != null && entityId.getPath().contains("barbarian")) {
+            return false;
+        }
+        return type.is(PATH_CREATORS);
+    }
+
+    private static boolean isProtectedFromPathing(BlockState state) {
+        if (state.is(Blocks.FARMLAND) || state.is(CANNOT_BECOME_PATH)) {
+            return true;
+        }
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        if (blockId == null) {
+            return false;
+        }
+        return blockId.getPath().contains("farmland") || blockId.getNamespace().equals("minecolonies");
+    }
+
+    private static void syncSpeedBoost(LivingEntity livingEntity, BlockState stateBelow) {
+        AttributeInstance attribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (attribute == null) {
+            return;
+        }
+
+        AttributeModifier existing = attribute.getModifier(SPEED_MODIFIER_ID);
+        boolean shouldBoost = PathConfig.ENABLE_SPEED_BOOST.get() && isPathBlock(stateBelow);
+        if (shouldBoost) {
+            double desired = PathConfig.SPEED_MULTIPLIER.get();
+            if (existing == null || Double.compare(existing.amount(), desired) != 0) {
+                attribute.removeModifier(SPEED_MODIFIER_ID);
+                attribute.addTransientModifier(new AttributeModifier(
+                        SPEED_MODIFIER_ID,
+                        desired,
+                        AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                ));
+            }
+        } else if (existing != null) {
+            attribute.removeModifier(SPEED_MODIFIER_ID);
+        }
+    }
+
+    private static int cleanupIntervalTicks() {
+        int construction = PathConfig.CONSTRUCTION_TIME.get();
+        int decay = PathConfig.DECAY_TIME.get();
+        return Math.max(20, Math.min(1000, Math.min(construction, decay) / 24));
+    }
+
+    private static void clearMemoryAt(Level level, BlockPos pos) {
+        if (!(level instanceof ServerLevel serverLevel)) return;
+        PathMemorySavedData.get(serverLevel).clearAt(pos);
+    }
+
+    private static void clearMemoryAt(Level level, Iterable<BlockPos> positions) {
+        if (!(level instanceof ServerLevel serverLevel)) return;
+        PathMemorySavedData data = PathMemorySavedData.get(serverLevel);
+        for (BlockPos pos : positions) {
+            data.clearAt(pos);
+        }
+    }
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (!(event.getLevel() instanceof Level level)) return;
-        DimPos key = DimPos.of(level, event.getPos());
-        TRAMPLE_MEMORY.remove(key);
-        PATH_MEMORY.remove(key);
+        clearMemoryAt(level, event.getPos());
     }
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
         if (!(event.getLevel() instanceof Level level)) return;
-        DimPos key = DimPos.of(level, event.getPos());
-        TRAMPLE_MEMORY.remove(key);
-        PATH_MEMORY.remove(key);
+        clearMemoryAt(level, event.getPos());
+    }
+
+    @SubscribeEvent
+    public static void onFluidPlace(BlockEvent.FluidPlaceBlockEvent event) {
+        if (!(event.getLevel() instanceof Level level)) return;
+        clearMemoryAt(level, event.getPos());
+    }
+
+    @SubscribeEvent
+    public static void onExplosion(ExplosionEvent.Detonate event) {
+        Level level = event.getLevel();
+        if (level.isClientSide()) return;
+        clearMemoryAt(level, event.getAffectedBlocks());
+    }
+
+    @SubscribeEvent
+    public static void onPiston(PistonEvent.Pre event) {
+        if (!(event.getLevel() instanceof Level level) || level.isClientSide()) return;
+        clearMemoryAt(level, event.getFaceOffsetPos());
+        var helper = event.getStructureHelper();
+        if (helper != null && helper.resolve()) {
+            clearMemoryAt(level, helper.getToPush());
+            clearMemoryAt(level, helper.getToDestroy());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLevelUnload(LevelEvent.Unload event) {
+        if (!(event.getLevel() instanceof Level level) || level.isClientSide()) return;
+        LAST_POSITIONS.entrySet().removeIf(entry -> entry.getKey().level() == level || entry.getKey().isRemoved());
+    }
+
+    @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent event) {
+        LAST_POSITIONS.clear();
     }
 
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         Level level = event.getLevel();
-        if (level.isClientSide()) return;
+        if (!(level instanceof ServerLevel serverLevel)) return;
 
         long currentTick = level.getGameTime();
-        if (currentTick % 1000 != 0) return;
+        int interval = cleanupIntervalTicks();
+        if (currentTick % interval != 0) return;
 
-        ResourceKey<Level> dimension = level.dimension();
+        PathMemorySavedData memory = PathMemorySavedData.get(serverLevel);
+        long decayTime = PathConfig.DECAY_TIME.get();
+        long unloadGrace = decayTime * 2L;
 
-        TRAMPLE_MEMORY.entrySet().removeIf(entry ->
-                entry.getKey().dimension().equals(dimension)
-                        && (currentTick - entry.getValue().firstTime) > PathConfig.CONSTRUCTION_TIME.get());
+        memory.removeTrampleIf(entry ->
+                (currentTick - entry.getValue().firstTime) > PathConfig.CONSTRUCTION_TIME.get());
 
-        PATH_MEMORY.entrySet().removeIf(entry -> {
-            if (!entry.getKey().dimension().equals(dimension)) {
-                return false;
-            }
-            if ((currentTick - entry.getValue().lastTime) <= PathConfig.DECAY_TIME.get()) {
-                return false;
-            }
+        memory.removePathIf(entry -> {
+            BlockPos pos = entry.getKey();
+            PathMemorySavedData.PathData pathData = entry.getValue();
+            long age = currentTick - pathData.lastTime;
 
-            BlockPos pos = entry.getKey().pos();
             if (!level.isLoaded(pos)) {
+                // Drop very old unloaded entries so memory cannot grow forever;
+                // the dirt path remains, but we stop tracking it.
+                return age > unloadGrace;
+            }
+
+            BlockState current = level.getBlockState(pos);
+            if (!current.is(pathData.targetPathBlock)) {
+                return true;
+            }
+
+            if (age <= decayTime) {
                 return false;
             }
 
-            if (level.getBlockState(pos).is(entry.getValue().targetPathBlock)) {
-                level.setBlockAndUpdate(pos, entry.getValue().originalState);
-            }
+            level.setBlockAndUpdate(pos, pathData.originalState);
             return true;
         });
     }
@@ -103,76 +210,56 @@ public class PathCreationEvent {
     public static void onEntityTick(EntityTickEvent.Post event) {
         Entity entity = event.getEntity();
         Level level = entity.level();
-        if (level.isClientSide() || !(entity instanceof LivingEntity)) return;
+        if (!(level instanceof ServerLevel serverLevel) || !(entity instanceof LivingEntity livingEntity)) return;
 
-        LivingEntity livingEntity = (LivingEntity) entity;
+        // Cheap allow-list gate before any block lookups.
+        if (!isPathRelevantEntity(livingEntity)) return;
+
         BlockPos posBelow = livingEntity.getOnPos();
         BlockState stateBelow = level.getBlockState(posBelow);
-        if (stateBelow.isAir()) return;
+        if (stateBelow.isAir() || isProtectedFromPathing(stateBelow)) return;
 
-        if (stateBelow.is(Blocks.FARMLAND)) return;
+        syncSpeedBoost(livingEntity, stateBelow);
 
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(stateBelow.getBlock());
-        if (blockId != null) {
-            String bName = blockId.getPath();
-            String bNamespace = blockId.getNamespace();
-
-            if (bName.contains("farmland") || bNamespace.equals("minecolonies")) {
-                return;
-            }
-        }
-
-        boolean isAllowedEntity = (livingEntity instanceof Player);
-        if (!isAllowedEntity) {
-            ResourceLocation entityId = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
-            if (entityId != null && entityId.getNamespace().equals("minecolonies")) {
-                String p = entityId.getPath();
-                if (p.contains("barbarian")) return;
-                if (p.equals("citizen") || p.equals("visitor") || p.equals("mercenary")) isAllowedEntity = true;
-            } else { return; }
-        }
-
-        AttributeInstance attribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
-        if (attribute != null && isAllowedEntity) {
-            if (PathConfig.ENABLE_SPEED_BOOST.get() && isPathBlock(stateBelow)) {
-                if (attribute.getModifier(SPEED_MODIFIER_ID) == null) {
-                    AttributeModifier modifier = new AttributeModifier(SPEED_MODIFIER_ID, PathConfig.SPEED_MULTIPLIER.get(), AttributeModifier.Operation.ADD_VALUE);
-                    attribute.addTransientModifier(modifier);
-                }
-            } else if (attribute.getModifier(SPEED_MODIFIER_ID) != null) {
-                attribute.removeModifier(SPEED_MODIFIER_ID);
-            }
-        }
+        if (!livingEntity.onGround()) return;
 
         long currentTick = level.getGameTime();
 
         if (posBelow.equals(LAST_POSITIONS.get(livingEntity))) return;
         LAST_POSITIONS.put(livingEntity, posBelow.immutable());
 
-        DimPos key = DimPos.of(level, posBelow);
+        PathMemorySavedData memory = PathMemorySavedData.get(serverLevel);
 
-        if (isAllowedEntity && stateBelow.is(PATHABLE_BLOCKS)) {
-            if (isPathBlock(stateBelow)) {
-                PathData pathData = PATH_MEMORY.get(key);
-                if (pathData != null) {
+        if (isPathBlock(stateBelow)) {
+            PathMemorySavedData.PathData pathData = memory.getPath(posBelow);
+            if (pathData != null) {
+                if (!stateBelow.is(pathData.targetPathBlock)) {
+                    memory.removePath(posBelow);
+                } else {
                     pathData.lastTime = currentTick;
+                    memory.touch();
                 }
-                return;
             }
+            return;
+        }
 
-            TrampleData data = TRAMPLE_MEMORY.getOrDefault(key, new TrampleData(0, currentTick));
+        if (stateBelow.is(PATHABLE_BLOCKS)) {
+            PathMemorySavedData.TrampleData data = memory.getTrample(posBelow);
+            if (data == null) {
+                data = new PathMemorySavedData.TrampleData(0, currentTick);
+            }
             data.count++;
 
             if (data.count >= PathConfig.REQUIRED_PASSES.get()) {
                 BlockState targetState = Blocks.DIRT_PATH.defaultBlockState();
-                Block targetBlock = targetState.getBlock();
-
-                PATH_MEMORY.put(key, new PathData(stateBelow, targetBlock, currentTick));
+                memory.putPath(posBelow, new PathMemorySavedData.PathData(stateBelow, targetState.getBlock(), currentTick));
                 level.setBlockAndUpdate(posBelow, targetState);
-                TRAMPLE_MEMORY.remove(key);
+                memory.removeTrample(posBelow);
             } else {
-                TRAMPLE_MEMORY.put(key, data);
+                memory.putTrample(posBelow, data);
             }
+        } else {
+            memory.clearAt(posBelow);
         }
     }
 }
