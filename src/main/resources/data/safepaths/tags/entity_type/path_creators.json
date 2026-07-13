@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "minecolonies:citizen", "required": false },
+    { "id": "minecolonies:visitor", "required": false },
+    { "id": "minecolonies:mercenary", "required": false }
+  ]
+}

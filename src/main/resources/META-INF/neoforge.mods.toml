@@ -1,6 +1,6 @@
 modLoader="javafml"
-loaderVersion="[1,)"
-license="MIT"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
 
 [[mods]]
 modId="safepaths"
@@ -12,14 +12,21 @@ description="Safepaths mod allows players (and friendly NPCs like colonists and 
 
 [[dependencies.safepaths]]
 modId="neoforge"
-mandatory=true
-versionRange="[21,)"
+type="required"
+versionRange="[${neo_version},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.safepaths]]
 modId="minecraft"
-mandatory=true
-versionRange="[1.21.1,)"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.safepaths]]
+modId="minecolonies"
+type="optional"
+versionRange="[0,)"
 ordering="NONE"
 side="BOTH"
