@@ -38,5 +38,9 @@ MineColonies *blocks* are still skipped by namespace in code so colony buildings
 ## Development
 * GameTests live in `SafePathsGameTests` (template `safepaths:platform`). Run with `./gradlew runGameTestServer`.
 
-## License
-This project is open-source and available under the [MIT License](LICENSE).
+## License / permissions
+**All Rights Reserved** — see [LICENSE](LICENSE).
+
+* You may use the unmodified mod in singleplayer and on servers.
+* **Do not put this mod in a modpack** (or redistribute / publish modified versions) **without contacting me first** and getting permission.
+* Contact: GitHub issue or profile for [ahm3tak1f616/Safepaths](https://github.com/ahm3tak1f616/Safepaths).
