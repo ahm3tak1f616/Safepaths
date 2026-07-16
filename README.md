@@ -1,4 +1,4 @@
-# Safepaths (Minecolonies)
+# Safepaths (MineColonies)
 
 Safepaths is a lightweight, standalone NeoForge mod that brings organic path formation to your Minecraft world. Walking over the same blocks repeatedly will gradually trample them into dirt paths. Established paths reward entities with a configurable movement speed boost, making travel through your base or village faster and more immersive.
 
