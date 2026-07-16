@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.1.0
 
 ### Changed
 - License switched from MIT to **All Rights Reserved**: modpacks and redistribution require prior permission (contact via GitHub)
+- Optimization and version bump
 
 ## 1.0.2 - 2026-07-14
 
