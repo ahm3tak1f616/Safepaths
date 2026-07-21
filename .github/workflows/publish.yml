@@ -8,10 +8,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@3a4fe1e1f1b5d5e1e124619d8560124294d1f2b2 # v4.0.0
         with:
           java-version: '21' 
           distribution: 'temurin'
@@ -26,7 +26,7 @@ jobs:
           echo "MOD_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Publish to Modrinth and CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@e5b382d5eb9f8c6ebae6a917e75dd575a7fc4d22 # v3.3
         with:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
