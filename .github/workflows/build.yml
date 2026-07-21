@@ -8,18 +8,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          fetch-depth: 0
-          fetch-tags: true
 
       - name: Setup JDK 21
-        uses: actions/setup-java@3a4fe1e1f1b5d5e1e124619d8560124294d1f2b2 # v4.0.0
+        uses: actions/setup-java@8df1039f650269edb4d16fe02a0a3aefdf92878b # v4.7.0
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@dbbdc20eb828d1474187f9e8321a50a04593452a # v4.1.0
+        uses: gradle/actions/setup-gradle@94baf225fe0a50835b0829212d10526644023ee0 # v4.3.0
 
       - name: Build with Gradle
         run: ./gradlew build
