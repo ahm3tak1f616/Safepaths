@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # GitHub Actions güncellemelerini haftalık kontrol et
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

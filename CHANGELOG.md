@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0
+## 1.1.0 - 2026-07-17
 
 ### Changed
 - License switched from MIT to **All Rights Reserved**: modpacks and redistribution require prior permission (contact via GitHub)
