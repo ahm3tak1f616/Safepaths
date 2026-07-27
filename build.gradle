@@ -27,6 +27,12 @@ sourceSets.main.resources {
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 base {
@@ -34,7 +40,11 @@ base {
 }
 
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+    withJavadocJar()
+}
 
 //minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 //minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
@@ -103,6 +113,19 @@ dependencies {
     // And its provides the option to then use net.minecraft as the group, and one of; client, server or joined as the module name, plus the game version as version.
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
+
+    // CurseForge dependencies (CurseMaven) for MineColonies and compatibility development
+    compileOnly "curse.maven:minecolonies-${minecolonies_project_id}:${minecolonies_file_id}"
+    compileOnly "curse.maven:structurize-${structurize_project_id}:${structurize_file_id}"
+    compileOnly "curse.maven:multi-piston-${multipiston_project_id}:${multipiston_file_id}"
+    compileOnly "curse.maven:blockui-${blockui_project_id}:${blockui_file_id}"
+    compileOnly "curse.maven:domum-ornamentum-${domum_ornamentum_project_id}:${domum_ornamentum_file_id}"
+
+    localRuntime "curse.maven:minecolonies-${minecolonies_project_id}:${minecolonies_file_id}"
+    localRuntime "curse.maven:structurize-${structurize_project_id}:${structurize_file_id}"
+    localRuntime "curse.maven:multi-piston-${multipiston_project_id}:${multipiston_file_id}"
+    localRuntime "curse.maven:blockui-${blockui_project_id}:${blockui_file_id}"
+    localRuntime "curse.maven:domum-ornamentum-${domum_ornamentum_project_id}:${domum_ornamentum_file_id}"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
