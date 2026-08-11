@@ -42,5 +42,5 @@ MineColonies *blocks* are still skipped by namespace in code so colony buildings
 **All Rights Reserved** — see [LICENSE](LICENSE).
 
 * You may use the unmodified mod in singleplayer and on servers.
-* **Do not put this mod in a modpack** (or redistribute / publish modified versions) **without contacting me first** and getting permission.
+* **Do not put this mod in a modpack** (or redistribute / publish modified versions) **without contacting me first**.
 * Contact: GitHub issue or profile for [ahm3tak1f616/Safepaths](https://github.com/ahm3tak1f616/Safepaths).
