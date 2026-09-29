@@ -12,6 +12,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
+@SuppressWarnings({"unused", "removal"})
 @GameTestHolder("safepaths")
 @PrefixGameTestTemplate(false)
 public class SafePathsGameTests {
@@ -55,7 +56,7 @@ public class SafePathsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "platform", timeoutTicks = 100)
+    @GameTest(template = "platform")
     public static void walkingFormsDirtPath(GameTestHelper helper) {
         helper.setBlock(FLOOR, Blocks.GRASS_BLOCK);
         helper.setBlock(ABOVE, Blocks.AIR);
@@ -84,7 +85,7 @@ public class SafePathsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "platform", timeoutTicks = 100)
+    @GameTest(template = "platform")
     public static void farmlandIsNotTrampledIntoPath(GameTestHelper helper) {
         helper.setBlock(FLOOR, Blocks.FARMLAND);
         helper.setBlock(ABOVE, Blocks.AIR);
