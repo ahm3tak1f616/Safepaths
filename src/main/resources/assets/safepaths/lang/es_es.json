@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths permite a los jugadores (y NPCs amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths permite a los jugadores (y NPCs amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths permite a los jugadores (y NPCs amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
+  "fml.menu.mods.info.description.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
+  "neoforge.screen.mods.info.description.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
+  "modmenu.descriptionTranslation.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
 
   "safepaths.configuration.title": "Configuración de SafePaths",
   "safepaths.configuration.section.safepaths.common.toml": "Configuración común",
   "safepaths.configuration.section.safepaths.common.toml.title": "Ajustes comunes de SafePaths",
   "safepaths.configuration.Path Settings": "Ajustes de caminos",
   "safepaths.configuration.Path Settings.button": "Ajustes de caminos",
-  "safepaths.configuration.Path Settings.tooltip": "Configura la creación de caminos y la mejora de velocidad",
+  "safepaths.configuration.Path Settings.tooltip": "Configura la creación de caminos y el aumento de velocidad",
+
+  "safepaths.gui.conversions.configure": "Configurar conversiones...",
+  "safepaths.gui.conversions.title": "Conversiones de caminos",
+  "safepaths.gui.cheat_warning": "⚠ Advertencia: Se puede convertir cualquier bloque. ¡Esto puede considerarse trampa!",
+  "safepaths.gui.speed_boost.on": "Aumento de velocidad: SÍ",
+  "safepaths.gui.speed_boost.off": "Aumento de velocidad: NO",
+  "safepaths.gui.palette.title": "Paleta de bloques (Clic para seleccionar)",
+  "safepaths.gui.palette.search": "Buscar bloques...",
+  "safepaths.gui.palette.search_hint": "Filtrar bloques...",
+  "safepaths.gui.add_conversion": "+ Añadir conversión",
+  "safepaths.gui.add_conversion.tooltip": "Añade una nueva entrada de bloque origen -> bloque de camino",
+  "safepaths.gui.delete_conversion": "Eliminar conversión",
+  "safepaths.gui.restore_defaults": "Restaurar valores por defecto",
+  "safepaths.gui.restore_defaults.title": "Restaurar conversiones por defecto",
+  "safepaths.gui.restore_defaults.message": "¿Seguro que quieres restaurar las conversiones por defecto? Se restablecerán las entradas personalizadas.",
+  "safepaths.gui.restore_defaults.confirm": "Restaurar",
 
   "config.safepaths.requiredPasses": "Pasos requeridos",
-  "config.safepaths.requiredPasses.tooltip": "Cantidad de veces que se debe pisar el mismo bloque para comprimirlo en un camino.",
+  "config.safepaths.requiredPasses.tooltip": "Número de veces que debes pisar el mismo bloque para comprimirlo en un camino.",
 
-  "config.safepaths.constructionTime": "Límite de tiempo de construcción",
-  "config.safepaths.constructionTime.tooltip": "Ventana de tiempo para alcanzar los pasos requeridos. Si no se alcanza a tiempo, el progreso se reinicia. (24.000 ticks = 1 día de Minecraft).",
+  "config.safepaths.constructionTime": "Límite de tiempo para crear caminos",
+  "config.safepaths.constructionTime.tooltip": "Ventana de tiempo para alcanzar los pasos. Si se agota, el progreso se reinicia. (24.000 ticks = 1 día en Minecraft).",
 
-  "config.safepaths.enableSpeedBoost": "Activar mejora de velocidad",
-  "config.safepaths.enableSpeedBoost.tooltip": "Otorga un aumento de velocidad al caminar sobre bloques de camino.",
+  "config.safepaths.enableSpeedBoost": "Activar aumento de velocidad (Interruptor maestro)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Interruptor maestro para activar la velocidad en caminos.",
 
-  "config.safepaths.speedMultiplier": "Intensidad de la velocidad",
-  "config.safepaths.speedMultiplier.tooltip": "Mayor valor = movimiento más rápido. 0.2 equivale a Velocidad I (+20% de velocidad total).",
+  "config.safepaths.speedMultiplier": "Multiplicador de aumento de velocidad",
+  "config.safepaths.speedMultiplier.tooltip": "Bonificación de velocidad al caminar por caminos (0.2 = Velocidad I / +20% velocidad).",
 
-  "config.safepaths.decayTime": "Tiempo de deterioro del camino",
-  "config.safepaths.decayTime.tooltip": "Cuánto tiempo permanece un camino sin usar antes de revertirse. (24.000 ticks = 1 día | 72.000 ticks = 3 días)."
+  "config.safepaths.decayTime": "Tiempo de descomposición del camino",
+  "config.safepaths.decayTime.tooltip": "Tiempo que dura un camino sin usar antes de desaparecer. (24.000 ticks = 1 día | 72.000 ticks = 3 días).",
+
+  "config.safepaths.customConversions": "Conversiones de bloques personalizadas",
+  "config.safepaths.customConversions.tooltip": "Lista de mapeos 'bloque_origen -> bloque_camino'."
 }

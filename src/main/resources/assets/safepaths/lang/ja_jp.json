@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
+  "fml.menu.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
 
   "safepaths.configuration.title": "SafePaths 設定",
   "safepaths.configuration.section.safepaths.common.toml": "共通設定",
   "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 共通設定",
-  "safepaths.configuration.Path Settings": "小道設定",
-  "safepaths.configuration.Path Settings.button": "小道設定",
-  "safepaths.configuration.Path Settings.tooltip": "小道の生成と移動速度上昇の挙動を設定します",
+  "safepaths.configuration.Path Settings": "小道の設定",
+  "safepaths.configuration.Path Settings.button": "小道の設定",
+  "safepaths.configuration.Path Settings.tooltip": "小道の生成と速度上昇効果を設定します",
+
+  "safepaths.gui.conversions.configure": "変換ルールを設定...",
+  "safepaths.gui.conversions.title": "小道の変換設定",
+  "safepaths.gui.cheat_warning": "⚠ 警告: あらゆるブロックを変換できます。これはチートとみなされる場合があります！",
+  "safepaths.gui.speed_boost.on": "速度上昇: 有効",
+  "safepaths.gui.speed_boost.off": "速度上昇: 無効",
+  "safepaths.gui.palette.title": "ブロックパレット (クリックで選択)",
+  "safepaths.gui.palette.search": "ブロックを検索...",
+  "safepaths.gui.palette.search_hint": "ブロックを絞り込む...",
+  "safepaths.gui.add_conversion": "+ 変換ルールを追加",
+  "safepaths.gui.add_conversion.tooltip": "変換元ブロック -> 変換先小道ブロックの新しいルールを追加します",
+  "safepaths.gui.delete_conversion": "変換ルールを削除",
+  "safepaths.gui.restore_defaults": "デフォルトに戻す",
+  "safepaths.gui.restore_defaults.title": "デフォルト設定に戻す",
+  "safepaths.gui.restore_defaults.message": "デフォルトの変換設定に戻してもよろしいですか？カスタムブロックの登録はリセットされます。",
+  "safepaths.gui.restore_defaults.confirm": "復元する",
 
   "config.safepaths.requiredPasses": "必要な歩数",
-  "config.safepaths.requiredPasses.tooltip": "同じブロックを小道に変えるために踏む必要がある回数です。",
+  "config.safepaths.requiredPasses.tooltip": "ブロックが小道に変化するまでに踏む必要がある回数です。",
 
   "config.safepaths.constructionTime": "小道作成の制限時間",
-  "config.safepaths.constructionTime.tooltip": "必要な歩数に達するまでの制限時間です。時間を過ぎると進行状況がリセットされます。(24,000 tick = マイクラの1日)。",
+  "config.safepaths.constructionTime.tooltip": "必要な歩数に達するまでの制限時間です。時間を過ぎると進行状況がリセットされます。(24,000 tick = 1マインクラフト日)。",
 
-  "config.safepaths.enableSpeedBoost": "速度上昇を有効化",
-  "config.safepaths.enableSpeedBoost.tooltip": "小道ブロック上を歩くときに移動速度上昇を付与します。",
+  "config.safepaths.enableSpeedBoost": "速度上昇を有効化 (マスタースイッチ)",
+  "config.safepaths.enableSpeedBoost.tooltip": "小道での速度上昇を有効にするマスタースイッチです。",
 
-  "config.safepaths.speedMultiplier": "速度上昇の強度",
-  "config.safepaths.speedMultiplier.tooltip": "値が大きいほど速くなります。0.2 は移動速度上昇 I (+20%) に相当します。",
+  "config.safepaths.speedMultiplier": "速度上昇倍率",
+  "config.safepaths.speedMultiplier.tooltip": "小道を歩く際の移動速度ボーナス倍率 (0.2 = 移動速度上昇I / +20%)。",
 
-  "config.safepaths.decayTime": "小道の自然消滅時間",
-  "config.safepaths.decayTime.tooltip": "使われなくなった小道が元のブロックに戻るまでの時間です。(24,000 tick = 1日 | 72,000 tick = 3日)。"
+  "config.safepaths.decayTime": "小道の風化時間",
+  "config.safepaths.decayTime.tooltip": "使われなくなった小道が元のブロックに戻るまでの時間です。(24,000 tick = 1日 | 72,000 tick = 3日)。",
+
+  "config.safepaths.customConversions": "カスタムブロック変換設定",
+  "config.safepaths.customConversions.tooltip": "「変換元ブロック -> 変換先小道ブロック」の対応リストです。"
 }

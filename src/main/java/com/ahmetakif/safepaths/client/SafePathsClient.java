@@ -1,5 +1,10 @@
 package com.ahmetakif.safepaths.client;
 
+import com.ahmetakif.safepaths.client.gui.CustomConversionsScreen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -9,6 +14,26 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @Mod(value = "safepaths", dist = Dist.CLIENT)
 public class SafePathsClient {
     public SafePathsClient(ModContainer container) {
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        container.registerExtensionPoint(IConfigScreenFactory.class, (modContainer, parent) ->
+                new ConfigurationScreen(modContainer, parent, (context, key, element) -> {
+                    if ("enableSpeedBoost".equals(key) || "speedMultiplier".equals(key)) {
+                        return null;
+                    }
+                    if ("customConversions".equals(key)) {
+                        Button configureButton = Button.builder(
+                                Component.translatable("safepaths.gui.conversions.configure"),
+                                b -> Minecraft.getInstance().setScreen(new CustomConversionsScreen(context.parent()))
+                        ).width(150).tooltip(Tooltip.create(element.tooltip())).build();
+
+                        return new ConfigurationScreen.ConfigurationSectionScreen.Element(
+                                element.name(),
+                                element.tooltip(),
+                                configureButton,
+                                false
+                        );
+                    }
+                    return element;
+                })
+        );
     }
 }

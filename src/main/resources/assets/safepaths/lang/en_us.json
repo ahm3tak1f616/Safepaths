@@ -10,18 +10,37 @@
   "safepaths.configuration.Path Settings.button": "Path Settings",
   "safepaths.configuration.Path Settings.tooltip": "Configure path creation and speed boost behavior",
 
+  "safepaths.gui.conversions.configure": "Configure Conversions...",
+  "safepaths.gui.conversions.title": "Path Conversions",
+  "safepaths.gui.cheat_warning": "⚠ Warning: Any block can be converted. This can be considered cheating!",
+  "safepaths.gui.speed_boost.on": "Speed Boost: ON",
+  "safepaths.gui.speed_boost.off": "Speed Boost: OFF",
+  "safepaths.gui.palette.title": "Block Palette (Click to select)",
+  "safepaths.gui.palette.search": "Search blocks...",
+  "safepaths.gui.palette.search_hint": "Filter blocks...",
+  "safepaths.gui.add_conversion": "+ Add Conversion",
+  "safepaths.gui.add_conversion.tooltip": "Add a new custom source block -> road block conversion entry",
+  "safepaths.gui.delete_conversion": "Delete conversion",
+  "safepaths.gui.restore_defaults": "Restore Defaults",
+  "safepaths.gui.restore_defaults.title": "Restore Default Conversions",
+  "safepaths.gui.restore_defaults.message": "Are you sure you want to restore default conversions? Any custom block entries will be reset.",
+  "safepaths.gui.restore_defaults.confirm": "Restore Defaults",
+
   "config.safepaths.requiredPasses": "Required Footsteps",
   "config.safepaths.requiredPasses.tooltip": "Number of times you must step on the same block to compress it into a path.",
 
   "config.safepaths.constructionTime": "Path Construction Time Limit",
   "config.safepaths.constructionTime.tooltip": "Time window to reach the required footsteps. If you don't reach the target within this time, your progress resets. (24,000 ticks = 1 Minecraft Day).",
 
-  "config.safepaths.enableSpeedBoost": "Enable Speed Boost",
-  "config.safepaths.enableSpeedBoost.tooltip": "Grants a speed boost while walking on path blocks.",
+  "config.safepaths.enableSpeedBoost": "Enable Speed Boost (Master Switch)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Master switch to enable speed boost on paths.",
 
-  "config.safepaths.speedMultiplier": "Speed Boost Intensity",
-  "config.safepaths.speedMultiplier.tooltip": "Higher value = faster movement. 0.2 matches Speed I (+20% total movement speed).",
+  "config.safepaths.speedMultiplier": "Speed Boost Multiplier",
+  "config.safepaths.speedMultiplier.tooltip": "Speed bonus multiplier when walking on paths (0.2 = Speed I / +20% speed).",
 
   "config.safepaths.decayTime": "Path Decay Time",
-  "config.safepaths.decayTime.tooltip": "How long an unused path stays before reverting. (24,000 ticks = 1 Minecraft Day | 72,000 ticks = 3 Minecraft Days)."
+  "config.safepaths.decayTime.tooltip": "How long an unused path stays before reverting. (24,000 ticks = 1 Minecraft Day | 72,000 ticks = 3 Minecraft Days).",
+
+  "config.safepaths.customConversions": "Custom Block Conversions",
+  "config.safepaths.customConversions.tooltip": "List of 'source_block -> target_path_block' mappings. Allows configuring any block to turn into any road or path block."
 }

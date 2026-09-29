@@ -1,65 +1,88 @@
 # 🌿 Safepaths (MineColonies)
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen.svg?logo=minecraft)](https://www.minecraft.net/)
-[![NeoForge](https://img.shields.io/badge/NeoForge-21.1.235-orange.svg)](https://neoforged.net/)
-[![License](https://img.shields.io/badge/License-All_Rights_Reserved-red.svg)](LICENSE)
-[![GitHub Release](https://img.shields.io/badge/Version-1.2.0-blue.svg)](https://github.com/ahm3tak1f616/Safepaths/releases)
+<p align="center">
+  <img src="src/main/resources/icon.png" alt="Safepaths Logo" width="128" height="128">
+</p>
 
-Safepaths brings natural path formation to your Minecraft world. Walking over the same blocks repeatedly will gradually trample them into dirt paths. Established paths reward players and friendly MineColonies NPCs with a configurable movement speed boost, making travel through your base or town faster and more immersive.
+<p align="center">
+  <a href="https://www.minecraft.net/"><img src="https://img.shields.io/badge/Minecraft-1.21.1-228B22?style=flat-square&logo=minecraft&logoColor=white" alt="Minecraft"></a>
+  <a href="https://neoforged.net/"><img src="https://img.shields.io/badge/NeoForge-21.1.235-E06622?style=flat-square" alt="NeoForge"></a>
+  <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-1.3.0-097979?style=flat-square" alt="Version"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-All_Rights_Reserved-555555?style=flat-square" alt="License"></a>
+</p>
 
-## ✨ Features
-* 🚶 **Organic Path Creation:** Walk over the same blocks multiple times to naturally form dirt paths.
-* ⚡ **Speed Boost:** Walking on paths grants a smooth movement speed bonus (default matches Speed I: +20%) with a grace period over slabs, stairs, and 1-block gaps so your camera doesn't jitter.
-* ⏳ **Smart Decay:** Unused paths slowly revert back to their original ground blocks over time.
-* 🛡️ **Farmland & Building Protection:** Farmland, `#safepaths:cannot_become_path`, and all MineColonies blocks are strictly protected from pathing.
-* 🏛️ **MineColonies Support:** Colonists, visitors, and guards in `#safepaths:path_creators` naturally form paths during daily work and get the path speed boost. Hostiles like barbarians (`#safepaths:path_blocked`) are excluded.
-* 🌐 **Multi-Language:** Available in 9 languages (English, German, Spanish, French, Japanese, Russian, Simplified Chinese, Turkish, and Brazilian Portuguese).
+<p align="center">
+  <b>Natural, immersive path generation for your Minecraft world.</b><br>
+  Repeatedly walk over ground blocks to trample them into paths with custom speed boosts.
+</p>
 
-## 🧩 Dependencies
-| Dependency | Type | Version Range | Side | Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| **NeoForge** | **Required** | `[21.1.235, )` | Both | Mod loader |
-| **Minecraft** | **Required** | `[1.21.1]` | Both | Game engine |
-| **MineColonies** | **Optional** | `[0, )` | Both | Adds citizen path-making, colony speed boost, & structure protection |
+---
 
-## ⚙️ Configuration
-Open **Mods → Safepaths → Config** in-game, or edit `config/safepaths-common.toml`:
-* `requiredPasses` (default `30`): Steps required to turn a block into a path.
-* `enableSpeedBoost` (default `true`): Toggle the path movement speed bonus.
-* `speedMultiplier` (default `0.2`): Speed bonus intensity (+20% ≈ Speed I).
-* `decayTime` (default `2400`): Seconds before an unused path reverts to its original block.
-* `constructionTime` (default `60`): Seconds before incomplete step memory resets.
+### ✨ Features
 
-## 🏷️ Datapack Tags
-Pack makers can customize behavior using tags without touching code:
+| Feature | Description |
+| :--- | :--- |
+| 🚶 **Organic Pathing** | Blocks naturally compress into paths the more you walk over them. |
+| 🔘 **Master Speed Switch & Multiplier** | Toggle path speed and adjust its global multiplier directly inside the in-game conversion menu. |
+| 🎨 **Visual Palette GUI** | In-game visual editor with live search, animated block selection, and smart filters. |
+| ⏳ **Smart Decay** | Inactive paths gradually revert to their original block; active paths refresh. |
+| 🛡️ **Colony Safe** | Farmland, claimed colonies, and protected structures remain untouched. |
+| 🏛️ **MineColonies Support** | Citizens form paths during daily work routines and benefit from speed boosts. |
+| 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*. Any modded block can be mapped. |
+| 🌐 **9 Languages** | English, German, Spanish, French, Japanese, Russian, Chinese, Turkish, Portuguese. |
 
-| Tag | Type | Purpose |
-| :--- | :--- | :--- |
-| `#safepaths:can_become_path` | Block | Blocks that can be trampled into dirt paths |
-| `#safepaths:cannot_become_path` | Block | Blocks that must never become paths |
-| `#safepaths:path_creators` | Entity | Non-player entities that can create paths and get speed |
-| `#safepaths:path_blocked` | Entity | Entities excluded from using the system |
+---
 
-## 📦 Installation
-1. Install [NeoForge](https://neoforged.net/) for Minecraft 1.21.1.
-2. Put `safepaths-[version].jar` in your `.minecraft/mods` folder.
-3. *(Optional)* Add [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies).
+### ⚙️ Configuration
 
-*Note: Safepaths is server-side authoritative. It works in singleplayer and on multiplayer servers.*
+Access in-game via **Mods ➔ Safepaths ➔ Config**, or edit `config/safepaths-common.toml`:
 
-## 🛠️ Development
-Run automated GameTests locally:
-```bash
-./gradlew runGameTestServer
+```toml
+[Path Settings]
+# Steps required to compress ground into a path
+requiredPasses = 20
+
+# Time window (in ticks) to perform steps before progress resets
+constructionTime = 24000
+
+# Ticks until an unused path reverts (72,000 = 3 days)
+decayTime = 72000
+
+# Master speed switch and multiplier (also editable in Conversions GUI)
+enableSpeedBoost = true
+speedMultiplier = 0.2
+
+# Custom conversions: "source_block -> target_block"
+customConversions = [
+    "minecraft:grass_block -> minecraft:dirt_path",
+    "minecraft:dirt -> minecraft:dirt_path",
+    "minecraft:sand -> minecraft:dirt_path",
+    "minecraft:gravel -> minecraft:dirt_path",
+    "biomeswevegone:lush_grass_block -> biomeswevegone:lush_dirt_path",
+    "biomeswevegone:lush_dirt -> biomeswevegone:lush_dirt_path",
+    "biomeswevegone:sandy_dirt -> biomeswevegone:sandy_dirt_path",
+    "biomesoplenty:origin_grass_block -> minecraft:dirt_path",
+    "regions_unexplored:peat_grass_block -> regions_unexplored:peat_dirt_path",
+    "regions_unexplored:peat_dirt -> regions_unexplored:peat_dirt_path",
+    "regions_unexplored:silt_grass_block -> regions_unexplored:silt_dirt_path",
+    "regions_unexplored:silt_dirt -> regions_unexplored:silt_dirt_path",
+    "regions_unexplored:chalk_grass_block -> regions_unexplored:chalk_dirt_path",
+    "regions_unexplored:chalk_dirt -> regions_unexplored:chalk_dirt_path"
+]
 ```
 
-## 📜 Changelog
-See [CHANGELOG.md](CHANGELOG.md) for full release notes and version history.
+---
 
-## 🔒 License / Permissions
-**All Rights Reserved** — see [LICENSE](LICENSE).
+### 📦 Installation
 
-* You may use the unmodified mod in singleplayer and on servers.
-* **Modpacks:** You are free to include this mod in any public or private modpack without asking, provided that proper credit and a link to the original project are given.
-* **Redistribution:** Do not re-upload the standalone mod jar to third-party sites or distribute modified builds without prior permission.
-* Contact: GitHub issue or profile for [ahm3tak1f616/Safepaths](https://github.com/ahm3tak1f616/Safepaths).
+1. Install [NeoForge 21.1.235+](https://neoforged.net/) for **Minecraft 1.21.1**.
+2. Place `safepaths-1.3.0.jar` into your `.minecraft/mods` directory.
+3. *(Optional)* Install [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies) or any biome mod.
+
+---
+
+### 📜 Changelog
+Check [CHANGELOG.md](CHANGELOG.md) for full update history.
+
+### 🔒 Permissions
+**All Rights Reserved** — Free to include in public or private modpacks with credit. Standalone redistributions prohibited.

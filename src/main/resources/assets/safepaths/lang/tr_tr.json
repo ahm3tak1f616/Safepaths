@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
+  "fml.menu.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
 
   "safepaths.configuration.title": "SafePaths Yapılandırması",
   "safepaths.configuration.section.safepaths.common.toml": "Genel Yapılandırma",
   "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Genel Ayarları",
-  "safepaths.configuration.Path Settings": "Yol Ayarları",
-  "safepaths.configuration.Path Settings.button": "Yol Ayarları",
-  "safepaths.configuration.Path Settings.tooltip": "Yol oluşumu ve hız artışı davranışını yapılandırın",
+  "safepaths.configuration.Path Settings": "Patika Ayarları",
+  "safepaths.configuration.Path Settings.button": "Patika Ayarları",
+  "safepaths.configuration.Path Settings.tooltip": "Patika oluşumu ve hız artışı davranışını yapılandırın",
 
-  "config.safepaths.requiredPasses": "Gerekli Adım Sayısı",
-  "config.safepaths.requiredPasses.tooltip": "Bir bloğun patikaya dönüşmesi için aynı blok üzerine kaç kez basılması gerektiği.",
+  "safepaths.gui.conversions.configure": "Dönüşümleri Yapılandır...",
+  "safepaths.gui.conversions.title": "Patika Dönüşümleri",
+  "safepaths.gui.cheat_warning": "⚠ Uyarı: Herhangi bir blok dönüştürülebilir. Bu hile olarak değerlendirilebilir!",
+  "safepaths.gui.speed_boost.on": "Hız Artışı: AÇIK",
+  "safepaths.gui.speed_boost.off": "Hız Artışı: KAPALI",
+  "safepaths.gui.palette.title": "Blok Paleti (Seçmek için tıkla)",
+  "safepaths.gui.palette.search": "Blok ara...",
+  "safepaths.gui.palette.search_hint": "Blokları filtrele...",
+  "safepaths.gui.add_conversion": "+ Dönüşüm Ekle",
+  "safepaths.gui.add_conversion.tooltip": "Yeni bir kaynak blok -> yol bloğu dönüşüm girdisi ekle",
+  "safepaths.gui.delete_conversion": "Dönüşümü sil",
+  "safepaths.gui.restore_defaults": "Varsayılanları Geri Yükle",
+  "safepaths.gui.restore_defaults.title": "Varsayılan Dönüşümleri Geri Yükle",
+  "safepaths.gui.restore_defaults.message": "Varsayılan dönüşümleri geri yüklemek istediğinize emin misiniz? Özel blok girdileriniz sıfırlanacaktır.",
+  "safepaths.gui.restore_defaults.confirm": "Geri Yükle",
 
-  "config.safepaths.constructionTime": "Yol Oluşturma Süre Sınırı",
-  "config.safepaths.constructionTime.tooltip": "Gerekli adım sayısına ulaşmak için tanınan süre. Süre aşılırsa ilerleme sıfırlanır. (24.000 tick = 1 Minecraft günü).",
+  "config.safepaths.requiredPasses": "Gereken Adım Sayısı",
+  "config.safepaths.requiredPasses.tooltip": "Aynı bloğu bir patikaya sıkıştırmak için üzerine kaç kez basılması gerektiği.",
 
-  "config.safepaths.enableSpeedBoost": "Hız Artışını Etkinleştir",
-  "config.safepaths.enableSpeedBoost.tooltip": "Patika blokları üzerinde yürürken hareket hızı artışı sağlar.",
+  "config.safepaths.constructionTime": "Patika Oluşumu Süre Sınırı",
+  "config.safepaths.constructionTime.tooltip": "Gerekli adımları tamamlamak için tanınan süre. Süre dolduğunda ilerleme sıfırlanır. (24.000 tick = 1 Minecraft Günü).",
 
-  "config.safepaths.speedMultiplier": "Hız Artışı Yoğunluğu",
-  "config.safepaths.speedMultiplier.tooltip": "Daha yüksek değer = daha hızlı hareket. 0.2 değeri Hız I (%20 hız artışı) etkisine eşdeğerdir.",
+  "config.safepaths.enableSpeedBoost": "Hız Artışını Etkinleştir (Ana Anahtar)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Patikalarda hız artışını sağlayan ana anahtar.",
 
-  "config.safepaths.decayTime": "Yol Bozulma Süresi",
-  "config.safepaths.decayTime.tooltip": "Kullanılmayan bir patikanın eski bloğuna geri dönmesi için gereken süre. (24.000 tick = 1 gün | 72.000 tick = 3 gün)."
+  "config.safepaths.speedMultiplier": "Hız Artış Çarpanı",
+  "config.safepaths.speedMultiplier.tooltip": "Patikalarda yürüme hızı bonusu çarpanı (0.2 = Hız I / +%20 hız).",
+
+  "config.safepaths.decayTime": "Patika Bozulma Süresi",
+  "config.safepaths.decayTime.tooltip": "Kullanılmayan bir patikanın eski haline dönmeden önce ne kadar süre kaldığı. (24.000 tick = 1 Gün | 72.000 tick = 3 Gün).",
+
+  "config.safepaths.customConversions": "Özel Blok Dönüşümleri",
+  "config.safepaths.customConversions.tooltip": "'kaynak_blok -> hedef_patika_bloğu' eşleştirmeleri. Her bloğa özel patika dönüşümü tanımlamanızı sağlar."
 }

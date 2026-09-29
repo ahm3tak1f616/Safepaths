@@ -2,6 +2,8 @@ package com.ahmetakif.safepaths.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.util.List;
+
 public class PathConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.ConfigValue<Integer> REQUIRED_PASSES;
@@ -9,6 +11,24 @@ public class PathConfig {
     public static final ModConfigSpec.ConfigValue<Double> SPEED_MULTIPLIER;
     public static final ModConfigSpec.ConfigValue<Integer> DECAY_TIME;
     public static final ModConfigSpec.ConfigValue<Integer> CONSTRUCTION_TIME;
+    public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_CONVERSIONS;
+
+    public static final List<String> DEFAULT_CONVERSIONS = List.of(
+            "minecraft:grass_block -> minecraft:dirt_path",
+            "minecraft:dirt -> minecraft:dirt_path",
+            "minecraft:sand -> minecraft:dirt_path",
+            "minecraft:gravel -> minecraft:dirt_path",
+            "biomeswevegone:lush_grass_block -> biomeswevegone:lush_dirt_path",
+            "biomeswevegone:lush_dirt -> biomeswevegone:lush_dirt_path",
+            "biomeswevegone:sandy_dirt -> biomeswevegone:sandy_dirt_path",
+            "biomesoplenty:origin_grass_block -> minecraft:dirt_path",
+            "regions_unexplored:peat_grass_block -> regions_unexplored:peat_dirt_path",
+            "regions_unexplored:peat_dirt -> regions_unexplored:peat_dirt_path",
+            "regions_unexplored:silt_grass_block -> regions_unexplored:silt_dirt_path",
+            "regions_unexplored:silt_dirt -> regions_unexplored:silt_dirt_path",
+            "regions_unexplored:chalk_grass_block -> regions_unexplored:chalk_dirt_path",
+            "regions_unexplored:chalk_dirt -> regions_unexplored:chalk_dirt_path"
+    );
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -25,19 +45,30 @@ public class PathConfig {
                 .defineInRange("requiredPasses", 20, 1, 1000);
 
         ENABLE_SPEED_BOOST = builder
-                .comment("Enable speed boost on paths")
+                .comment("Master switch: enable speed boost on paths")
                 .translation("config.safepaths.enableSpeedBoost")
                 .define("enableSpeedBoost", true);
 
         SPEED_MULTIPLIER = builder
-                .comment("Movement speed multiplier added on paths (ADD_MULTIPLIED_TOTAL). 0.2 matches Speed I.")
+                .comment("Movement speed boost multiplier (e.g. 0.2 = Speed I / +20% speed).")
                 .translation("config.safepaths.speedMultiplier")
-                .defineInRange("speedMultiplier", 0.2, 0.01, 1.0);
+                .defineInRange("speedMultiplier", 0.2, 0.0, 5.0);
 
         DECAY_TIME = builder
                 .comment("Ticks until path decays (24000 ticks = 1 in-game day).")
                 .translation("config.safepaths.decayTime")
                 .defineInRange("decayTime", 72000, 1000, 144000);
+
+        CUSTOM_CONVERSIONS = builder
+                .comment("Custom block conversions in format: \"source_block -> target_path_block\".",
+                        "Allows any block (vanilla or modded) to trample into any road/path block.",
+                        "Default popular mod mappings work automatically if those mods are installed.")
+                .translation("config.safepaths.customConversions")
+                .defineListAllowEmpty(
+                        "customConversions",
+                        DEFAULT_CONVERSIONS,
+                        obj -> obj instanceof String str && str.contains("->")
+                );
 
         builder.pop();
         SPEC = builder.build();

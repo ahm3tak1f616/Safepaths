@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
+  "fml.menu.mods.info.description.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",
+  "neoforge.screen.mods.info.description.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",
+  "modmenu.descriptionTranslation.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",
 
   "safepaths.configuration.title": "SafePaths-Konfiguration",
   "safepaths.configuration.section.safepaths.common.toml": "Allgemeine Konfiguration",
-  "safepaths.configuration.section.safepaths.common.toml.title": "Allgemeine SafePaths-Einstellungen",
-  "safepaths.configuration.Path Settings": "Pfadeinstellungen",
-  "safepaths.configuration.Path Settings.button": "Pfadeinstellungen",
-  "safepaths.configuration.Path Settings.tooltip": "Konfiguriere Pfaderstellung und Geschwindigkeitsbonus",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Allgemeine Einstellungen",
+  "safepaths.configuration.Path Settings": "Pfad-Einstellungen",
+  "safepaths.configuration.Path Settings.button": "Pfad-Einstellungen",
+  "safepaths.configuration.Path Settings.tooltip": "Pfaderstellung und Geschwindigkeitsboost konfigurieren",
+
+  "safepaths.gui.conversions.configure": "Konvertierungen konfigurieren...",
+  "safepaths.gui.conversions.title": "Pfad-Konvertierungen",
+  "safepaths.gui.cheat_warning": "⚠ Warnung: Jeder Block kann konvertiert werden. Dies kann als Cheaten angesehen werden!",
+  "safepaths.gui.speed_boost.on": "Geschwindigkeit: AN",
+  "safepaths.gui.speed_boost.off": "Geschwindigkeit: AUS",
+  "safepaths.gui.palette.title": "Blockpalette (Zum Auswählen anklicken)",
+  "safepaths.gui.palette.search": "Blöcke suchen...",
+  "safepaths.gui.palette.search_hint": "Blöcke filtern...",
+  "safepaths.gui.add_conversion": "+ Konvertierung hinzufügen",
+  "safepaths.gui.add_conversion.tooltip": "Neuen Eintrag für Quellblock -> Pfadblock hinzufügen",
+  "safepaths.gui.delete_conversion": "Konvertierung löschen",
+  "safepaths.gui.restore_defaults": "Standard wiederherstellen",
+  "safepaths.gui.restore_defaults.title": "Standard-Konvertierungen wiederherstellen",
+  "safepaths.gui.restore_defaults.message": "Sind Sie sicher, dass Sie die Standard-Konvertierungen wiederherstellen möchten? Benutzerdefinierte Einträge werden zurückgesetzt.",
+  "safepaths.gui.restore_defaults.confirm": "Wiederherstellen",
 
   "config.safepaths.requiredPasses": "Erforderliche Schritte",
-  "config.safepaths.requiredPasses.tooltip": "Wie oft derselbe Block betreten werden muss, um ihn zu einem Pfad zu verdichten.",
+  "config.safepaths.requiredPasses.tooltip": "Anzahl der Schritte auf demselben Block, um ihn in einen Pfad zu verwandeln.",
 
-  "config.safepaths.constructionTime": "Zeitfenster für Pfaderstellung",
-  "config.safepaths.constructionTime.tooltip": "Zeitfenster zum Erreichen der erforderlichen Schritte. Wird das Ziel nicht rechtzeitig erreicht, setzt sich der Fortschritt zurück. (24.000 Ticks = 1 Minecraft-Tag).",
+  "config.safepaths.constructionTime": "Zeitlimit für Pfaderstellung",
+  "config.safepaths.constructionTime.tooltip": "Zeitfenster zum Erreichen der Schritte. Verfällt die Zeit, wird der Fortschritt zurückgesetzt. (24.000 Ticks = 1 Minecraft-Tag).",
 
-  "config.safepaths.enableSpeedBoost": "Geschwindigkeitsbonus aktivieren",
-  "config.safepaths.enableSpeedBoost.tooltip": "Gewährt einen Geschwindigkeitsbonus beim Gehen auf Pfadblöcken.",
+  "config.safepaths.enableSpeedBoost": "Geschwindigkeitsboost aktivieren (Hauptschalter)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Hauptschalter für den Geschwindigkeitsboost auf Pfaden.",
 
-  "config.safepaths.speedMultiplier": "Geschwindigkeitsbonus-Intensität",
-  "config.safepaths.speedMultiplier.tooltip": "Höherer Wert = schnellere Bewegung. 0.2 entspricht Tempo I (+20% Gesamtgeschwindigkeit).",
+  "config.safepaths.speedMultiplier": "Geschwindigkeitsboost-Multiplikator",
+  "config.safepaths.speedMultiplier.tooltip": "Geschwindigkeitsbonus auf Pfaden (0.2 = Tempo I / +20% Tempo).",
 
   "config.safepaths.decayTime": "Pfad-Verfallszeit",
-  "config.safepaths.decayTime.tooltip": "Wie lange ein ungenutzter Pfad bestehen bleibt, bevor er zum ursprünglichen Block zurückkehrt. (24.000 Ticks = 1 Minecraft-Tag | 72.000 Ticks = 3 Minecraft-Tage)."
+  "config.safepaths.decayTime.tooltip": "Wie lange ein ungenutzter Pfad bleibt, bevor er verfällt. (24.000 Ticks = 1 Tag | 72.000 Ticks = 3 Tage).",
+
+  "config.safepaths.customConversions": "Benutzerdefinierte Block-Konvertierungen",
+  "config.safepaths.customConversions.tooltip": "Liste der 'Quellblock -> Pfadblock'-Zuordnungen."
 }

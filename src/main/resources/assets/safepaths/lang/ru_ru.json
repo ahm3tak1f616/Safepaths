@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
+  "fml.menu.mods.info.description.safepaths": "Мод Safepaths позволяет игрокам (и дружелюбным NPC, таким как колонисты и посетители) естественным образом создавать грунтовые дорожки, просто многократно проходя по одним и тем же блокам.",
+  "neoforge.screen.mods.info.description.safepaths": "Мод Safepaths позволяет игрокам (и дружелюбным NPC, таким как колонисты и посетители) естественным образом создавать грунтовые дорожки, просто многократно проходя по одним и тем же блокам.",
+  "modmenu.descriptionTranslation.safepaths": "Мод Safepaths позволяет игрокам (и дружелюбным NPC, таким как колонисты и посетители) естественным образом создавать грунтовые дорожки, просто многократно проходя по одним и тем же блокам.",
 
-  "safepaths.configuration.title": "Настройки SafePaths",
+  "safepaths.configuration.title": "Конфигурация SafePaths",
   "safepaths.configuration.section.safepaths.common.toml": "Общая конфигурация",
   "safepaths.configuration.section.safepaths.common.toml.title": "Общие настройки SafePaths",
-  "safepaths.configuration.Path Settings": "Настройки тропинок",
-  "safepaths.configuration.Path Settings.button": "Настройки тропинок",
-  "safepaths.configuration.Path Settings.tooltip": "Настройка создания тропинок и ускорения передвижения",
+  "safepaths.configuration.Path Settings": "Настройки дорожек",
+  "safepaths.configuration.Path Settings.button": "Настройки дорожек",
+  "safepaths.configuration.Path Settings.tooltip": "Настройка создания дорожек и ускорения",
+
+  "safepaths.gui.conversions.configure": "Настроить превращения...",
+  "safepaths.gui.conversions.title": "Превращения дорожек",
+  "safepaths.gui.cheat_warning": "⚠ Предупреждение: Можно превратить любой блок. Это может считаться читерством!",
+  "safepaths.gui.speed_boost.on": "Ускорение: ВКЛ",
+  "safepaths.gui.speed_boost.off": "Ускорение: ВЫКЛ",
+  "safepaths.gui.palette.title": "Палитра блоков (Нажмите для выбора)",
+  "safepaths.gui.palette.search": "Поиск блоков...",
+  "safepaths.gui.palette.search_hint": "Фильтр блоков...",
+  "safepaths.gui.add_conversion": "+ Добавить превращение",
+  "safepaths.gui.add_conversion.tooltip": "Добавить новое правило исходный блок -> блок дорожки",
+  "safepaths.gui.delete_conversion": "Удалить превращение",
+  "safepaths.gui.restore_defaults": "Сбросить по умолчанию",
+  "safepaths.gui.restore_defaults.title": "Восстановить настройки по умолчанию",
+  "safepaths.gui.restore_defaults.message": "Вы уверены, что хотите восстановить стандартные превращения? Пользовательские блоки будут сброшены.",
+  "safepaths.gui.restore_defaults.confirm": "Восстановить",
 
   "config.safepaths.requiredPasses": "Необходимое количество шагов",
-  "config.safepaths.requiredPasses.tooltip": "Сколько раз нужно наступить на блок, чтобы вытоптать тропинку.",
+  "config.safepaths.requiredPasses.tooltip": "Сколько раз нужно наступить на один и тот же блок, чтобы утрамбовать его в дорожку.",
 
-  "config.safepaths.constructionTime": "Время на создание тропинки",
-  "config.safepaths.constructionTime.tooltip": "Время, за которое нужно успеть сделать требуемое количество шагов. При истечении времени прогресс сбрасывается. (24 000 тактов = 1 день Minecraft).",
+  "config.safepaths.constructionTime": "Лимит времени на создание дорожки",
+  "config.safepaths.constructionTime.tooltip": "Окно времени для совершения шагов. По истечении прогресс сбрасывается. (24 000 тактов = 1 день в Minecraft).",
 
-  "config.safepaths.enableSpeedBoost": "Включить ускорение",
-  "config.safepaths.enableSpeedBoost.tooltip": "Дает ускорение передвижения при ходьбе по блокам тропинок.",
+  "config.safepaths.enableSpeedBoost": "Включить ускорение (Главный переключатель)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Главный переключатель для ускорения на дорожках.",
 
-  "config.safepaths.speedMultiplier": "Сила ускорения",
-  "config.safepaths.speedMultiplier.tooltip": "Чем выше значение, тем быстрее скорость. 0.2 соответствует Скорости I (+20% к скорости).",
+  "config.safepaths.speedMultiplier": "Множитель ускорения",
+  "config.safepaths.speedMultiplier.tooltip": "Бонус к скорости при передвижении по дорожкам (0.2 = Скорость I / +20% скорости).",
 
-  "config.safepaths.decayTime": "Время зарастания тропинки",
-  "config.safepaths.decayTime.tooltip": "Через какое время неиспользуемая тропинка восстановится в исходный блок. (24 000 тактов = 1 день | 72 000 тактов = 3 дня)."
+  "config.safepaths.decayTime": "Время исчезновения дорожки",
+  "config.safepaths.decayTime.tooltip": "Сколько времени неиспользуемая дорожка сохраняется до исчезновения. (24 000 тактов = 1 день | 72 000 тактов = 3 дня).",
+
+  "config.safepaths.customConversions": "Пользовательские превращения блоков",
+  "config.safepaths.customConversions.tooltip": "Список правил 'исходный_блок -> блок_дорожки'."
 }

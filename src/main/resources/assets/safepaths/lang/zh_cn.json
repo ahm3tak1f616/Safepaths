@@ -1,27 +1,46 @@
 {
-  "fml.menu.mods.info.description.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
+  "fml.menu.mods.info.description.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",
+  "neoforge.screen.mods.info.description.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",
+  "modmenu.descriptionTranslation.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",
 
   "safepaths.configuration.title": "SafePaths 配置",
-  "safepaths.configuration.section.safepaths.common.toml": "通用配置",
-  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 通用设置",
+  "safepaths.configuration.section.safepaths.common.toml": "常规配置",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 常规设置",
   "safepaths.configuration.Path Settings": "小径设置",
   "safepaths.configuration.Path Settings.button": "小径设置",
   "safepaths.configuration.Path Settings.tooltip": "配置小径生成与速度提升行为",
 
+  "safepaths.gui.conversions.configure": "配置方块转换...",
+  "safepaths.gui.conversions.title": "小径转换",
+  "safepaths.gui.cheat_warning": "⚠ 警告：任何方块均可转换。这可能被视为作弊！",
+  "safepaths.gui.speed_boost.on": "速度提升: 开启",
+  "safepaths.gui.speed_boost.off": "速度提升: 关闭",
+  "safepaths.gui.palette.title": "方块面板（点击选择）",
+  "safepaths.gui.palette.search": "搜索方块...",
+  "safepaths.gui.palette.search_hint": "筛选方块...",
+  "safepaths.gui.add_conversion": "+ 添加转换",
+  "safepaths.gui.add_conversion.tooltip": "添加一条新的源方块 -> 目标道路方块转换项",
+  "safepaths.gui.delete_conversion": "删除转换",
+  "safepaths.gui.restore_defaults": "恢复默认",
+  "safepaths.gui.restore_defaults.title": "恢复默认转换规则",
+  "safepaths.gui.restore_defaults.message": "确定要恢复默认转换规则吗？您的自定义方块条目将被重置。",
+  "safepaths.gui.restore_defaults.confirm": "恢复默认",
+
   "config.safepaths.requiredPasses": "所需踩踏步数",
-  "config.safepaths.requiredPasses.tooltip": "踩踏同一方块形成小径所需的次数。",
+  "config.safepaths.requiredPasses.tooltip": "在同一方块上行走的次数，以将其压实成小径。",
 
-  "config.safepaths.constructionTime": "小径建造时限",
-  "config.safepaths.constructionTime.tooltip": "达到所需步数的时间限制。若超时未完成，步数进度将重置。(24,000刻 = 1个游戏日)。",
+  "config.safepaths.constructionTime": "小径生成时间限制",
+  "config.safepaths.constructionTime.tooltip": "完成所需步数的时间窗口。超时后进度将被重置。（24,000刻 = 1个Minecraft天）。",
 
-  "config.safepaths.enableSpeedBoost": "启用速度提升",
-  "config.safepaths.enableSpeedBoost.tooltip": "在小径方块上行走时获得移动速度提升。",
+  "config.safepaths.enableSpeedBoost": "开启速度提升 (总开关)",
+  "config.safepaths.enableSpeedBoost.tooltip": "小径速度提升的总开关。",
 
-  "config.safepaths.speedMultiplier": "速度提升强度",
-  "config.safepaths.speedMultiplier.tooltip": "数值越高移动越快。0.2 相当于 速度 I (+20% 总移动速度)。",
+  "config.safepaths.speedMultiplier": "速度提升倍率",
+  "config.safepaths.speedMultiplier.tooltip": "在小径上行走时的移动速度加成倍率 (0.2 = 速度 I / +20% 移动速度)。",
 
-  "config.safepaths.decayTime": "小径衰退时间",
-  "config.safepaths.decayTime.tooltip": "未被使用的小径恢复为原始方块所需的时间。(24,000刻 = 1天 | 72,000刻 = 3天)。"
+  "config.safepaths.decayTime": "小径退化时间",
+  "config.safepaths.decayTime.tooltip": "未被踩踏的小径恢复原状前保留的时间。（24,000刻 = 1天 | 72,000刻 = 3天）。",
+
+  "config.safepaths.customConversions": "自定义方块转换",
+  "config.safepaths.customConversions.tooltip": "'源方块 -> 目标道路方块' 对应列表。"
 }
