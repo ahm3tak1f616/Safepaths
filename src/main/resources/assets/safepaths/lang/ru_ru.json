@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths позволяет игрокам (и дружелюбным жителям, таким как колонисты и гости) естественным образом создавать земляные тропинки, просто проходя по одним и тем же блокам несколько раз.",
+
+  "safepaths.configuration.title": "Настройки SafePaths",
+  "safepaths.configuration.section.safepaths.common.toml": "Общая конфигурация",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Общие настройки SafePaths",
+  "safepaths.configuration.Path Settings": "Настройки тропинок",
+  "safepaths.configuration.Path Settings.button": "Настройки тропинок",
+  "safepaths.configuration.Path Settings.tooltip": "Настройка создания тропинок и ускорения передвижения",
+
+  "config.safepaths.requiredPasses": "Необходимое количество шагов",
+  "config.safepaths.requiredPasses.tooltip": "Сколько раз нужно наступить на блок, чтобы вытоптать тропинку.",
+
+  "config.safepaths.constructionTime": "Время на создание тропинки",
+  "config.safepaths.constructionTime.tooltip": "Время, за которое нужно успеть сделать требуемое количество шагов. При истечении времени прогресс сбрасывается. (24 000 тактов = 1 день Minecraft).",
+
+  "config.safepaths.enableSpeedBoost": "Включить ускорение",
+  "config.safepaths.enableSpeedBoost.tooltip": "Дает ускорение передвижения при ходьбе по блокам тропинок.",
+
+  "config.safepaths.speedMultiplier": "Сила ускорения",
+  "config.safepaths.speedMultiplier.tooltip": "Чем выше значение, тем быстрее скорость. 0.2 соответствует Скорости I (+20% к скорости).",
+
+  "config.safepaths.decayTime": "Время зарастания тропинки",
+  "config.safepaths.decayTime.tooltip": "Через какое время неиспользуемая тропинка восстановится в исходный блок. (24 000 тактов = 1 день | 72 000 тактов = 3 дня)."
+}

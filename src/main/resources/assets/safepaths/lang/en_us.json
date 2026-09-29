@@ -1,4 +1,15 @@
 {
+  "fml.menu.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
+  "neoforge.screen.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
+  "modmenu.descriptionTranslation.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
+
+  "safepaths.configuration.title": "SafePaths Configuration",
+  "safepaths.configuration.section.safepaths.common.toml": "Common Configuration",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Common Settings",
+  "safepaths.configuration.Path Settings": "Path Settings",
+  "safepaths.configuration.Path Settings.button": "Path Settings",
+  "safepaths.configuration.Path Settings.tooltip": "Configure path creation and speed boost behavior",
+
   "config.safepaths.requiredPasses": "Required Footsteps",
   "config.safepaths.requiredPasses.tooltip": "Number of times you must step on the same block to compress it into a path.",
 

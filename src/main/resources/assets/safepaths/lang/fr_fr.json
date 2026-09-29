@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement et de manière répétée sur les mêmes blocs.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement et de manière répétée sur les mêmes blocs.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement et de manière répétée sur les mêmes blocs.",
+
+  "safepaths.configuration.title": "Configuration de SafePaths",
+  "safepaths.configuration.section.safepaths.common.toml": "Configuration générale",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Paramètres généraux de SafePaths",
+  "safepaths.configuration.Path Settings": "Paramètres des chemins",
+  "safepaths.configuration.Path Settings.button": "Paramètres des chemins",
+  "safepaths.configuration.Path Settings.tooltip": "Configurer la création de chemins et le bonus de vitesse",
+
+  "config.safepaths.requiredPasses": "Pas nécessaires",
+  "config.safepaths.requiredPasses.tooltip": "Nombre de passages requis sur un même bloc pour le transformer en chemin.",
+
+  "config.safepaths.constructionTime": "Délai de création du chemin",
+  "config.safepaths.constructionTime.tooltip": "Fenêtre de temps pour atteindre le nombre de pas requis. En cas de dépassement, la progression se réinitialise. (24 000 ticks = 1 jour Minecraft).",
+
+  "config.safepaths.enableSpeedBoost": "Activer le bonus de vitesse",
+  "config.safepaths.enableSpeedBoost.tooltip": "Accorde un bonus de vitesse lors de la marche sur les chemins.",
+
+  "config.safepaths.speedMultiplier": "Intensité du bonus de vitesse",
+  "config.safepaths.speedMultiplier.tooltip": "Valeur plus élevée = déplacement plus rapide. 0.2 correspond à Vitesse I (+20% de vitesse totale).",
+
+  "config.safepaths.decayTime": "Temps de disparition du chemin",
+  "config.safepaths.decayTime.tooltip": "Durée pendant laquelle un chemin inutilisé subsiste avant de redevenir son bloc d'origine. (24 000 ticks = 1 jour | 72 000 ticks = 3 jours)."
+}

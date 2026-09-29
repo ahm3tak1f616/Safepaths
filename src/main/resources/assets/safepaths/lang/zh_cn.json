@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths 让玩家（以及殖民者和访客等友好NPC）通过多次践踏同一方块，自然而然地踩出泥土小径。",
+
+  "safepaths.configuration.title": "SafePaths 配置",
+  "safepaths.configuration.section.safepaths.common.toml": "通用配置",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 通用设置",
+  "safepaths.configuration.Path Settings": "小径设置",
+  "safepaths.configuration.Path Settings.button": "小径设置",
+  "safepaths.configuration.Path Settings.tooltip": "配置小径生成与速度提升行为",
+
+  "config.safepaths.requiredPasses": "所需踩踏步数",
+  "config.safepaths.requiredPasses.tooltip": "踩踏同一方块形成小径所需的次数。",
+
+  "config.safepaths.constructionTime": "小径建造时限",
+  "config.safepaths.constructionTime.tooltip": "达到所需步数的时间限制。若超时未完成，步数进度将重置。(24,000刻 = 1个游戏日)。",
+
+  "config.safepaths.enableSpeedBoost": "启用速度提升",
+  "config.safepaths.enableSpeedBoost.tooltip": "在小径方块上行走时获得移动速度提升。",
+
+  "config.safepaths.speedMultiplier": "速度提升强度",
+  "config.safepaths.speedMultiplier.tooltip": "数值越高移动越快。0.2 相当于 速度 I (+20% 总移动速度)。",
+
+  "config.safepaths.decayTime": "小径衰退时间",
+  "config.safepaths.decayTime.tooltip": "未被使用的小径恢复为原始方块所需的时间。(24,000刻 = 1天 | 72,000刻 = 3天)。"
+}

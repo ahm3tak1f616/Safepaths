@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), natürliche Trampelpfade zu erschaffen, indem sie wiederholt über dieselben Blöcke laufen.",
+
+  "safepaths.configuration.title": "SafePaths-Konfiguration",
+  "safepaths.configuration.section.safepaths.common.toml": "Allgemeine Konfiguration",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Allgemeine SafePaths-Einstellungen",
+  "safepaths.configuration.Path Settings": "Pfadeinstellungen",
+  "safepaths.configuration.Path Settings.button": "Pfadeinstellungen",
+  "safepaths.configuration.Path Settings.tooltip": "Konfiguriere Pfaderstellung und Geschwindigkeitsbonus",
+
+  "config.safepaths.requiredPasses": "Erforderliche Schritte",
+  "config.safepaths.requiredPasses.tooltip": "Wie oft derselbe Block betreten werden muss, um ihn zu einem Pfad zu verdichten.",
+
+  "config.safepaths.constructionTime": "Zeitfenster für Pfaderstellung",
+  "config.safepaths.constructionTime.tooltip": "Zeitfenster zum Erreichen der erforderlichen Schritte. Wird das Ziel nicht rechtzeitig erreicht, setzt sich der Fortschritt zurück. (24.000 Ticks = 1 Minecraft-Tag).",
+
+  "config.safepaths.enableSpeedBoost": "Geschwindigkeitsbonus aktivieren",
+  "config.safepaths.enableSpeedBoost.tooltip": "Gewährt einen Geschwindigkeitsbonus beim Gehen auf Pfadblöcken.",
+
+  "config.safepaths.speedMultiplier": "Geschwindigkeitsbonus-Intensität",
+  "config.safepaths.speedMultiplier.tooltip": "Höherer Wert = schnellere Bewegung. 0.2 entspricht Tempo I (+20% Gesamtgeschwindigkeit).",
+
+  "config.safepaths.decayTime": "Pfad-Verfallszeit",
+  "config.safepaths.decayTime.tooltip": "Wie lange ein ungenutzter Pfad bestehen bleibt, bevor er zum ursprünglichen Block zurückkehrt. (24.000 Ticks = 1 Minecraft-Tag | 72.000 Ticks = 3 Minecraft-Tage)."
+}

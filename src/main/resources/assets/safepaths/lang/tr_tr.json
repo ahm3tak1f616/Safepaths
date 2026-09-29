@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı blokların üzerinden defalarca geçerek doğal patikalar oluşturmasını sağlar.",
+
+  "safepaths.configuration.title": "SafePaths Yapılandırması",
+  "safepaths.configuration.section.safepaths.common.toml": "Genel Yapılandırma",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Genel Ayarları",
+  "safepaths.configuration.Path Settings": "Yol Ayarları",
+  "safepaths.configuration.Path Settings.button": "Yol Ayarları",
+  "safepaths.configuration.Path Settings.tooltip": "Yol oluşumu ve hız artışı davranışını yapılandırın",
+
+  "config.safepaths.requiredPasses": "Gerekli Adım Sayısı",
+  "config.safepaths.requiredPasses.tooltip": "Bir bloğun patikaya dönüşmesi için aynı blok üzerine kaç kez basılması gerektiği.",
+
+  "config.safepaths.constructionTime": "Yol Oluşturma Süre Sınırı",
+  "config.safepaths.constructionTime.tooltip": "Gerekli adım sayısına ulaşmak için tanınan süre. Süre aşılırsa ilerleme sıfırlanır. (24.000 tick = 1 Minecraft günü).",
+
+  "config.safepaths.enableSpeedBoost": "Hız Artışını Etkinleştir",
+  "config.safepaths.enableSpeedBoost.tooltip": "Patika blokları üzerinde yürürken hareket hızı artışı sağlar.",
+
+  "config.safepaths.speedMultiplier": "Hız Artışı Yoğunluğu",
+  "config.safepaths.speedMultiplier.tooltip": "Daha yüksek değer = daha hızlı hareket. 0.2 değeri Hız I (%20 hız artışı) etkisine eşdeğerdir.",
+
+  "config.safepaths.decayTime": "Yol Bozulma Süresi",
+  "config.safepaths.decayTime.tooltip": "Kullanılmayan bir patikanın eski bloğuna geri dönmesi için gereken süre. (24.000 tick = 1 gün | 72.000 tick = 3 gün)."
+}

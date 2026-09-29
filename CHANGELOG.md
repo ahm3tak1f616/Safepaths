@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.2.0 - 2026-09-29
+
+### Added
+- **Multi-Language Support**: Added native translations for German (`de_de`), Spanish (`es_es`), French (`fr_fr`), Japanese (`ja_jp`), Russian (`ru_ru`), Simplified Chinese (`zh_cn`), Turkish (`tr_tr`), and Brazilian Portuguese (`pt_br`).
+
+### Improved
+- **Speed Boost Continuity & Smoothing**: Added a smooth 15-tick grace period allowing seamless traversal over stairs, slabs, 1-block non-road gaps, corners, and jumps without sudden speed drop-offs or jarring FOV/POV stutter.
+- **Footprint Hitbox Detection**: Stepping and path detection now checks the entity's full bounding box rather than a single center point, eliminating edge jitter when walking near block borders.
+- **Stepping Logic & Map Efficiency**: Optimized step handling over non-path blocks by verifying trample state prior to map deletions, reducing unnecessary map mutations.
+- **Entity Lifecycle Management**: Active entities that are removed or dead are immediately pruned from cache tracking.
+
+### Fixed
+- **Dirt Path Decay Refresh**: Fixed an issue where walking on an existing dirt path skipped refreshing its decay timer due to an early return, ensuring frequently walked paths stay maintained.
+- **Transient Speed Modifier**: Reverted modifier registration to transient to prevent client prediction desyncs and avoid writing temporary movement attributes into player save NBT.
+- **In-Game Config GUI Localization**: Added all required NeoForge configuration category title, button, and tooltip localization keys.
+- **FOV Flickering on Jumps**: Sprint-jumping across dirt paths no longer causes the FOV to repeatedly zoom in and out.
+- **ConcurrentModificationException on Path Decay**: Decoupled block restoration updates from path memory iteration during decay cycles.
+- **Terrain Air Void Bug**: Added a safe fallback to dirt when original block state data is corrupted or missing, preventing decayed paths from creating holes in the world.
+
+### Development
+- **GameTest Modernization**: Modernized GameTest mock player creation API and added tests verifying dirt path decay timer refreshing upon walking.
+- **Codebase & Inspection Polish**: Addressed IDE code inspection warnings, cleaned unused parameters and modifiers, streamlined GameTest setup helpers, and aligned documentation formatting.
+
 ## 1.1.0 - 2026-07-17
 
 ### Changed

@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem caminhos de terra naturalmente apenas caminhando sobre os mesmos blocos repetidamente.",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem caminhos de terra naturalmente apenas caminhando sobre os mesmos blocos repetidamente.",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem caminhos de terra naturalmente apenas caminhando sobre os mesmos blocos repetidamente.",
+
+  "safepaths.configuration.title": "Configuração do SafePaths",
+  "safepaths.configuration.section.safepaths.common.toml": "Configuração Comum",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Configurações Comuns do SafePaths",
+  "safepaths.configuration.Path Settings": "Configurações de Caminho",
+  "safepaths.configuration.Path Settings.button": "Configurações de Caminho",
+  "safepaths.configuration.Path Settings.tooltip": "Configure a criação de caminhos e o aumento de velocidade",
+
+  "config.safepaths.requiredPasses": "Passos Necessários",
+  "config.safepaths.requiredPasses.tooltip": "Quantidade de vezes necessária pisar no mesmo bloco para compactá-lo em um caminho.",
+
+  "config.safepaths.constructionTime": "Tempo Limite de Construção",
+  "config.safepaths.constructionTime.tooltip": "Janela de tempo para atingir os passos necessários. Se expirar, o progresso é reiniciado. (24.000 ticks = 1 dia do Minecraft).",
+
+  "config.safepaths.enableSpeedBoost": "Ativar Aumento de Velocidade",
+  "config.safepaths.enableSpeedBoost.tooltip": "Concede um bônus de velocidade de movimento ao andar sobre caminhos.",
+
+  "config.safepaths.speedMultiplier": "Intensidade da Velocidade",
+  "config.safepaths.speedMultiplier.tooltip": "Valor maior = movimento mais rápido. 0.2 equivale a Velocidade I (+20% de velocidade total).",
+
+  "config.safepaths.decayTime": "Tempo de Degradação do Caminho",
+  "config.safepaths.decayTime.tooltip": "Tempo que um caminho não utilizado dura antes de retornar ao bloco original. (24.000 ticks = 1 dia | 72.000 ticks = 3 dias)."
+}

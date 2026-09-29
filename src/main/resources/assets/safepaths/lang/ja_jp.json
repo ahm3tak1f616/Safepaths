@@ -1,0 +1,27 @@
+{
+  "fml.menu.mods.info.description.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
+  "neoforge.screen.mods.info.description.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
+  "modmenu.descriptionTranslation.safepaths": "SafePaths は、同じブロックの上を繰り返し歩くことで、プレイヤー（および開拓者や訪問者などの友好的なNPC）が自然に土の小道を作成できるようにするMODです。",
+
+  "safepaths.configuration.title": "SafePaths 設定",
+  "safepaths.configuration.section.safepaths.common.toml": "共通設定",
+  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 共通設定",
+  "safepaths.configuration.Path Settings": "小道設定",
+  "safepaths.configuration.Path Settings.button": "小道設定",
+  "safepaths.configuration.Path Settings.tooltip": "小道の生成と移動速度上昇の挙動を設定します",
+
+  "config.safepaths.requiredPasses": "必要な歩数",
+  "config.safepaths.requiredPasses.tooltip": "同じブロックを小道に変えるために踏む必要がある回数です。",
+
+  "config.safepaths.constructionTime": "小道作成の制限時間",
+  "config.safepaths.constructionTime.tooltip": "必要な歩数に達するまでの制限時間です。時間を過ぎると進行状況がリセットされます。(24,000 tick = マイクラの1日)。",
+
+  "config.safepaths.enableSpeedBoost": "速度上昇を有効化",
+  "config.safepaths.enableSpeedBoost.tooltip": "小道ブロック上を歩くときに移動速度上昇を付与します。",
+
+  "config.safepaths.speedMultiplier": "速度上昇の強度",
+  "config.safepaths.speedMultiplier.tooltip": "値が大きいほど速くなります。0.2 は移動速度上昇 I (+20%) に相当します。",
+
+  "config.safepaths.decayTime": "小道の自然消滅時間",
+  "config.safepaths.decayTime.tooltip": "使われなくなった小道が元のブロックに戻るまでの時間です。(24,000 tick = 1日 | 72,000 tick = 3日)。"
+}

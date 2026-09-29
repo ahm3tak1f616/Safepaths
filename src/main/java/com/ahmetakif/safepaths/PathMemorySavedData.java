@@ -3,10 +3,8 @@ package com.ahmetakif.safepaths;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -16,16 +14,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class PathMemorySavedData extends SavedData {
-    public static final String ID = "safepaths_memory";
+    private static final String DATA_NAME = "safepaths_memory";
 
-    public static final class TrampleData {
+    public static class TrampleData {
         public int count;
-        public long firstTime;
+        public final long firstTime;
 
         public TrampleData(int count, long firstTime) {
             this.count = count;
@@ -33,9 +30,9 @@ public class PathMemorySavedData extends SavedData {
         }
     }
 
-    public static final class PathData {
-        public final BlockState originalState;
-        public final Block targetPathBlock;
+    public static class PathData {
+        public BlockState originalState;
+        public Block targetPathBlock;
         public long lastTime;
 
         public PathData(BlockState originalState, Block targetPathBlock, long lastTime) {
@@ -51,40 +48,61 @@ public class PathMemorySavedData extends SavedData {
     public static PathMemorySavedData get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(
                 new Factory<>(PathMemorySavedData::new, PathMemorySavedData::load),
-                ID
+                DATA_NAME
         );
     }
 
     public static PathMemorySavedData load(CompoundTag tag, HolderLookup.Provider registries) {
         PathMemorySavedData data = new PathMemorySavedData();
-        var blockLookup = registries.lookupOrThrow(Registries.BLOCK);
 
         ListTag trampleList = tag.getList("trample", Tag.TAG_COMPOUND);
         for (int i = 0; i < trampleList.size(); i++) {
-            CompoundTag entry = trampleList.getCompound(i);
-            BlockPos pos = BlockPos.of(entry.getLong("pos"));
-            data.trampleMemory.put(pos, new TrampleData(entry.getInt("count"), entry.getLong("firstTime")));
+            CompoundTag compound = trampleList.getCompound(i);
+            BlockPos pos = BlockPos.of(compound.getLong("pos"));
+            int count = compound.getInt("count");
+            long firstTime = compound.getLong("firstTime");
+            data.trampleMemory.put(pos, new TrampleData(count, firstTime));
         }
 
         ListTag pathList = tag.getList("paths", Tag.TAG_COMPOUND);
         for (int i = 0; i < pathList.size(); i++) {
-            CompoundTag entry = pathList.getCompound(i);
-            BlockPos pos = BlockPos.of(entry.getLong("pos"));
-            BlockState original = NbtUtils.readBlockState(blockLookup, entry.getCompound("original"));
-            Block target = Blocks.DIRT_PATH;
-            if (entry.contains("target", Tag.TAG_STRING)) {
-                ResourceLocation id = ResourceLocation.tryParse(entry.getString("target"));
-                if (id != null) {
-                    target = BuiltInRegistries.BLOCK.get(id);
+            CompoundTag compound = pathList.getCompound(i);
+            BlockPos pos = BlockPos.of(compound.getLong("pos"));
+            long lastTime = compound.getLong("lastTime");
+
+            BlockState originalState = null;
+            if (compound.contains("original")) {
+                String origId = compound.getString("original");
+                ResourceLocation rl = ResourceLocation.tryParse(origId);
+                if (rl != null) {
+                    Block block = BuiltInRegistries.BLOCK.get(rl);
+                    originalState = block.defaultBlockState();
                 }
             }
-            data.pathMemory.put(pos, new PathData(original, target, entry.getLong("lastTime")));
+            if (originalState == null || originalState.isAir()) {
+                originalState = Blocks.DIRT.defaultBlockState();
+            }
+
+            Block targetPathBlock = Blocks.DIRT_PATH;
+            if (compound.contains("target")) {
+                String targetId = compound.getString("target");
+                ResourceLocation rl = ResourceLocation.tryParse(targetId);
+                if (rl != null) {
+                    Block block = BuiltInRegistries.BLOCK.get(rl);
+                    if (block != Blocks.AIR) {
+                        targetPathBlock = block;
+                    }
+                }
+            }
+
+            data.pathMemory.put(pos, new PathData(originalState, targetPathBlock, lastTime));
         }
 
         return data;
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag trampleList = new ListTag();
         for (Map.Entry<BlockPos, TrampleData> entry : trampleMemory.entrySet()) {
@@ -100,10 +118,16 @@ public class PathMemorySavedData extends SavedData {
         for (Map.Entry<BlockPos, PathData> entry : pathMemory.entrySet()) {
             CompoundTag compound = new CompoundTag();
             compound.putLong("pos", entry.getKey().asLong());
-            compound.put("original", NbtUtils.writeBlockState(entry.getValue().originalState));
-            ResourceLocation targetId = BuiltInRegistries.BLOCK.getKey(entry.getValue().targetPathBlock);
-            compound.putString("target", targetId.toString());
             compound.putLong("lastTime", entry.getValue().lastTime);
+
+            if (entry.getValue().originalState != null) {
+                ResourceLocation origKey = BuiltInRegistries.BLOCK.getKey(entry.getValue().originalState.getBlock());
+                compound.putString("original", origKey.toString());
+            }
+
+            ResourceLocation targetKey = BuiltInRegistries.BLOCK.getKey(entry.getValue().targetPathBlock);
+            compound.putString("target", targetKey.toString());
+
             pathList.add(compound);
         }
         tag.put("paths", pathList);
@@ -111,13 +135,17 @@ public class PathMemorySavedData extends SavedData {
         return tag;
     }
 
+    public void putTrample(BlockPos pos, TrampleData data) {
+        trampleMemory.put(pos.immutable(), data);
+        setDirty();
+    }
+
     public TrampleData getTrample(BlockPos pos) {
         return trampleMemory.get(pos);
     }
 
-    public void putTrample(BlockPos pos, TrampleData data) {
-        trampleMemory.put(pos.immutable(), data);
-        setDirty();
+    public boolean hasTrample(BlockPos pos) {
+        return trampleMemory.containsKey(pos);
     }
 
     public void removeTrample(BlockPos pos) {
@@ -126,60 +154,32 @@ public class PathMemorySavedData extends SavedData {
         }
     }
 
-    public PathData getPath(BlockPos pos) {
-        return pathMemory.get(pos);
-    }
-
     public void putPath(BlockPos pos, PathData data) {
         pathMemory.put(pos.immutable(), data);
         setDirty();
     }
 
-    public void removePath(BlockPos pos) {
-        if (pathMemory.remove(pos) != null) {
-            setDirty();
-        }
+    public PathData getPath(BlockPos pos) {
+        return pathMemory.get(pos);
     }
 
     public void clearAt(BlockPos pos) {
-        boolean removed = trampleMemory.remove(pos) != null;
-        removed |= pathMemory.remove(pos) != null;
-        if (removed) {
+        boolean removedTrample = trampleMemory.remove(pos) != null;
+        boolean removedPath = pathMemory.remove(pos) != null;
+        if (removedTrample || removedPath) {
             setDirty();
         }
     }
 
-    public boolean removeTrampleIf(Predicate<Map.Entry<BlockPos, TrampleData>> predicate) {
-        boolean changed = false;
-        Iterator<Map.Entry<BlockPos, TrampleData>> iterator = trampleMemory.entrySet().iterator();
-        while (iterator.hasNext()) {
-            if (predicate.test(iterator.next())) {
-                iterator.remove();
-                changed = true;
-            }
-        }
-        if (changed) {
+    public void removeTrampleIf(Predicate<Map.Entry<BlockPos, TrampleData>> filter) {
+        if (trampleMemory.entrySet().removeIf(filter)) {
             setDirty();
         }
-        return changed;
     }
 
-    public boolean removePathIf(Predicate<Map.Entry<BlockPos, PathData>> predicate) {
-        boolean changed = false;
-        Iterator<Map.Entry<BlockPos, PathData>> iterator = pathMemory.entrySet().iterator();
-        while (iterator.hasNext()) {
-            if (predicate.test(iterator.next())) {
-                iterator.remove();
-                changed = true;
-            }
-        }
-        if (changed) {
+    public void removePathIf(Predicate<Map.Entry<BlockPos, PathData>> filter) {
+        if (pathMemory.entrySet().removeIf(filter)) {
             setDirty();
         }
-        return changed;
-    }
-
-    public void touch() {
-        setDirty();
     }
 }
