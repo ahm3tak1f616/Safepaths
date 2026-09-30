@@ -50,6 +50,7 @@ public class PathCreationEvent {
     private static List<? extends String> lastRawConversions = null;
     private static Map<Block, Block> customConversionMap = Collections.emptyMap();
     private static Set<Block> customTargetBlocks = Collections.emptySet();
+    private static Set<Block> speedOnlyBlocks = Collections.emptySet();
 
     private static void updateConversionCache() {
         List<? extends String> currentRaw = PathConfig.CUSTOM_CONVERSIONS.get();
@@ -57,8 +58,9 @@ public class PathCreationEvent {
             return;
         }
         lastRawConversions = currentRaw;
-        Map<Block, Block> newMap = new HashMap<>();
+        Map<Block, Block> newMap = new LinkedHashMap<>();
         Set<Block> newTargets = new HashSet<>();
+        Set<Block> newSpeedOnly = new HashSet<>();
 
         if (currentRaw != null) {
             for (String rawEntry : currentRaw) {
@@ -82,14 +84,19 @@ public class PathCreationEvent {
                     Block src = BuiltInRegistries.BLOCK.get(sourceId);
                     Block tgt = BuiltInRegistries.BLOCK.get(targetId);
                     if (src != Blocks.AIR && tgt != Blocks.AIR) {
-                        newMap.put(src, tgt);
-                        newTargets.add(tgt);
+                        if (src == tgt) {
+                            newSpeedOnly.add(src);
+                        } else {
+                            newMap.putIfAbsent(src, tgt);
+                            newTargets.add(tgt);
+                        }
                     }
                 }
             }
         }
         customConversionMap = Collections.unmodifiableMap(newMap);
         customTargetBlocks = Collections.unmodifiableSet(newTargets);
+        speedOnlyBlocks = Collections.unmodifiableSet(newSpeedOnly);
     }
 
     public static boolean isPathBlock(BlockState state) {
@@ -97,7 +104,7 @@ public class PathCreationEvent {
             return true;
         }
         updateConversionCache();
-        if (customTargetBlocks.contains(state.getBlock())) {
+        if (speedOnlyBlocks.contains(state.getBlock()) || customTargetBlocks.contains(state.getBlock())) {
             return true;
         }
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
