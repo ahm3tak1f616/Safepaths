@@ -4,6 +4,22 @@ All notable changes to Safepaths are documented here.
 
 ---
 
+## [2.0.0] — 2026-09-30
+
+### 🚀 Added
+* ⚡ **Speed-Only Road Blocks (Self-Mapping)** — Map any block to itself (e.g. `stone_bricks -> stone_bricks` or `gravel -> gravel`) to grant full movement speed bonus without any trampling, block alteration, or decay tracking.
+* 🛡️ **Conflict & Duplicate Resolution** — Deterministic resolution for duplicate and conflicting conversion rules using `putIfAbsent`. First declared rule safely takes priority.
+* 🌐 **Full Biome Mod Integration** — Native support for vanilla-block worldgen overhauls (*Terralith*, *Geophilic*) alongside pre-configured defaults for *Oh The Biomes We've Gone*, *Biomes O' Plenty*, and *Regions Unexplored*.
+
+### 🔄 Changed
+* 🪨 **Gravel Road Defaults** — Changed default gravel behavior from converting into dirt path to pure speed road (`minecraft:gravel -> minecraft:gravel`), keeping natural gravel pathways intact.
+
+### 🛡️ Improved & Fixed
+* ⚙️ **Config GUI Null Safety** — Fixed tooltip null safety in `SafePathsClient` to ensure the NeoForge configuration menu opens reliably without errors.
+* 🧹 **Clean Memory Management** — Pruned redundant trample checks and tracking overhead on protected and speed-only blocks.
+
+---
+
 ## [1.3.0] — 2026-09-30
 
 ### 🚀 Added
@@ -21,7 +37,7 @@ All notable changes to Safepaths are documented here.
 
 ### 🛡️ Improved
 * 🏃 **Speed Boost Smoothing** — 15-tick grace period over stairs, slabs, and 1-block gaps prevents camera and FOV jitter.
-* 👟 **Hitbox Detection** — Bounding box footprint tracking eliminates edge stutter near block borders.
+* 👢 **Hitbox Detection** — Bounding box footprint tracking eliminates edge stutter near block borders.
 * 🔄 **Decay Timer Maintenance** — Walking on existing paths consistently refreshes decay timers.
 * ⚡ **Transient Attributes** — Dynamic movement speed modifiers are transient to prevent world save NBT clutter.
 

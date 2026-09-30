@@ -17,7 +17,7 @@ public class PathConfig {
             "minecraft:grass_block -> minecraft:dirt_path",
             "minecraft:dirt -> minecraft:dirt_path",
             "minecraft:sand -> minecraft:dirt_path",
-            "minecraft:gravel -> minecraft:dirt_path",
+            "minecraft:gravel -> minecraft:gravel",
             "biomeswevegone:lush_grass_block -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:lush_dirt -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:sandy_dirt -> biomeswevegone:sandy_dirt_path",
@@ -44,31 +44,25 @@ public class PathConfig {
                 .translation("config.safepaths.requiredPasses")
                 .defineInRange("requiredPasses", 20, 1, 1000);
 
+        DECAY_TIME = builder
+                .comment("Time in ticks for an unused path to revert (72,000 ticks = 3 Minecraft days).")
+                .translation("config.safepaths.decayTime")
+                .defineInRange("decayTime", 72000, 1000, 240000);
+
         ENABLE_SPEED_BOOST = builder
-                .comment("Master switch: enable speed boost on paths")
+                .comment("Enable or disable movement speed boost on paths.")
                 .translation("config.safepaths.enableSpeedBoost")
                 .define("enableSpeedBoost", true);
 
         SPEED_MULTIPLIER = builder
-                .comment("Movement speed boost multiplier (e.g. 0.2 = Speed I / +20% speed).")
+                .comment("Movement speed boost percentage on paths (e.g., 0.2 = +20% speed).")
                 .translation("config.safepaths.speedMultiplier")
                 .defineInRange("speedMultiplier", 0.2, 0.0, 5.0);
 
-        DECAY_TIME = builder
-                .comment("Ticks until path decays (24000 ticks = 1 in-game day).")
-                .translation("config.safepaths.decayTime")
-                .defineInRange("decayTime", 72000, 1000, 144000);
-
         CUSTOM_CONVERSIONS = builder
-                .comment("Custom block conversions in format: \"source_block -> target_path_block\".",
-                        "Allows any block (vanilla or modded) to trample into any road/path block.",
-                        "Default popular mod mappings work automatically if those mods are installed.")
+                .comment("Custom block conversions in format: source_block -> target_block")
                 .translation("config.safepaths.customConversions")
-                .defineListAllowEmpty(
-                        "customConversions",
-                        DEFAULT_CONVERSIONS,
-                        obj -> obj instanceof String str && str.contains("->")
-                );
+                .defineListAllowEmpty(List.of("customConversions"), () -> DEFAULT_CONVERSIONS, o -> o instanceof String s && s.contains("->"));
 
         builder.pop();
         SPEC = builder.build();
