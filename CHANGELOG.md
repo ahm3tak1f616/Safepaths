@@ -10,8 +10,11 @@ All notable changes to Safepaths are documented here.
 * 🥾 **Sub-Block & Path Collision Targeting** — Switched position tracking to entity supporting block coordinates (`getOnPos()`), fixing an issue where walking on dirt paths or mud targeted the block underneath, preventing decay timer refreshes and causing ghost sub-surface paths.
 * ⏳ **Chunk Unload Decay Preservation** — Paths in unloaded chunks are now preserved in world memory until reloaded rather than being prematurely purged, ensuring abandoned pathways properly decay and revert to nature when players return.
 * 🔀 **Conversion Rule Precedence** — Explicit block transformations (`A -> B`) now cleanly supersede self-mapping speed rules (`A -> A`) if both are declared for the same block.
+* 🛡️ **Speed-Only Roadway Guard** — Guarded path state determination so self-mapped roadways are permanently immune to converting into dirt paths through any code path.
+* 🦺 **World Save Null Safety** — Added fallback null-safety in `PathMemorySavedData` during NBT serialization.
 * 🌐 **Localized Decimal Input Support** — Configuration GUI now handles both dot (`.`) and comma (`,`) decimal separators gracefully for all keyboard layouts and international locales.
 * 🎯 **GUI Slot & Input Synchronization** — Clicking directly into custom conversion text boxes immediately synchronizes slot selection with the block palette.
+* 🧪 **Automated Self-Mapping GameTest** — Added in-engine GameTest verifying self-mapped block recognition and path immunity.
 
 ---
 

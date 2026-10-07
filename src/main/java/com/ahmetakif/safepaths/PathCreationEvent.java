@@ -124,6 +124,9 @@ public class PathCreationEvent {
 
     public static BlockState determinePathState(BlockState originalState) {
         updateConversionCache();
+        if (speedOnlyBlocks.contains(originalState.getBlock())) {
+            return null;
+        }
         Block customTarget = customConversionMap.get(originalState.getBlock());
         if (customTarget != null) {
             return customTarget.defaultBlockState();

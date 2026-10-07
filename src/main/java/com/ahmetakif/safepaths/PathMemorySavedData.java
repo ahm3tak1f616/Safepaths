@@ -125,7 +125,8 @@ public class PathMemorySavedData extends SavedData {
                 compound.putString("original", origKey.toString());
             }
 
-            ResourceLocation targetKey = BuiltInRegistries.BLOCK.getKey(entry.getValue().targetPathBlock);
+            Block targetBlock = entry.getValue().targetPathBlock != null ? entry.getValue().targetPathBlock : Blocks.DIRT_PATH;
+            ResourceLocation targetKey = BuiltInRegistries.BLOCK.getKey(targetBlock);
             compound.putString("target", targetKey.toString());
 
             pathList.add(compound);

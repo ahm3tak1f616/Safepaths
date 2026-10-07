@@ -1,5 +1,6 @@
 package com.ahmetakif.safepaths;
 
+import com.ahmetakif.safepaths.config.PathConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -8,6 +9,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+import java.util.List;
 
 @SuppressWarnings({"unused", "removal"})
 @GameTestHolder("safepaths")
@@ -91,6 +94,21 @@ public class SafePathsGameTests {
     public static void moddedPathNamingHeuristic(GameTestHelper helper) {
         boolean recognized = PathCreationEvent.isPathBlock(Blocks.DIRT_PATH.defaultBlockState());
         helper.assertTrue(recognized, "Path block recognition must succeed");
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void selfMappedBlockIsPathBlock(GameTestHelper helper) {
+        List<? extends String> previous = PathConfig.CUSTOM_CONVERSIONS.get();
+        try {
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of("minecraft:gravel -> minecraft:gravel"));
+            boolean recognized = PathCreationEvent.isPathBlock(Blocks.GRAVEL.defaultBlockState());
+            helper.assertTrue(recognized, "Self-mapped gravel should be recognized as a path block");
+            BlockState pathState = PathCreationEvent.determinePathState(Blocks.GRAVEL.defaultBlockState());
+            helper.assertTrue(pathState == null, "Self-mapped gravel must not convert into another block");
+        } finally {
+            PathConfig.CUSTOM_CONVERSIONS.set(previous);
+        }
         helper.succeed();
     }
 }
