@@ -165,7 +165,8 @@ public class CustomConversionsScreen extends Screen {
         PathConfig.ENABLE_SPEED_BOOST.set(this.speedBoostEnabled);
 
         try {
-            double multiplier = Double.parseDouble(this.masterSpeedBox.getValue().trim());
+            String rawSpeed = this.masterSpeedBox.getValue().trim().replace(',', '.');
+            double multiplier = Double.parseDouble(rawSpeed);
             multiplier = Mth.clamp(multiplier, 0.0, 5.0);
             PathConfig.SPEED_MULTIPLIER.set(multiplier);
         } catch (NumberFormatException ignored) {
@@ -439,10 +440,20 @@ public class CustomConversionsScreen extends Screen {
                 return true;
             }
 
-            int targetSlotX = currentX + slotSize + spacing + boxWidth + spacing + arrowWidth + spacing;
+            int sourceBoxX = currentX + slotSize + spacing;
+            if (mouseX >= sourceBoxX && mouseX <= sourceBoxX + boxWidth && mouseY >= centerY && mouseY <= centerY + slotSize) {
+                CustomConversionsScreen.this.selectSlot(idx, true);
+            }
+
+            int targetSlotX = sourceBoxX + boxWidth + spacing + arrowWidth + spacing;
             if (mouseX >= targetSlotX && mouseX <= targetSlotX + slotSize && mouseY >= centerY && mouseY <= centerY + slotSize) {
                 CustomConversionsScreen.this.selectSlot(idx, false);
                 return true;
+            }
+
+            int targetBoxX = targetSlotX + slotSize + spacing;
+            if (mouseX >= targetBoxX && mouseX <= targetBoxX + boxWidth && mouseY >= centerY && mouseY <= centerY + slotSize) {
+                CustomConversionsScreen.this.selectSlot(idx, false);
             }
 
             return super.mouseClicked(mouseX, mouseY, button);

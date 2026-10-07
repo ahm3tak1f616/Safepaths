@@ -4,6 +4,17 @@ All notable changes to Safepaths are documented here.
 
 ---
 
+## [2.0.1] — 2026-10-07
+
+### 🛡️ Fixed & Improved
+* 🥾 **Sub-Block & Path Collision Targeting** — Switched position tracking to entity supporting block coordinates (`getOnPos()`), fixing an issue where walking on dirt paths or mud targeted the block underneath, preventing decay timer refreshes and causing ghost sub-surface paths.
+* ⏳ **Chunk Unload Decay Preservation** — Paths in unloaded chunks are now preserved in world memory until reloaded rather than being prematurely purged, ensuring abandoned pathways properly decay and revert to nature when players return.
+* 🔀 **Conversion Rule Precedence** — Explicit block transformations (`A -> B`) now cleanly supersede self-mapping speed rules (`A -> A`) if both are declared for the same block.
+* 🌐 **Localized Decimal Input Support** — Configuration GUI now handles both dot (`.`) and comma (`,`) decimal separators gracefully for all keyboard layouts and international locales.
+* 🎯 **GUI Slot & Input Synchronization** — Clicking directly into custom conversion text boxes immediately synchronizes slot selection with the block palette.
+
+---
+
 ## [2.0.0] — 2026-09-30
 
 ### 🚀 Added
@@ -37,7 +48,7 @@ All notable changes to Safepaths are documented here.
 
 ### 🛡️ Improved
 * 🏃 **Speed Boost Smoothing** — 15-tick grace period over stairs, slabs, and 1-block gaps prevents camera and FOV jitter.
-* 👢 **Hitbox Detection** — Bounding box footprint tracking eliminates edge stutter near block borders.
+* 👞 **Hitbox Detection** — Bounding box footprint tracking eliminates edge stutter near block borders.
 * 🔄 **Decay Timer Maintenance** — Walking on existing paths consistently refreshes decay timers.
 * ⚡ **Transient Attributes** — Dynamic movement speed modifiers are transient to prevent world save NBT clutter.
 

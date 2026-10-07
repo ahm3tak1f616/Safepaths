@@ -85,9 +85,12 @@ public class PathCreationEvent {
                     Block tgt = BuiltInRegistries.BLOCK.get(targetId);
                     if (src != Blocks.AIR && tgt != Blocks.AIR) {
                         if (src == tgt) {
-                            newSpeedOnly.add(src);
+                            if (!newMap.containsKey(src)) {
+                                newSpeedOnly.add(src);
+                            }
                         } else {
-                            newMap.putIfAbsent(src, tgt);
+                            newSpeedOnly.remove(src);
+                            newMap.put(src, tgt);
                             newTargets.add(tgt);
                         }
                     }
@@ -193,7 +196,7 @@ public class PathCreationEvent {
         }
 
         if (livingEntity.isInWaterOrBubble() || livingEntity.isInLava() || livingEntity.isFallFlying()
-                || (livingEntity instanceof Player player && player.getAbilities().flying)
+                || (livingEntity instanceof Player player && (player.getAbilities().flying || player.isSpectator()))
                 || livingEntity.fallDistance >= 3.5F) {
             LAST_PATH_TICKS.remove(livingEntity);
             if (attribute.getModifier(SPEED_MODIFIER_ID) != null) {
@@ -254,8 +257,7 @@ public class PathCreationEvent {
             return;
         }
 
-        BlockPos currentPos = livingEntity.blockPosition();
-        BlockPos posBelow = currentPos.below();
+        BlockPos posBelow = livingEntity.getOnPos();
         BlockState stateBelow = level.getBlockState(posBelow);
         long currentTick = level.getGameTime();
 
@@ -276,8 +278,8 @@ public class PathCreationEvent {
         }
 
         BlockPos lastPos = LAST_POSITIONS.get(livingEntity);
-        if (lastPos == null || !lastPos.equals(currentPos)) {
-            LAST_POSITIONS.put(livingEntity, currentPos);
+        if (lastPos == null || !lastPos.equals(posBelow)) {
+            LAST_POSITIONS.put(livingEntity, posBelow);
 
             if (isProtectedFromPathing(stateBelow)) {
                 return;
@@ -329,7 +331,6 @@ public class PathCreationEvent {
         PathMemorySavedData memory = PathMemorySavedData.get(serverLevel);
         int constructionTime = PathConfig.CONSTRUCTION_TIME.get();
         int decayTime = PathConfig.DECAY_TIME.get();
-        long unloadGraceTicks = 2L * decayTime;
 
         memory.removeTrampleIf(entry -> currentTick - entry.getValue().firstTime > constructionTime);
 
@@ -339,7 +340,7 @@ public class PathCreationEvent {
             PathMemorySavedData.PathData data = entry.getValue();
 
             if (!serverLevel.isLoaded(pos)) {
-                return currentTick - data.lastTime > unloadGraceTicks;
+                return false;
             }
 
             BlockState currentState = serverLevel.getBlockState(pos);
@@ -405,5 +406,6 @@ public class PathCreationEvent {
     public static void onServerStopping(ServerStoppingEvent event) {
         LAST_POSITIONS.clear();
         LAST_PATH_TICKS.clear();
+        lastRawConversions = null;
     }
 }

@@ -7,7 +7,8 @@
 <p align="center">
   <a href="https://www.minecraft.net/"><img src="https://img.shields.io/badge/Minecraft-1.21.1-228B22?style=flat-square&logo=minecraft&logoColor=white" alt="Minecraft"></a>
   <a href="https://neoforged.net/"><img src="https://img.shields.io/badge/NeoForge-21.1.235-E06622?style=flat-square" alt="NeoForge"></a>
-  <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-2.0.0-097979?style=flat-square" alt="Version"></a>
+  <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-2.0.1-097979?style=flat-square" alt="Version"></a>
+  <a href="https://www.patreon.com/ahmetakif616"><img src="https://img.shields.io/badge/Patreon-Support-FF424D?style=flat-square&logo=patreon&logoColor=white" alt="Patreon"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-All_Rights_Reserved-555555?style=flat-square" alt="License"></a>
 </p>
 
@@ -26,7 +27,7 @@
 | ⚡ **Speed-Only Road Blocks** | Self-map blocks (`A -> A`, like stone bricks or gravel) to grant speed boosts without alteration or decay. |
 | 🔘 **Master Speed Switch & Multiplier** | Toggle path speed and adjust its global multiplier directly inside the in-game conversion menu. |
 | 🎨 **Visual Palette GUI** | In-game visual editor with live search, animated block selection, and smart filters. |
-| ⏳ **Smart Decay** | Inactive paths gradually revert to their original block; active paths refresh. |
+| ⏳ **Smart Decay** | Inactive paths gradually revert to their original block; active paths refresh on traffic. |
 | 🛡️ **Colony Safe** | Farmland, claimed colonies, and protected structures remain untouched. |
 | 🏛️ **MineColonies Support** | Citizens form paths during daily work routines and benefit from speed boosts. |
 | 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*. Fully compatible with *Terralith* & *Geophilic*. |
@@ -78,7 +79,7 @@ customConversions = [
 ### 📦 Installation
 
 1. Install [NeoForge 21.1.235+](https://neoforged.net/) for **Minecraft 1.21.1**.
-2. Place `safepaths-2.0.0.jar` into your `.minecraft/mods` directory.
+2. Place `safepaths-x.x.x.jar` into your `.minecraft/mods` directory.
 3. *(Optional)* Install [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies) or any biome mod.
 
 ---
