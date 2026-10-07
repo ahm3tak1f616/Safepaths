@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+  <a href="https://www.patreon.com/ahmetakif616"><img src="https://img.shields.io/badge/Patreon-Support_Me-FF424D?style=flat-square&logo=patreon&logoColor=white" alt="Patreon"></a>
   <a href="https://www.minecraft.net/"><img src="https://img.shields.io/badge/Minecraft-1.21.1-228B22?style=flat-square&logo=minecraft&logoColor=white" alt="Minecraft"></a>
   <a href="https://neoforged.net/"><img src="https://img.shields.io/badge/NeoForge-21.1.235-E06622?style=flat-square" alt="NeoForge"></a>
   <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-2.0.1-097979?style=flat-square" alt="Version"></a>
