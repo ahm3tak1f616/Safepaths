@@ -79,7 +79,7 @@ customConversions = [
 ### 📦 Installation
 
 1. Install [Minecraft Forge 47.3.0+](https://files.minecraftforge.net/) for **Minecraft 1.20.1**.
-2. Place `safepaths-2.0.1-1.20.1-forge.jar` into your `.minecraft/mods` directory.
+2. Place `safepaths-x.x.x-1.20.1-forge.jar` into your `.minecraft/mods` directory.
 3. *(Optional)* Install [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies) or any biome mod.
 
 ---
