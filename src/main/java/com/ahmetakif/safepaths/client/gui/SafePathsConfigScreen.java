@@ -1,7 +1,6 @@
 package com.ahmetakif.safepaths.client.gui;
 
 import com.ahmetakif.safepaths.config.PathConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -11,12 +10,18 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
+import java.util.Locale;
+
 public class SafePathsConfigScreen extends Screen {
     private final Screen parentScreen;
 
     private EditBox requiredPassesBox;
     private EditBox constructionTimeBox;
     private EditBox decayTimeBox;
+
+    private Button speedBoostBtn;
+    private EditBox speedMultiplierBox;
+    private boolean speedBoostEnabled;
 
     public SafePathsConfigScreen(Screen parentScreen) {
         super(Component.translatable("safepaths.configuration.title"));
@@ -26,42 +31,59 @@ public class SafePathsConfigScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int startY = 46;
-        int rowSpacing = 38;
-        int boxWidth = 200;
-        int boxHeight = 18;
-        int boxX = centerX - boxWidth / 2;
+        int leftColX = centerX - 155;
+        int rightColX = centerX + 5;
+        int colWidth = 150;
+        int boxHeight = 20;
 
-        // 1. Required Passes
-        int currentY = startY;
-        this.requiredPassesBox = new EditBox(this.font, boxX, currentY + 12, boxWidth, boxHeight, Component.translatable("config.safepaths.requiredPasses"));
+        // Row 0: y = 42
+        // Left: Required Passes
+        this.requiredPassesBox = new EditBox(this.font, leftColX, 42, colWidth, boxHeight, Component.translatable("config.safepaths.requiredPasses"));
         this.requiredPassesBox.setMaxLength(6);
         this.requiredPassesBox.setValue(String.valueOf(PathConfig.REQUIRED_PASSES.get()));
         this.requiredPassesBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.requiredPasses.tooltip")));
         this.addRenderableWidget(this.requiredPassesBox);
 
-        // 2. Construction Time
-        currentY += rowSpacing;
-        this.constructionTimeBox = new EditBox(this.font, boxX, currentY + 12, boxWidth, boxHeight, Component.translatable("config.safepaths.constructionTime"));
+        // Right: Speed Boost Master Switch
+        this.speedBoostEnabled = PathConfig.ENABLE_SPEED_BOOST.get();
+        this.speedBoostBtn = Button.builder(getSpeedBoostButtonText(), b -> {
+            this.speedBoostEnabled = !this.speedBoostEnabled;
+            this.speedBoostBtn.setMessage(getSpeedBoostButtonText());
+        }).bounds(rightColX, 42, colWidth, boxHeight)
+          .tooltip(Tooltip.create(Component.translatable("config.safepaths.enableSpeedBoost.tooltip")))
+          .build();
+        this.addRenderableWidget(this.speedBoostBtn);
+
+        // Row 1: y = 84
+        // Left: Construction Time Limit
+        this.constructionTimeBox = new EditBox(this.font, leftColX, 84, colWidth, boxHeight, Component.translatable("config.safepaths.constructionTime"));
         this.constructionTimeBox.setMaxLength(8);
         this.constructionTimeBox.setValue(String.valueOf(PathConfig.CONSTRUCTION_TIME.get()));
         this.constructionTimeBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.constructionTime.tooltip")));
         this.addRenderableWidget(this.constructionTimeBox);
 
-        // 3. Decay Time
-        currentY += rowSpacing;
-        this.decayTimeBox = new EditBox(this.font, boxX, currentY + 12, boxWidth, boxHeight, Component.translatable("config.safepaths.decayTime"));
+        // Right: Speed Multiplier
+        this.speedMultiplierBox = new EditBox(this.font, rightColX, 84, colWidth, boxHeight, Component.translatable("config.safepaths.speedMultiplier"));
+        this.speedMultiplierBox.setMaxLength(6);
+        this.speedMultiplierBox.setValue(String.format(Locale.ROOT, "%.2f", PathConfig.SPEED_MULTIPLIER.get()));
+        this.speedMultiplierBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.speedMultiplier.tooltip")));
+        this.addRenderableWidget(this.speedMultiplierBox);
+
+        // Row 2: y = 126
+        // Left: Decay Time
+        this.decayTimeBox = new EditBox(this.font, leftColX, 126, colWidth, boxHeight, Component.translatable("config.safepaths.decayTime"));
         this.decayTimeBox.setMaxLength(8);
         this.decayTimeBox.setValue(String.valueOf(PathConfig.DECAY_TIME.get()));
         this.decayTimeBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.decayTime.tooltip")));
         this.addRenderableWidget(this.decayTimeBox);
 
-        // 4. Configure Conversions button
-        currentY += rowSpacing + 6;
+        // Right: Configure Conversions button
         this.addRenderableWidget(Button.builder(
                 Component.translatable("safepaths.gui.conversions.configure"),
                 b -> this.minecraft.setScreen(new CustomConversionsScreen(this))
-        ).bounds(boxX, currentY, boxWidth, 20).build());
+        ).bounds(rightColX, 126, colWidth, boxHeight)
+         .tooltip(Tooltip.create(Component.translatable("config.safepaths.customConversions.tooltip")))
+         .build());
 
         // Bottom Controls (Restore Defaults, Done, Cancel)
         int bottomY = this.height - 28;
@@ -83,10 +105,17 @@ public class SafePathsConfigScreen extends Screen {
         ).bounds(centerX + btnWidth / 2 + 8, bottomY, btnWidth, 20).build());
     }
 
+    private Component getSpeedBoostButtonText() {
+        return Component.translatable(this.speedBoostEnabled ? "safepaths.gui.speed_boost.on" : "safepaths.gui.speed_boost.off");
+    }
+
     private void restoreDefaults() {
         this.requiredPassesBox.setValue("20");
         this.constructionTimeBox.setValue("24000");
         this.decayTimeBox.setValue("72000");
+        this.speedBoostEnabled = true;
+        this.speedBoostBtn.setMessage(getSpeedBoostButtonText());
+        this.speedMultiplierBox.setValue("0.20");
     }
 
     private void saveAndClose() {
@@ -105,6 +134,15 @@ public class SafePathsConfigScreen extends Screen {
             PathConfig.DECAY_TIME.set(Mth.clamp(decay, 1000, 240000));
         } catch (NumberFormatException ignored) {}
 
+        PathConfig.ENABLE_SPEED_BOOST.set(this.speedBoostEnabled);
+
+        try {
+            String rawSpeed = this.speedMultiplierBox.getValue().trim().replace(',', '.');
+            double multiplier = Double.parseDouble(rawSpeed);
+            multiplier = Mth.clamp(multiplier, 0.0, 5.0);
+            PathConfig.SPEED_MULTIPLIER.set(multiplier);
+        } catch (NumberFormatException ignored) {}
+
         PathConfig.SPEC.save();
         this.minecraft.setScreen(this.parentScreen);
     }
@@ -115,15 +153,20 @@ public class SafePathsConfigScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
 
         // Header Title
-        graphics.drawCenteredString(this.font, this.title, this.width / 2, 16, 0xFFFFFF);
+        graphics.drawCenteredString(this.font, this.title, this.width / 2, 14, 0xFFFFFF);
 
         int centerX = this.width / 2;
-        int startY = 46;
-        int rowSpacing = 38;
+        int leftColCenter = centerX - 80;
+        int rightColCenter = centerX + 80;
 
-        // Field Labels
-        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.requiredPasses"), centerX, startY, 0xDDDDDD);
-        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.constructionTime"), centerX, startY + rowSpacing, 0xDDDDDD);
-        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.decayTime"), centerX, startY + rowSpacing * 2, 0xDDDDDD);
+        // Labels above fields
+        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.requiredPasses"), leftColCenter, 30, 0xDDDDDD);
+        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.enableSpeedBoost"), rightColCenter, 30, 0xDDDDDD);
+
+        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.constructionTime"), leftColCenter, 72, 0xDDDDDD);
+        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.speedMultiplier"), rightColCenter, 72, 0xDDDDDD);
+
+        graphics.drawCenteredString(this.font, Component.translatable("config.safepaths.decayTime"), leftColCenter, 114, 0xDDDDDD);
+        graphics.drawCenteredString(this.font, Component.translatable("safepaths.gui.conversions.title"), rightColCenter, 114, 0xDDDDDD);
     }
 }
