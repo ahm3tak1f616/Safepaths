@@ -16,27 +16,18 @@ public class PathConfig {
     public static final List<String> DEFAULT_CONVERSIONS = List.of(
             "minecraft:grass_block -> minecraft:dirt_path",
             "minecraft:dirt -> minecraft:dirt_path",
-            "minecraft:coarse_dirt -> minecraft:dirt_path",
-            "minecraft:podzol -> minecraft:dirt_path",
-            "minecraft:rooted_dirt -> minecraft:dirt_path",
-            "minecraft:mycelium -> minecraft:dirt_path",
             "minecraft:sand -> minecraft:dirt_path",
-            "minecraft:red_sand -> minecraft:dirt_path",
             "minecraft:gravel -> minecraft:gravel",
             "biomeswevegone:lush_grass_block -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:lush_dirt -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:sandy_dirt -> biomeswevegone:sandy_dirt_path",
-            "byg:lush_grass_block -> byg:lush_dirt_path",
-            "byg:lush_dirt -> byg:lush_dirt_path",
             "biomesoplenty:origin_grass_block -> minecraft:dirt_path",
             "regions_unexplored:peat_grass_block -> regions_unexplored:peat_dirt_path",
             "regions_unexplored:peat_dirt -> regions_unexplored:peat_dirt_path",
-            "regions_unexplored:peat_coarse_dirt -> regions_unexplored:peat_dirt_path",
             "regions_unexplored:silt_grass_block -> regions_unexplored:silt_dirt_path",
             "regions_unexplored:silt_dirt -> regions_unexplored:silt_dirt_path",
-            "regions_unexplored:silt_coarse_dirt -> regions_unexplored:silt_dirt_path",
-            "regions_unexplored:chalk_grass_block -> minecraft:dirt_path",
-            "regions_unexplored:chalk_dirt -> minecraft:dirt_path"
+            "regions_unexplored:chalk_grass_block -> regions_unexplored:chalk_dirt_path",
+            "regions_unexplored:chalk_dirt -> regions_unexplored:chalk_dirt_path"
     );
 
     static {
