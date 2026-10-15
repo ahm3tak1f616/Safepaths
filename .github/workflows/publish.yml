@@ -3,6 +3,7 @@ name: Publish to Modrinth and CurseForge
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -33,4 +34,4 @@ jobs:
         with:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          files: build/libs/safepaths-${{ env.MOD_VERSION }}.jar
+          files: build/libs/safepaths-${{ env.MOD_VERSION }}-1.21.1-neoforge.jar
