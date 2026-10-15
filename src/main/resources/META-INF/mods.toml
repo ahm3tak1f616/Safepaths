@@ -30,3 +30,8 @@ mandatory=false
 versionRange="[0,)"
 ordering="NONE"
 side="BOTH"
+
+[custom]
+[custom.mc-publish]
+modrinth = "ec6ewft2"
+curseforge = "1600734"
