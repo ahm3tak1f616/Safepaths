@@ -203,7 +203,7 @@ public class CustomConversionsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderMenuBackground(graphics);
+        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
 
         graphics.drawCenteredString(this.font, this.title, this.width / 4, 10, 0xFFFFFF);
@@ -215,7 +215,7 @@ public class CustomConversionsScreen extends Screen {
         if (this.masterSpeedBox != null) {
             int iconX = this.masterSpeedBox.getX() - 12;
             int iconY = this.masterSpeedBox.getY() + 5;
-            graphics.drawString(this.font, "⚡", iconX, iconY, 0xFFFF55);
+            graphics.drawString(this.font, "\u26a1", iconX, iconY, 0xFFFF55);
         }
 
         if (this.blockPalette != null) {
@@ -228,7 +228,7 @@ public class CustomConversionsScreen extends Screen {
 
     public class ConversionTableWidget extends ContainerObjectSelectionList<ConversionEntry> {
         public ConversionTableWidget(Minecraft mc, int width, int height, int y, int itemHeight) {
-            super(mc, width, height, y, itemHeight);
+            super(mc, width, height, y, y + height, itemHeight);
         }
 
         public void populate(List<? extends String> entries) {
@@ -297,16 +297,12 @@ public class CustomConversionsScreen extends Screen {
 
         @Override
         protected int getScrollbarPosition() {
-            return this.width - 4;
+            return this.getLeft() + this.width - 4;
         }
 
         @Override
-        protected void renderListBackground(GuiGraphics graphics) {
-            graphics.fill(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x44000000);
-        }
-
-        @Override
-        protected void renderListSeparators(GuiGraphics graphics) {
+        protected void renderBackground(GuiGraphics graphics) {
+            graphics.fill(this.getLeft(), this.getTop(), this.getRight(), this.getBottom(), 0x44000000);
         }
     }
 
@@ -330,7 +326,7 @@ public class CustomConversionsScreen extends Screen {
             this.targetBox.setMaxLength(128);
             this.targetBox.setValue(target);
 
-            this.deleteBtn = Button.builder(Component.literal("✕"), b -> parentList.remove(this))
+            this.deleteBtn = Button.builder(Component.literal("\u2715"), b -> parentList.remove(this))
                     .bounds(0, 0, 18, 18)
                     .tooltip(Tooltip.create(Component.translatable("safepaths.gui.delete_conversion")))
                     .build();
@@ -399,7 +395,7 @@ public class CustomConversionsScreen extends Screen {
             this.sourceBox.render(graphics, mouseX, mouseY, partialTick);
 
             currentX += boxWidth + spacing;
-            graphics.drawCenteredString(CustomConversionsScreen.this.font, "➔", currentX + 6, centerY + 5, 0xAAAAAA);
+            graphics.drawCenteredString(CustomConversionsScreen.this.font, "\u2794", currentX + 6, centerY + 5, 0xAAAAAA);
 
             currentX += arrowWidth + spacing;
             int targetBorderColor = (isCurrentRowSelected && !CustomConversionsScreen.this.selectingSource) ? 0xFF55FF55 : 0xFF888888;
@@ -496,9 +492,9 @@ public class CustomConversionsScreen extends Screen {
         private final int leftPos;
 
         public BlockPaletteWidget(Minecraft mc, int x, int y, int width, int height) {
-            super(mc, width, height, y, 20);
+            super(mc, width, height, y, y + height, 20);
             this.leftPos = x;
-            this.setX(x);
+            this.setLeftPos(x);
             this.columns = Math.max(1, (width - 12) / slotSize);
 
             for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
@@ -508,7 +504,7 @@ public class CustomConversionsScreen extends Screen {
                 }
 
                 BlockState state = b.defaultBlockState();
-                if (!state.blocksMotion() || state.liquid()) {
+                if (!state.blocksMotion() || !state.getFluidState().isEmpty()) {
                     continue;
                 }
 
@@ -517,7 +513,7 @@ public class CustomConversionsScreen extends Screen {
                     continue;
                 }
 
-                if (stack.getItem().getFoodProperties(stack, null) != null) {
+                if (stack.getItem().isEdible()) {
                     continue;
                 }
 
@@ -572,21 +568,17 @@ public class CustomConversionsScreen extends Screen {
         }
 
         @Override
-        protected void renderListBackground(GuiGraphics graphics) {
-            graphics.fill(this.leftPos, this.getY(), this.leftPos + this.width, this.getY() + this.height, 0x44000000);
-            graphics.renderOutline(this.leftPos, this.getY(), this.width, this.height, 0x66555555);
+        protected void renderBackground(GuiGraphics graphics) {
+            graphics.fill(this.leftPos, this.getTop(), this.leftPos + this.width, this.getBottom(), 0x44000000);
+            graphics.renderOutline(this.leftPos, this.getTop(), this.width, this.height, 0x66555555);
         }
 
         @Override
-        protected void renderListSeparators(GuiGraphics graphics) {
-        }
-
-        @Override
-        protected void updateWidgetNarration(NarrationElementOutput output) {
+        public void updateNarration(NarrationElementOutput output) {
         }
 
         public void renderHoverTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
-            if (mouseX < this.leftPos || mouseX > this.leftPos + this.width || mouseY < this.getY() || mouseY > this.getY() + this.height) {
+            if (mouseX < this.leftPos || mouseX > this.leftPos + this.width || mouseY < this.getTop() || mouseY > this.getBottom()) {
                 return;
             }
             for (BlockPaletteRow row : this.children()) {

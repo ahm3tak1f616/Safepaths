@@ -1,17 +1,17 @@
 package com.ahmetakif.safepaths.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
 public class PathConfig {
-    public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.ConfigValue<Integer> REQUIRED_PASSES;
-    public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_SPEED_BOOST;
-    public static final ModConfigSpec.ConfigValue<Double> SPEED_MULTIPLIER;
-    public static final ModConfigSpec.ConfigValue<Integer> DECAY_TIME;
-    public static final ModConfigSpec.ConfigValue<Integer> CONSTRUCTION_TIME;
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_CONVERSIONS;
+    public static final ForgeConfigSpec SPEC;
+    public static final ForgeConfigSpec.ConfigValue<Integer> REQUIRED_PASSES;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SPEED_BOOST;
+    public static final ForgeConfigSpec.ConfigValue<Double> SPEED_MULTIPLIER;
+    public static final ForgeConfigSpec.ConfigValue<Integer> DECAY_TIME;
+    public static final ForgeConfigSpec.ConfigValue<Integer> CONSTRUCTION_TIME;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> CUSTOM_CONVERSIONS;
 
     public static final List<String> DEFAULT_CONVERSIONS = List.of(
             "minecraft:grass_block -> minecraft:dirt_path",
@@ -31,7 +31,7 @@ public class PathConfig {
     );
 
     static {
-        ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         builder.push("Path Settings");
 
         CONSTRUCTION_TIME = builder

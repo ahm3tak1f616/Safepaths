@@ -23,27 +23,28 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.level.ExplosionEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.level.PistonEvent;
-import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.level.PistonEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@EventBusSubscriber(modid = "safepaths")
+@Mod.EventBusSubscriber(modid = "safepaths")
 public class PathCreationEvent {
-    public static final TagKey<Block> PATHABLE_BLOCKS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("safepaths", "can_become_path"));
-    public static final TagKey<Block> CANNOT_BECOME_PATH = BlockTags.create(ResourceLocation.fromNamespaceAndPath("safepaths", "cannot_become_path"));
-    public static final TagKey<Block> PATH_BLOCKS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("safepaths", "is_path"));
-    public static final TagKey<EntityType<?>> PATH_CREATORS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("safepaths", "path_creators"));
-    public static final TagKey<EntityType<?>> PATH_BLOCKED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("safepaths", "path_blocked"));
+    public static final TagKey<Block> PATHABLE_BLOCKS = BlockTags.create(new ResourceLocation("safepaths", "can_become_path"));
+    public static final TagKey<Block> CANNOT_BECOME_PATH = BlockTags.create(new ResourceLocation("safepaths", "cannot_become_path"));
+    public static final TagKey<Block> PATH_BLOCKS = BlockTags.create(new ResourceLocation("safepaths", "is_path"));
+    public static final TagKey<EntityType<?>> PATH_CREATORS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("safepaths", "path_creators"));
+    public static final TagKey<EntityType<?>> PATH_BLOCKED = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("safepaths", "path_blocked"));
 
-    private static final ResourceLocation SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("safepaths", "path_speed");
+    private static final UUID SPEED_MODIFIER_UUID = UUID.fromString("c8b7f8e1-5e72-4d1a-8c3b-7f1a9e8d2c4e");
+    private static final String SPEED_MODIFIER_NAME = "safepaths:path_speed";
     private static final Map<Entity, BlockPos> LAST_POSITIONS = new WeakHashMap<>();
     private static final Map<Entity, Long> LAST_PATH_TICKS = new WeakHashMap<>();
 
@@ -202,8 +203,8 @@ public class PathCreationEvent {
                 || (livingEntity instanceof Player player && (player.getAbilities().flying || player.isSpectator()))
                 || livingEntity.fallDistance >= 3.5F) {
             LAST_PATH_TICKS.remove(livingEntity);
-            if (attribute.getModifier(SPEED_MODIFIER_ID) != null) {
-                attribute.removeModifier(SPEED_MODIFIER_ID);
+            if (attribute.getModifier(SPEED_MODIFIER_UUID) != null) {
+                attribute.removeModifier(SPEED_MODIFIER_UUID);
             }
             return;
         }
@@ -221,27 +222,28 @@ public class PathCreationEvent {
             }
         }
 
-        AttributeModifier existing = attribute.getModifier(SPEED_MODIFIER_ID);
+        AttributeModifier existing = attribute.getModifier(SPEED_MODIFIER_UUID);
         if (shouldBoost) {
-            if (existing == null || Math.abs(existing.amount() - multiplier) > 0.0001) {
+            if (existing == null || Math.abs(existing.getAmount() - multiplier) > 0.0001) {
                 if (existing != null) {
-                    attribute.removeModifier(SPEED_MODIFIER_ID);
+                    attribute.removeModifier(SPEED_MODIFIER_UUID);
                 }
                 attribute.addTransientModifier(new AttributeModifier(
-                        SPEED_MODIFIER_ID,
+                        SPEED_MODIFIER_UUID,
+                        SPEED_MODIFIER_NAME,
                         multiplier,
-                        AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                        AttributeModifier.Operation.MULTIPLY_TOTAL
                 ));
             }
         } else if (existing != null) {
-            attribute.removeModifier(SPEED_MODIFIER_ID);
+            attribute.removeModifier(SPEED_MODIFIER_UUID);
         }
     }
 
     @SubscribeEvent
-    public static void onEntityTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
-        if (!(entity instanceof LivingEntity livingEntity) || livingEntity.level().isClientSide) {
+    public static void onLivingTick(LivingEvent.LivingTickEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        if (livingEntity.level().isClientSide()) {
             return;
         }
 
@@ -249,8 +251,8 @@ public class PathCreationEvent {
             LAST_POSITIONS.remove(livingEntity);
             LAST_PATH_TICKS.remove(livingEntity);
             AttributeInstance attribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
-            if (attribute != null && attribute.getModifier(SPEED_MODIFIER_ID) != null) {
-                attribute.removeModifier(SPEED_MODIFIER_ID);
+            if (attribute != null && attribute.getModifier(SPEED_MODIFIER_UUID) != null) {
+                attribute.removeModifier(SPEED_MODIFIER_UUID);
             }
             return;
         }
@@ -321,8 +323,11 @@ public class PathCreationEvent {
     private record RevertEntry(BlockPos pos, BlockState state) {}
 
     @SubscribeEvent
-    public static void onLevelTick(LevelTickEvent.Post event) {
-        if (!(event.getLevel() instanceof ServerLevel serverLevel)) {
+    public static void onLevelTick(TickEvent.LevelTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+        if (!(event.level instanceof ServerLevel serverLevel)) {
             return;
         }
 

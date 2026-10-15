@@ -1,7 +1,6 @@
 package com.ahmetakif.safepaths;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -47,12 +46,13 @@ public class PathMemorySavedData extends SavedData {
 
     public static PathMemorySavedData get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(
-                new Factory<>(PathMemorySavedData::new, PathMemorySavedData::load),
+                PathMemorySavedData::load,
+                PathMemorySavedData::new,
                 DATA_NAME
         );
     }
 
-    public static PathMemorySavedData load(CompoundTag tag, HolderLookup.Provider registries) {
+    public static PathMemorySavedData load(CompoundTag tag) {
         PathMemorySavedData data = new PathMemorySavedData();
 
         ListTag trampleList = tag.getList("trample", Tag.TAG_COMPOUND);
@@ -103,7 +103,7 @@ public class PathMemorySavedData extends SavedData {
 
     @Override
     @SuppressWarnings("NullableProblems")
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
+    public CompoundTag save(CompoundTag tag) {
         ListTag trampleList = new ListTag();
         for (Map.Entry<BlockPos, TrampleData> entry : trampleMemory.entrySet()) {
             CompoundTag compound = new CompoundTag();
