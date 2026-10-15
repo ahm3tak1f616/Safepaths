@@ -1,6 +1,6 @@
 package com.ahmetakif.safepaths.client;
 
-import com.ahmetakif.safepaths.client.gui.CustomConversionsScreen;
+import com.ahmetakif.safepaths.client.gui.SafePathsConfigScreen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,7 +15,7 @@ public class SafePathsClient {
         ModLoadingContext.get().registerExtensionPoint(
                 ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory(
-                        (minecraft, screen) -> new CustomConversionsScreen(screen)
+                        (minecraft, screen) -> new SafePathsConfigScreen(screen)
                 )
         );
     }
