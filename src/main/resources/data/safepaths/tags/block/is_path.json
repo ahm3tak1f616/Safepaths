@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-    "minecraft:dirt_path"
+    "minecraft:dirt_path",
+    { "id": "biomeswevegone:lush_dirt_path", "required": false },
+    { "id": "biomeswevegone:sandy_dirt_path", "required": false },
+    { "id": "byg:lush_dirt_path", "required": false },
+    { "id": "regions_unexplored:peat_dirt_path", "required": false },
+    { "id": "regions_unexplored:silt_dirt_path", "required": false }
   ]
 }

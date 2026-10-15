@@ -14,20 +14,38 @@ public class PathConfig {
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> CUSTOM_CONVERSIONS;
 
     public static final List<String> DEFAULT_CONVERSIONS = List.of(
+            // Vanilla soils & pathing
             "minecraft:grass_block -> minecraft:dirt_path",
             "minecraft:dirt -> minecraft:dirt_path",
+            "minecraft:coarse_dirt -> minecraft:dirt_path",
+            "minecraft:podzol -> minecraft:dirt_path",
+            "minecraft:rooted_dirt -> minecraft:dirt_path",
+            "minecraft:mycelium -> minecraft:dirt_path",
             "minecraft:sand -> minecraft:dirt_path",
+            "minecraft:red_sand -> minecraft:dirt_path",
             "minecraft:gravel -> minecraft:gravel",
+
+            // Biomes We've Gone (BWG 1.20.1+)
             "biomeswevegone:lush_grass_block -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:lush_dirt -> biomeswevegone:lush_dirt_path",
             "biomeswevegone:sandy_dirt -> biomeswevegone:sandy_dirt_path",
+
+            // Oh The Biomes You'll Go (BYG 1.20.1 legacy)
+            "byg:lush_grass_block -> byg:lush_dirt_path",
+            "byg:lush_dirt -> byg:lush_dirt_path",
+
+            // Biomes O' Plenty (1.20.1)
             "biomesoplenty:origin_grass_block -> minecraft:dirt_path",
+
+            // Regions Unexplored (1.20.1)
             "regions_unexplored:peat_grass_block -> regions_unexplored:peat_dirt_path",
             "regions_unexplored:peat_dirt -> regions_unexplored:peat_dirt_path",
+            "regions_unexplored:peat_coarse_dirt -> regions_unexplored:peat_dirt_path",
             "regions_unexplored:silt_grass_block -> regions_unexplored:silt_dirt_path",
             "regions_unexplored:silt_dirt -> regions_unexplored:silt_dirt_path",
-            "regions_unexplored:chalk_grass_block -> regions_unexplored:chalk_dirt_path",
-            "regions_unexplored:chalk_dirt -> regions_unexplored:chalk_dirt_path"
+            "regions_unexplored:silt_coarse_dirt -> regions_unexplored:silt_dirt_path",
+            "regions_unexplored:chalk_grass_block -> minecraft:dirt_path",
+            "regions_unexplored:chalk_dirt -> minecraft:dirt_path"
     );
 
     static {

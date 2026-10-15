@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:farmland"
+    "minecraft:farmland",
+    { "id": "biomeswevegone:lush_farmland", "required": false },
+    { "id": "byg:lush_farmland", "required": false },
+    { "id": "regions_unexplored:peat_farmland", "required": false },
+    { "id": "regions_unexplored:silt_farmland", "required": false }
   ]
 }

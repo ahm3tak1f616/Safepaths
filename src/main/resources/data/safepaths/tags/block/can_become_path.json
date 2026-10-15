@@ -11,6 +11,20 @@
     "minecraft:mud",
     "minecraft:red_sand",
     "minecraft:sand",
-    "minecraft:gravel"
+    "minecraft:gravel",
+    { "id": "biomeswevegone:lush_grass_block", "required": false },
+    { "id": "biomeswevegone:lush_dirt", "required": false },
+    { "id": "biomeswevegone:sandy_dirt", "required": false },
+    { "id": "byg:lush_grass_block", "required": false },
+    { "id": "byg:lush_dirt", "required": false },
+    { "id": "biomesoplenty:origin_grass_block", "required": false },
+    { "id": "regions_unexplored:peat_grass_block", "required": false },
+    { "id": "regions_unexplored:peat_dirt", "required": false },
+    { "id": "regions_unexplored:peat_coarse_dirt", "required": false },
+    { "id": "regions_unexplored:silt_grass_block", "required": false },
+    { "id": "regions_unexplored:silt_dirt", "required": false },
+    { "id": "regions_unexplored:silt_coarse_dirt", "required": false },
+    { "id": "regions_unexplored:chalk_grass_block", "required": false },
+    { "id": "regions_unexplored:chalk_dirt", "required": false }
   ]
 }
