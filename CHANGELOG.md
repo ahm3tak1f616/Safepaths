@@ -4,6 +4,14 @@ All notable changes to Safepaths are documented here.
 
 ---
 
+## [Unreleased]
+
+### 🧹 Repository Maintenance
+* Expanded `.gitignore` to exclude local assistant state, machine-specific IDE configuration, Minecraft development runs, build output, temporary files, logs, and JVM diagnostics while keeping source assets and the Gradle wrapper versioned.
+* Removed the local conversation database files and Codex IDE connection configuration from Git tracking; local copies are preserved.
+
+---
+
 ## [2.0.1] — 2026-10-07
 
 ### 🛡️ Fixed & Improved
