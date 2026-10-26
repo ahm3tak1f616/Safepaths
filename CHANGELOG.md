@@ -6,8 +6,24 @@ All notable changes to Safepaths are documented here.
 
 ## [Unreleased]
 
-### 🧹 Repository Maintenance
-* Expanded `.gitignore` to exclude local assistant state, machine-specific IDE configuration, Minecraft development runs, build output, temporary files, logs, and JVM diagnostics while keeping source assets and the Gradle wrapper versioned.
+### 🛡️ Fixed
+
+* Fixed holes appearing when unused paths restored sand, red sand, gravel, or other falling terrain above air, liquids, or replaceable blocks, including roads directly over water. Paths now remain intact until support returns, then restore their original terrain automatically.
+* Rejected air variants, liquids, non-solid blocks, and block entities as conversion targets. Unsupported falling targets and targets that cannot survive at the position no longer replace terrain; blocks with inventories or other block-entity data are protected from trampling.
+* Invalidated stale decay records when roads are replaced, and cleared tracking for every block affected by piston chains and player placement.
+* Preserved original block properties and creator permission context across world saves while retaining compatibility with older path-memory data.
+* Enforced MineColonies break/place permissions for players and colony ownership for civilian path creators. Decay rechecks creator permissions before changing claimed ground.
+* Corrected duplicate conversions so the first explicit rule wins and unused targets no longer grant road speed. Explicit conversions continue to override self-mapping rules.
+* Applying a self-mapping rule to an existing tracked road now clears its old decay record without changing the road.
+* Preserved unsaved speed and search inputs when the conversion editor reopens or resizes. Multiplayer clients now receive server configuration instructions instead of editing unrelated local settings.
+* Preserved pending Forge config-screen inputs across resizing and conversion-editor navigation, and rejected non-finite speed input in both editors.
+* Prevented jumping or creative flight from counting as additional footsteps on the same ground block.
+
+### Changed
+
+* Indexed path records by chunk so decay maintenance skips individual unloaded positions without force-loading terrain. Active path timestamps are refreshed at most once per second, and disabled speed boosts skip footprint scanning.
+* Build and publishing workflows now require the in-world GameTests to pass both with and without MineColonies before completing.
+* Backported the road-safety, permissions, persistence, GUI, and maintenance fixes to Minecraft 1.20.1 on Forge with Java 17. The security scan now targets the Forge branch and Java version.
 
 ---
 

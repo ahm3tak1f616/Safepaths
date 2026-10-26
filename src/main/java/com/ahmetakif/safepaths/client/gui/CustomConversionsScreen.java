@@ -68,6 +68,9 @@ public class CustomConversionsScreen extends Screen {
 
     @Override
     protected void init() {
+        String speedText = this.masterSpeedBox == null
+                ? String.format(Locale.ROOT, "%.2f", PathConfig.SPEED_MULTIPLIER.get()) : this.masterSpeedBox.getValue();
+        String searchText = this.searchBox == null ? "" : this.searchBox.getValue();
         int contentTop = 38;
         int footerHeight = 36;
         int availableHeight = this.height - contentTop - footerHeight;
@@ -100,6 +103,8 @@ public class CustomConversionsScreen extends Screen {
         int paletteHeight = availableHeight - 22;
         this.blockPalette = new BlockPaletteWidget(this.minecraft, paletteLeft, paletteTop, paletteWidth, paletteHeight);
         this.addRenderableWidget(this.blockPalette);
+        this.searchBox.setValue(searchText);
+        this.blockPalette.filter(searchText);
 
         int buttonY = this.height - 28;
         int speedBoxWidth = 36;
@@ -145,7 +150,7 @@ public class CustomConversionsScreen extends Screen {
         int speedBoxX = currentBtnX + speedIconWidth + 4;
         this.masterSpeedBox = new EditBox(this.font, speedBoxX, buttonY + 1, speedBoxWidth, 18, Component.translatable("config.safepaths.speedMultiplier"));
         this.masterSpeedBox.setMaxLength(5);
-        this.masterSpeedBox.setValue(String.format(Locale.ROOT, "%.2f", PathConfig.SPEED_MULTIPLIER.get()));
+        this.masterSpeedBox.setValue(speedText);
         this.masterSpeedBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.speedMultiplier.tooltip")));
         this.addRenderableWidget(this.masterSpeedBox);
 
@@ -167,13 +172,20 @@ public class CustomConversionsScreen extends Screen {
         try {
             String rawSpeed = this.masterSpeedBox.getValue().trim().replace(',', '.');
             double multiplier = Double.parseDouble(rawSpeed);
-            multiplier = Mth.clamp(multiplier, 0.0, 5.0);
-            PathConfig.SPEED_MULTIPLIER.set(multiplier);
+            if (Double.isFinite(multiplier)) {
+                multiplier = Mth.clamp(multiplier, 0.0, 5.0);
+                PathConfig.SPEED_MULTIPLIER.set(multiplier);
+            }
         } catch (NumberFormatException ignored) {
         }
 
         PathConfig.CUSTOM_CONVERSIONS.set(values);
         PathConfig.SPEC.save();
+        this.minecraft.setScreen(this.parentScreen);
+    }
+
+    @Override
+    public void onClose() {
         this.minecraft.setScreen(this.parentScreen);
     }
 

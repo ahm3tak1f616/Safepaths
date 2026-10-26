@@ -1,6 +1,7 @@
 package com.ahmetakif.safepaths;
 
 import com.ahmetakif.safepaths.config.PathConfig;
+import com.ahmetakif.safepaths.compat.MineColoniesProtection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -21,17 +22,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.TickEvent;
 
 import java.util.*;
 
@@ -58,9 +62,7 @@ public class PathCreationEvent {
         if (currentRaw == lastRawConversions) {
             return;
         }
-        lastRawConversions = currentRaw;
         Map<Block, Block> newMap = new LinkedHashMap<>();
-        Set<Block> newTargets = new HashSet<>();
         Set<Block> newSpeedOnly = new HashSet<>();
 
         if (currentRaw != null) {
@@ -84,23 +86,32 @@ public class PathCreationEvent {
                         && BuiltInRegistries.BLOCK.containsKey(targetId)) {
                     Block src = BuiltInRegistries.BLOCK.get(sourceId);
                     Block tgt = BuiltInRegistries.BLOCK.get(targetId);
-                    if (src != Blocks.AIR && tgt != Blocks.AIR) {
+                    if (!src.defaultBlockState().isAir() && isSafeRoadState(tgt.defaultBlockState())) {
                         if (src == tgt) {
                             if (!newMap.containsKey(src)) {
                                 newSpeedOnly.add(src);
                             }
                         } else {
                             newSpeedOnly.remove(src);
-                            newMap.put(src, tgt);
-                            newTargets.add(tgt);
+                            newMap.putIfAbsent(src, tgt);
                         }
                     }
                 }
             }
         }
         customConversionMap = Collections.unmodifiableMap(newMap);
-        customTargetBlocks = Collections.unmodifiableSet(newTargets);
+        customTargetBlocks = Set.copyOf(newMap.values());
         speedOnlyBlocks = Collections.unmodifiableSet(newSpeedOnly);
+        lastRawConversions = currentRaw;
+    }
+
+    private static boolean isSafeRoadState(BlockState state) {
+        return !state.isAir() && !state.liquid() && state.blocksMotion() && !state.hasBlockEntity();
+    }
+
+    private static boolean canRemainAt(ServerLevel level, BlockPos pos, BlockState state) {
+        return state.canSurvive(level, pos) && (!(state.getBlock() instanceof FallingBlock)
+                || !FallingBlock.isFree(level.getBlockState(pos.below())));
     }
 
     public static boolean isPathBlock(BlockState state) {
@@ -163,7 +174,7 @@ public class PathCreationEvent {
     }
 
     private static boolean isProtectedFromPathing(BlockState state) {
-        if (state.is(Blocks.FARMLAND) || isPathBlock(state) || state.is(CANNOT_BECOME_PATH)) {
+        if (state.hasBlockEntity() || state.is(Blocks.FARMLAND) || isPathBlock(state) || state.is(CANNOT_BECOME_PATH)) {
             return true;
         }
         ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock());
@@ -199,6 +210,13 @@ public class PathCreationEvent {
             return;
         }
 
+        double multiplier = PathConfig.SPEED_MULTIPLIER.get();
+        if (!PathConfig.ENABLE_SPEED_BOOST.get() || !Double.isFinite(multiplier) || multiplier <= 0.0) {
+            LAST_PATH_TICKS.remove(livingEntity);
+            attribute.removeModifier(SPEED_MODIFIER_UUID);
+            return;
+        }
+
         if (livingEntity.isInWaterOrBubble() || livingEntity.isInLava() || livingEntity.isFallFlying()
                 || (livingEntity instanceof Player player && (player.getAbilities().flying || player.isSpectator()))
                 || livingEntity.fallDistance >= 3.5F) {
@@ -214,7 +232,6 @@ public class PathCreationEvent {
         }
 
         boolean shouldBoost = false;
-        double multiplier = PathConfig.SPEED_MULTIPLIER.get();
         if (PathConfig.ENABLE_SPEED_BOOST.get() && multiplier > 0.0) {
             Long lastTick = LAST_PATH_TICKS.get(livingEntity);
             if (lastTick != null && currentTick - lastTick <= 15) {
@@ -243,7 +260,7 @@ public class PathCreationEvent {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        if (livingEntity.level().isClientSide()) {
+        if (livingEntity.level().isClientSide) {
             return;
         }
 
@@ -268,7 +285,8 @@ public class PathCreationEvent {
 
         syncSpeedBoost(livingEntity, level, stateBelow, currentTick);
 
-        if (!canCreatePath(livingEntity)) {
+        if (!canCreatePath(livingEntity) || !livingEntity.onGround()
+                || (livingEntity instanceof Player player && player.getAbilities().flying)) {
             return;
         }
 
@@ -276,8 +294,12 @@ public class PathCreationEvent {
 
         if (isPathBlock(stateBelow)) {
             PathMemorySavedData.PathData existingDecay = memory.getPath(posBelow);
-            if (existingDecay != null) {
+            if (existingDecay != null && !stateBelow.is(existingDecay.targetPathBlock)) {
+                memory.clearAt(posBelow);
+            } else if (existingDecay != null && currentTick - existingDecay.lastTime >= 20
+                    && canTrample(serverLevel, posBelow, livingEntity)) {
                 existingDecay.lastTime = currentTick;
+                recordCreator(serverLevel, posBelow, livingEntity, existingDecay);
                 memory.setDirty();
             }
         }
@@ -290,13 +312,22 @@ public class PathCreationEvent {
                 return;
             }
 
-            if (isPathable(stateBelow)) {
-                handleTrample(serverLevel, memory, posBelow, stateBelow, currentTick);
+            if (isPathable(stateBelow) && canTrample(serverLevel, posBelow, livingEntity)) {
+                handleTrample(serverLevel, memory, posBelow, stateBelow, currentTick, livingEntity);
             }
         }
     }
 
-    private static void handleTrample(ServerLevel level, PathMemorySavedData memory, BlockPos posBelow, BlockState stateBelow, long currentTick) {
+    private static boolean canTrample(ServerLevel level, BlockPos pos, LivingEntity actor) {
+        return !ModList.get().isLoaded("minecolonies") || MineColoniesProtection.canTrample(level, pos, actor);
+    }
+
+    private static void recordCreator(ServerLevel level, BlockPos pos, LivingEntity actor, PathMemorySavedData.PathData data) {
+        data.creatorId = actor instanceof Player ? actor.getUUID() : null;
+        data.colonyId = ModList.get().isLoaded("minecolonies") ? MineColoniesProtection.colonyId(level, pos) : 0;
+    }
+
+    private static void handleTrample(ServerLevel level, PathMemorySavedData memory, BlockPos posBelow, BlockState stateBelow, long currentTick, LivingEntity actor) {
         PathMemorySavedData.TrampleData progress = memory.getTrample(posBelow);
         int steps = 1;
         long firstTime = currentTick;
@@ -310,9 +341,11 @@ public class PathCreationEvent {
 
         if (steps >= PathConfig.REQUIRED_PASSES.get()) {
             BlockState pathState = determinePathState(stateBelow);
-            if (pathState != null) {
-                level.setBlockAndUpdate(posBelow, pathState);
-                memory.putPath(posBelow, new PathMemorySavedData.PathData(stateBelow, pathState.getBlock(), currentTick));
+            if (pathState != null && isSafeRoadState(pathState) && canRemainAt(level, posBelow, pathState)
+                    && level.setBlockAndUpdate(posBelow, pathState)) {
+                PathMemorySavedData.PathData path = new PathMemorySavedData.PathData(stateBelow, pathState.getBlock(), currentTick);
+                recordCreator(level, posBelow, actor, path);
+                memory.putPath(posBelow, path);
                 memory.removeTrample(posBelow);
             }
         } else {
@@ -339,11 +372,12 @@ public class PathCreationEvent {
         PathMemorySavedData memory = PathMemorySavedData.get(serverLevel);
         int constructionTime = PathConfig.CONSTRUCTION_TIME.get();
         int decayTime = PathConfig.DECAY_TIME.get();
+        updateConversionCache();
 
         memory.removeTrampleIf(entry -> currentTick - entry.getValue().firstTime > constructionTime);
 
         List<RevertEntry> toRevert = new ArrayList<>();
-        memory.removePathIf(entry -> {
+        memory.removeLoadedPathsIf(serverLevel, entry -> {
             BlockPos pos = entry.getKey();
             PathMemorySavedData.PathData data = entry.getValue();
 
@@ -352,14 +386,21 @@ public class PathCreationEvent {
             }
 
             BlockState currentState = serverLevel.getBlockState(pos);
-            if (!currentState.is(data.targetPathBlock) && !isPathBlock(currentState)) {
+            if (!currentState.is(data.targetPathBlock) || currentState.hasBlockEntity()
+                    || currentState.is(CANNOT_BECOME_PATH) || speedOnlyBlocks.contains(currentState.getBlock())) {
                 return true;
             }
 
             if (currentTick - data.lastTime > decayTime) {
+                if (ModList.get().isLoaded("minecolonies") && !MineColoniesProtection.canDecay(serverLevel, pos, data)) {
+                    return false;
+                }
                 BlockState restoreState = data.originalState;
                 if (restoreState == null || restoreState.isAir()) {
                     restoreState = Blocks.DIRT.defaultBlockState();
+                }
+                if (!canRemainAt(serverLevel, pos, restoreState)) {
+                    return false;
                 }
                 toRevert.add(new RevertEntry(pos, restoreState));
                 return true;
@@ -373,10 +414,22 @@ public class PathCreationEvent {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
             PathMemorySavedData.get(serverLevel).clearAt(event.getPos());
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+        if (event.getLevel() instanceof ServerLevel level) {
+            PathMemorySavedData memory = PathMemorySavedData.get(level);
+            if (event instanceof BlockEvent.EntityMultiPlaceEvent multiple) {
+                multiple.getReplacedBlockSnapshots().forEach(snapshot -> memory.clearAt(snapshot.getPos()));
+            } else {
+                memory.clearAt(event.getPos());
+            }
         }
     }
 
@@ -390,14 +443,26 @@ public class PathCreationEvent {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPiston(PistonEvent.Pre event) {
         LevelAccessor level = event.getLevel();
         if (level instanceof ServerLevel serverLevel) {
+            var resolver = event.getStructureHelper();
+            if (event.isCanceled() || resolver == null || !resolver.resolve()) {
+                return;
+            }
             PathMemorySavedData memory = PathMemorySavedData.get(serverLevel);
             BlockPos pos = event.getPos();
             memory.clearAt(pos);
             memory.clearAt(pos.relative(event.getDirection()));
+            var movement = event.getPistonMoveType().isExtend ? event.getDirection() : event.getDirection().getOpposite();
+            for (BlockPos moved : resolver.getToPush()) {
+                memory.clearAt(moved);
+                memory.clearAt(moved.relative(movement));
+            }
+            for (BlockPos destroyed : resolver.getToDestroy()) {
+                memory.clearAt(destroyed);
+            }
         }
     }
 

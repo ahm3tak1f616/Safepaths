@@ -22,6 +22,8 @@ public class SafePathsConfigScreen extends Screen {
     private Button speedBoostBtn;
     private EditBox speedMultiplierBox;
     private boolean speedBoostEnabled;
+    private double lastConfiguredSpeed;
+    private boolean lastConfiguredSpeedBoost;
 
     public SafePathsConfigScreen(Screen parentScreen) {
         super(Component.translatable("safepaths.configuration.title"));
@@ -30,6 +32,18 @@ public class SafePathsConfigScreen extends Screen {
 
     @Override
     protected void init() {
+        String passesText = this.requiredPassesBox == null ? String.valueOf(PathConfig.REQUIRED_PASSES.get()) : this.requiredPassesBox.getValue();
+        String constructionText = this.constructionTimeBox == null ? String.valueOf(PathConfig.CONSTRUCTION_TIME.get()) : this.constructionTimeBox.getValue();
+        String decayText = this.decayTimeBox == null ? String.valueOf(PathConfig.DECAY_TIME.get()) : this.decayTimeBox.getValue();
+        double configuredSpeed = PathConfig.SPEED_MULTIPLIER.get();
+        String speedText = this.speedMultiplierBox == null || Double.compare(this.lastConfiguredSpeed, configuredSpeed) != 0
+                ? String.format(Locale.ROOT, "%.2f", configuredSpeed) : this.speedMultiplierBox.getValue();
+        boolean configuredSpeedBoost = PathConfig.ENABLE_SPEED_BOOST.get();
+        if (this.speedBoostBtn == null || this.lastConfiguredSpeedBoost != configuredSpeedBoost) {
+            this.speedBoostEnabled = configuredSpeedBoost;
+        }
+        this.lastConfiguredSpeed = configuredSpeed;
+        this.lastConfiguredSpeedBoost = configuredSpeedBoost;
         int centerX = this.width / 2;
         int leftColX = centerX - 155;
         int rightColX = centerX + 5;
@@ -38,11 +52,10 @@ public class SafePathsConfigScreen extends Screen {
 
         this.requiredPassesBox = new EditBox(this.font, leftColX, 42, colWidth, boxHeight, Component.translatable("config.safepaths.requiredPasses"));
         this.requiredPassesBox.setMaxLength(6);
-        this.requiredPassesBox.setValue(String.valueOf(PathConfig.REQUIRED_PASSES.get()));
+        this.requiredPassesBox.setValue(passesText);
         this.requiredPassesBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.requiredPasses.tooltip")));
         this.addRenderableWidget(this.requiredPassesBox);
 
-        this.speedBoostEnabled = PathConfig.ENABLE_SPEED_BOOST.get();
         this.speedBoostBtn = Button.builder(getSpeedBoostButtonText(), b -> {
             this.speedBoostEnabled = !this.speedBoostEnabled;
             this.speedBoostBtn.setMessage(getSpeedBoostButtonText());
@@ -53,19 +66,19 @@ public class SafePathsConfigScreen extends Screen {
 
         this.constructionTimeBox = new EditBox(this.font, leftColX, 84, colWidth, boxHeight, Component.translatable("config.safepaths.constructionTime"));
         this.constructionTimeBox.setMaxLength(8);
-        this.constructionTimeBox.setValue(String.valueOf(PathConfig.CONSTRUCTION_TIME.get()));
+        this.constructionTimeBox.setValue(constructionText);
         this.constructionTimeBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.constructionTime.tooltip")));
         this.addRenderableWidget(this.constructionTimeBox);
 
         this.speedMultiplierBox = new EditBox(this.font, rightColX, 84, colWidth, boxHeight, Component.translatable("config.safepaths.speedMultiplier"));
         this.speedMultiplierBox.setMaxLength(6);
-        this.speedMultiplierBox.setValue(String.format(Locale.ROOT, "%.2f", PathConfig.SPEED_MULTIPLIER.get()));
+        this.speedMultiplierBox.setValue(speedText);
         this.speedMultiplierBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.speedMultiplier.tooltip")));
         this.addRenderableWidget(this.speedMultiplierBox);
 
         this.decayTimeBox = new EditBox(this.font, leftColX, 126, colWidth, boxHeight, Component.translatable("config.safepaths.decayTime"));
         this.decayTimeBox.setMaxLength(8);
-        this.decayTimeBox.setValue(String.valueOf(PathConfig.DECAY_TIME.get()));
+        this.decayTimeBox.setValue(decayText);
         this.decayTimeBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.decayTime.tooltip")));
         this.addRenderableWidget(this.decayTimeBox);
 
@@ -129,11 +142,18 @@ public class SafePathsConfigScreen extends Screen {
         try {
             String rawSpeed = this.speedMultiplierBox.getValue().trim().replace(',', '.');
             double multiplier = Double.parseDouble(rawSpeed);
-            multiplier = Mth.clamp(multiplier, 0.0, 5.0);
-            PathConfig.SPEED_MULTIPLIER.set(multiplier);
+            if (Double.isFinite(multiplier)) {
+                multiplier = Mth.clamp(multiplier, 0.0, 5.0);
+                PathConfig.SPEED_MULTIPLIER.set(multiplier);
+            }
         } catch (NumberFormatException ignored) {}
 
         PathConfig.SPEC.save();
+        this.minecraft.setScreen(this.parentScreen);
+    }
+
+    @Override
+    public void onClose() {
         this.minecraft.setScreen(this.parentScreen);
     }
 

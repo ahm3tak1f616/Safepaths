@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "サーバー設定はサーバー管理者が管理します。サーバー上の config/safepaths-common.toml を編集してください。ローカル設定ではこのサーバーを変更できません。",
   "fml.menu.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
   "neoforge.screen.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
   "modmenu.descriptionTranslation.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",

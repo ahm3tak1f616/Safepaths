@@ -28,9 +28,9 @@
 | 🔘 **Master Speed Switch & Multiplier** | Toggle path speed and adjust its global multiplier directly inside the in-game conversion menu. |
 | 🎨 **Visual Palette GUI** | In-game visual editor with live search, animated block selection, and smart filters. |
 | ⏳ **Smart Decay** | Inactive paths gradually revert to their original block; active paths refresh on traffic. |
-| 🛡️ **Colony Safe** | Farmland, claimed colonies, and protected structures remain untouched. |
+| 🛡️ **Colony Protection** | Protects farmland, block entities, and colony blocks; checks MineColonies permissions before changing claimed ground. |
 | 🏛️ **MineColonies Support** | Citizens form paths during daily work routines and benefit from speed boosts. |
-| 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*. Fully compatible with *Terralith* & *Geophilic*. |
+| 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*, plus the supported vanilla terrain blocks used by *Terralith* and *Geophilic*. |
 | 🌐 **9 Languages** | English, German, Spanish, French, Japanese, Russian, Chinese, Turkish, Portuguese. |
 
 ---
@@ -39,12 +39,14 @@
 
 Access in-game via **Mods ➔ Safepaths ➔ Config**, or edit `config/safepaths-common.toml`:
 
+On a dedicated multiplayer server, the server owner edits this file on the server. The client config screen explains this instead of applying local changes that cannot affect the server.
+
 ```toml
 [Path Settings]
 # Steps required to compress ground into a path
 requiredPasses = 20
 
-# Time window (in ticks) to perform steps before progress resets
+# Fixed time window (in ticks) starting with the first step before progress resets
 constructionTime = 24000
 
 # Ticks until an unused path reverts (72,000 = 3 days)
@@ -73,6 +75,14 @@ customConversions = [
     "regions_unexplored:chalk_dirt -> regions_unexplored:chalk_dirt_path"
 ]
 ```
+
+Air variants, liquids, non-solid blocks, and block entities cannot be conversion targets. Existing block entities are protected from trampling. Conversions and decay wait when their result would fall away or cannot survive at the position, including roads directly above water. Original block-state properties survive world saves; unsupported falling terrain restores only after support returns. MineColonies decay also rechecks the recorded creator's permissions or colony ownership.
+
+When several explicit conversions use the same source, the first one wins. An explicit conversion overrides a self-mapping rule regardless of order. Self-mapping an already tracked road clears its old decay record without changing the road. Fresh shovel-made paths are not automatically tracked for decay.
+
+### Development checks
+
+Use Java 17. Run `gradlew.bat build runGameTestServer --console=plain` on Windows, or `./gradlew build runGameTestServer --console=plain` elsewhere. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime and its dependencies. CI and publishing require both test configurations to pass.
 
 ---
 

@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "服务器设置由服务器所有者管理。请编辑服务器上的 config/safepaths-common.toml；本地设置无法更改此服务器。",
   "fml.menu.mods.info.description.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",
   "neoforge.screen.mods.info.description.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",
   "modmenu.descriptionTranslation.safepaths": "Safepaths模组允许玩家（以及殖民者、访客等友好NPC）通过在相同方块上重复行走，自然地践踏出泥土小径。",

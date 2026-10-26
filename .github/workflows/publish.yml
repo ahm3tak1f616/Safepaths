@@ -21,7 +21,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build runGameTestServer --console=plain
+
+      - name: Test without MineColonies
+        run: ./gradlew runGameTestServer -PwithoutMineColonies --console=plain
 
       - name: Read Properties
         id: read_properties
