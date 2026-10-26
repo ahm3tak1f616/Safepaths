@@ -11,6 +11,8 @@ Safepaths includes a comprehensive, interactive in-game visual editor that allow
 3. Click **Config** (or open via Mod Menu / NeoForge Config).
 4. Under the **Path Settings** screen, click **Configure Custom Conversions...** to launch the visual palette editor.
 
+While connected to a dedicated server, the config screen instead explains that the server owner must edit `config/safepaths-common.toml` on the server. The editor does not provide remote server configuration.
+
 ---
 
 ## 🎛️ GUI Layout Overview
@@ -67,6 +69,7 @@ The GUI is divided into two primary working areas:
 Safepaths 2.0.1 introduces universal decimal number support for the master speed multiplier input:
 - Accepts both standard period (`0.25`) and European comma (`0,25`) decimal separators.
 - Seamlessly validates inputs across all international keyboards and OS locale settings without crashing or resetting to 0.
+- Unsaved speed and search text survive resizing and returning from the defaults confirmation. Non-finite speed values such as `NaN` are ignored.
 
 ---
 
@@ -75,3 +78,5 @@ Safepaths 2.0.1 introduces universal decimal number support for the master speed
 If multiple rules are entered for the same source block, Safepaths applies deterministic conflict resolution:
 - **Explicit Transformations Override Self-Mapping**: An explicit change (such as `A -> B`) always takes precedence over a self-mapping rule (`A -> A`).
 - **First Declared Priority**: When multiple distinct target transformations exist for the same source block, the first declared rule in the list takes precedence.
+
+Only the winning targets grant road speed. Invalid or unsafe conversion targets do not become active road rules. Air variants, liquids, non-solid blocks, and block entities cannot be targets, and world placement still requires a surviving, supported result.

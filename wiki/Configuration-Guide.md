@@ -1,7 +1,9 @@
 # 📝 Configuration Reference Guide
 
-Safepaths is fully customizable via its server and client configuration file located at:
+Safepaths uses the common configuration file located at:
 `config/safepaths-common.toml`
+
+On dedicated servers, this is the server's file. Client settings do not configure a remote server, and the in-game editor is unavailable while connected to one. Singleplayer and title-screen editing use the local file.
 
 This guide explains all configuration options, valid numerical ranges, conversion syntax, and ready-to-use tuning presets.
 
@@ -58,7 +60,7 @@ This guide explains all configuration options, valid numerical ranges, conversio
 - **Type**: Integer
 - **Default**: `24000` (1 full Minecraft day)
 - **Range**: `1000` to `72000` ticks
-- **Description**: The rolling time window during which footsteps are accumulated. If a block receives fewer than `requiredPasses` footsteps within this time window and is subsequently left abandoned, the accumulated step counter expires and resets to 0.
+- **Description**: A fixed window measured from the first counted footstep. The required passes must occur within this window; later footsteps do not extend it. Expired progress is discarded, and the next footstep starts a new window.
 
 ### `requiredPasses`
 - **Type**: Integer
@@ -87,6 +89,8 @@ This guide explains all configuration options, valid numerical ranges, conversio
 - **Type**: List of Strings
 - **Format**: `"namespace:source_block -> namespace:target_block"`
 - **Description**: Mapping rules that dictate what each block transforms into when trampled. Mapping a block to itself (`"block -> block"`) marks it as a permanent speed roadway that grants speed bonuses without converting or decaying.
+
+The first explicit transformation for each source takes priority. Explicit transformations override self-mapping, regardless of order. Air variants, liquids, non-solid blocks, and block entities are not valid targets. Existing block entities are protected from trampling. Conversions leave terrain unchanged when their target cannot survive or would fall away.
 
 ---
 

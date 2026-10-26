@@ -29,9 +29,9 @@
 | 🔘 **Master Speed Switch & Multiplier** | Toggle path speed and adjust its global multiplier directly inside the in-game conversion menu. |
 | 🎨 **Visual Palette GUI** | In-game visual editor with live search, animated block selection, and smart filters. |
 | ⏳ **Smart Decay** | Inactive paths gradually revert to their original block; active paths refresh on traffic. |
-| 🛡️ **Colony Safe** | Farmland, claimed colonies, and protected structures remain untouched. |
+| 🛡️ **Colony Protection** | Protects farmland, block entities, and colony blocks; checks MineColonies permissions before changing claimed ground. |
 | 🏛️ **MineColonies Support** | Citizens form paths during daily work routines and benefit from speed boosts. |
-| 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*. Fully compatible with *Terralith* & *Geophilic*. |
+| 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*, plus the supported vanilla terrain blocks used by *Terralith* and *Geophilic*. |
 | 🌐 **9 Languages** | English, German, Spanish, French, Japanese, Russian, Chinese, Turkish, Portuguese. |
 
 ---
@@ -49,13 +49,15 @@ Comprehensive documentation is hosted on the **[Safepaths GitHub Wiki](https://g
 | 📝 **[Configuration Reference](wiki/Configuration-Guide.md)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide)) | Full property definitions for `safepaths-common.toml`, tick conversions, and tuning presets. |
 | 🏷️ **[Block & Entity Tags](wiki/Block-and-Entity-Tags.md)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Block-and-Entity-Tags)) | Datapack tags for pathable blocks, protected areas, and NPC path creator entities. |
 | 🌐 **[Compatibility & Integrations](wiki/Compatibility-and-Integrations.md)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Compatibility-and-Integrations)) | Integration with MineColonies, biomes mods (*BWG*, *BOP*, *RU*), *Terralith*, and *Geophilic*. |
-| ❓ **[FAQ & Troubleshooting](wiki/FAQ-and-Troubleshooting.md)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/FAQ-and-Troubleshooting)) | Server tick benchmarks, zero chunk loading, common questions, bug reports. |
+| ❓ **[FAQ & Troubleshooting](wiki/FAQ-and-Troubleshooting.md)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/FAQ-and-Troubleshooting)) | Performance considerations, chunk loading behavior, common questions, bug reports. |
 
 ---
 
 ### ⚙️ Configuration
 
 Access in-game via **Mods ➔ Safepaths ➔ Config**, or edit `config/safepaths-common.toml`:
+
+On a dedicated multiplayer server, the server owner edits this file on the server. The client config screen explains this instead of applying local changes that cannot affect the server.
 
 ```toml
 [Path Settings]
@@ -93,6 +95,12 @@ customConversions = [
 ```
 
 *For more details on tuning and preset examples, see the [Configuration Guide](wiki/Configuration-Guide.md).*
+
+Air variants, liquids, non-solid blocks, and block entities cannot be conversion targets. Existing block entities are protected from trampling. Conversions and decay wait when their result would fall away or cannot survive at the position, including roads directly above water.
+
+### Development checks
+
+Run `gradlew.bat build runGameTestServer --console=plain` on Windows, or `./gradlew build runGameTestServer --console=plain` elsewhere. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime and its dependencies. CI and publishing run the GameTests before accepting a build.
 
 ---
 

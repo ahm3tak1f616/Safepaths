@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "Die Servereinstellungen werden vom Serverbetreiber verwaltet. Bearbeite config/safepaths-common.toml auf dem Server; lokale Einstellungen ändern diesen Server nicht.",
   "fml.menu.mods.info.description.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",
   "neoforge.screen.mods.info.description.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",
   "modmenu.descriptionTranslation.safepaths": "Die Safepaths-Mod ermöglicht es Spielern (und freundlichen NPCs wie Kolonisten und Besuchern), auf natürliche Weise Trampelpfade zu erstellen, indem sie einfach wiederholt über dieselben Blöcke laufen.",

@@ -25,4 +25,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.4.0
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build runGameTestServer --console=plain
+
+      - name: Test without MineColonies
+        run: ./gradlew runGameTestServer -PwithoutMineColonies --console=plain

@@ -28,10 +28,10 @@ Explore the wiki by topic using the sections below or through the sidebar:
 - 🚶 **Organic Desire Paths**: No shovel grinding required; simply walk along natural routes and watch realistic pathways emerge over time.
 - ⚡ **Speed-Only Roadways (Self-Mapping)**: Map blocks to themselves (such as `minecraft:gravel -> minecraft:gravel` or `minecraft:stone_bricks -> minecraft:stone_bricks`) to give speed bonuses on constructed roads without block alteration or decay tracking.
 - 🎨 **Visual Palette Editor**: A built-in graphical conversion editor equipped with real-time block search, item icons, and one-click configuration.
-- 🛡️ **Colony & Farmland Safe**: Farmland, crop plots, and MineColonies colonies/structures are completely immune to destructive pathing.
+- 🛡️ **Terrain Protection**: Farmland, block entities, and colony blocks are protected. Claim changes require MineColonies permissions or authorized civilian ownership.
 - 🏛️ **MineColonies Native**: Colonists, visitors, and mercenaries carve out realistic daily commute routes and enjoy speed boosts while barbarians and hostiles are strictly blocked.
 - 🌍 **Vast Biome Mod Support**: Pre-configured defaults for vanilla soils, *Oh The Biomes We've Gone*, *Biomes O' Plenty*, and *Regions Unexplored*, plus native support for *Terralith* and *Geophilic*.
-- 💾 **Safe & Lightweight World Storage**: Dimension-aware persistent storage using vanilla `SavedData` with zero chunk loading and zero tick lag.
+- 💾 **Persistent World Storage**: Dimension-aware `SavedData` preserves original block states and creator context. Chunk-indexed maintenance skips unloaded positions without force-loading terrain; server cost still depends on tracked terrain and entity counts.
 - 🌐 **9 Included Languages**: Fully localized in English, German, Spanish, French, Japanese, Russian, Chinese, Turkish, and Brazilian Portuguese.
 
 ---

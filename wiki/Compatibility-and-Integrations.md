@@ -20,6 +20,9 @@ In MineColonies, citizens perform daily routines: lumberjacks commute to forests
 Colonies are heavily protected from griefing or unwanted alterations:
 - **Farmland Immunity**: Farmland plots inside and outside colonies cannot be turned into paths.
 - **Colony Block Immunity**: Any block belonging to the `minecolonies` namespace (including town halls, builder huts, barracks, and colony structures) is strictly protected.
+- **Claim Permissions**: Players need both break and place permissions to form paths on claimed ground. Civilian creators may form paths only in their own colony; other tagged mobs cannot modify a claim.
+- **Decay Permissions**: Saved player permissions or civilian colony ownership are rechecked before decay. Newly claimed land and revoked permissions can therefore pause restoration. Legacy claim records without creator context wait for authorized traffic.
+- **Block Entities**: Inventories, machines, and other blocks with block-entity data cannot be trampled.
 - **Barbarian Blacklist**: Raider factions (`minecolonies:barbarian`, `minecolonies:archerbarbarian`, `minecolonies:chiefbarbarian`) are strictly barred from creating paths.
 
 ### 3. Worker Productivity
@@ -57,7 +60,7 @@ Safepaths includes pre-configured conversion defaults for major Minecraft biome 
 
 ## 🗺️ Vanilla-Block Terrain Overhauls
 
-Mods that generate custom landscapes using standard Minecraft blocks are **100% compatible out of the box** with no configuration required:
+Mods that generate landscapes using the supported vanilla ground blocks need no additional conversion rules:
 - **Terralith** (Starmute)
 - **Geophilic**
 - **Tectonic**
@@ -70,5 +73,5 @@ All grass types, sands, gravel slopes, and mud flats in these worldgens naturall
 ## 🪓 Shovel Pathing Heuristic (Third-Party Mods)
 
 For any mod not explicitly covered in the default list:
-1. Safepaths queries vanilla Minecraft's `ShovelItem.getShovelPathingState(state)`. If a modded soil defines a path state for shovels, Safepaths adopts that exact path block automatically!
-2. If shovel logic is absent, Safepaths analyzes registry identifiers for keywords (`grass`, `dirt`, `soil`, `sand`, `gravel`) and safely converts them to `minecraft:dirt_path`.
+1. Safepaths queries vanilla Minecraft's `ShovelItem.getShovelPathingState(state)`, which reads the shovel flattening table. A modded block implementing only tool-action hooks is not automatically discovered by this lookup; add an explicit conversion for it.
+2. For eligible pathable blocks without an explicit or shovel-table conversion, registry identifiers containing `grass`, `dirt`, `soil`, `sand`, or `gravel` fall back to `minecraft:dirt_path`. Safety and claim checks still apply.

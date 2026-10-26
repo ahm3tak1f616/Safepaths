@@ -9,7 +9,7 @@ This guide covers everything you need to install, configure, and play with **Saf
 | Requirement | Supported Version | Notes |
 | :--- | :--- | :--- |
 | **Minecraft** | `1.21.1` | Target game release |
-| **Mod Loader** | **NeoForge** `21.1.235+` | Required loader (FML major version 1+) |
+| **Mod Loader** | **NeoForge** `21.1.235+` | Required mod loader |
 | **Java** | `Java 21` (64-bit) | Standard for Minecraft 1.20.5+ |
 | **Optional Mods** | [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies)<br>[Biomes O' Plenty](https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty)<br>[Oh The Biomes We've Gone](https://www.curseforge.com/minecraft/mc-mods/oh-the-biomes-weve-gone)<br>[Regions Unexplored](https://www.curseforge.com/minecraft/mc-mods/regions-unexplored) | Enhanced features and default conversions |
 
@@ -41,7 +41,7 @@ To install on a dedicated server:
 3. Start the server. The configuration file will automatically generate at `config/safepaths-common.toml`.
 
 > [!NOTE]
-> For the best experience on multiplayer servers, install Safepaths on **both** the server and connected clients so players can access the in-game visual configuration menu and receive full client-side synchronization.
+> Install Safepaths on both the server and connected clients. The server owns path creation, decay, and speed settings. The client config screen does not edit or synchronize a remote server's common configuration; the server owner manages the server's file.
 
 ---
 

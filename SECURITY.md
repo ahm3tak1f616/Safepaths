@@ -6,9 +6,8 @@ Only the latest release targeting Minecraft 1.21.1 on NeoForge receives active u
 
 | Mod Version | Minecraft Version | Supported          |
 | ----------- | ----------------- | ------------------ |
-| 1.2.x       | 1.21.1            | :white_check_mark: |
-| 1.1.x       | 1.21.1            | :x:                |
-| 1.0.x       | 1.21.1            | :x:                |
+| 2.0.1       | 1.21.1            | :white_check_mark: |
+| 2.0.0 and older | 1.21.1        | :x:                |
 
 ## Reporting a Vulnerability
 

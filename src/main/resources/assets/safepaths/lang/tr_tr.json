@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "Sunucu ayarlarını sunucu sahibi yönetir. Sunucudaki config/safepaths-common.toml dosyasını düzenleyin; yerel ayarlar bu sunucuyu yapılandıramaz.",
   "fml.menu.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
   "neoforge.screen.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
   "modmenu.descriptionTranslation.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",

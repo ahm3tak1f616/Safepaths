@@ -8,6 +8,8 @@ Safepaths creates an organic and realistic pathing experience by modeling foot t
 
 Whenever a valid path creator (a player or designated NPC) moves across terrain, Safepaths monitors the block directly supporting them.
 
+Footsteps require ground contact. Creative flight does not create paths, and jumping in place does not add construction progress. On MineColonies claims, players need both break and place permissions; civilians must belong to the colony that owns the ground.
+
 ```mermaid
 flowchart TD
     A[Entity Moves to New Block] --> B{Is Entity Path Creator?}
@@ -55,10 +57,12 @@ When a block reaches `requiredPasses`, Safepaths determines which path block it 
 
 1. **Speed-Only Roadway Check**: If the block is registered as a self-mapped roadway (`A -> A`), it returns `null`—it is **never** transformed into a dirt path.
 2. **Explicit Custom Conversions**: Custom mappings defined in `customConversions` or via the in-game GUI (e.g. `minecraft:sand -> minecraft:dirt_path` or modded soil mappings).
-3. **Vanilla Shovel Pathing State**: Queries vanilla item logic (`ShovelItem.getShovelPathingState(state)`). This automatically supports any third-party mod block that hooks into vanilla shovel flattening behavior.
+3. **Vanilla Shovel Pathing State**: Queries the vanilla shovel flattening table (`ShovelItem.getShovelPathingState(state)`). Modded blocks that only implement tool-action hooks need an explicit conversion or an applicable fallback.
 4. **Keyword Heuristic Fallback**: Inspects block registry IDs for keywords: `grass`, `dirt`, `soil`, `sand`, or `gravel`. Matching blocks convert into standard `minecraft:dirt_path`.
 
-When converted, the block state is updated via `level.setBlockAndUpdate(pos, pathState)`, the trample counter is purged, and a permanent path memory record is created.
+After a successful block replacement, the trample counter is purged and a persistent path memory record is created. This record remains until decay or a world modification invalidates it.
+
+Air variants, liquids, non-solid blocks, and block entities are rejected as targets. Blocks with block entities are never trampled. The target must survive at the position, and falling blocks need support; unsafe conversions leave the original ground in place. The first explicit rule for a source wins, and only winning targets are recognized as roads.
 
 ---
 
@@ -71,15 +75,20 @@ When a path is created, Safepaths records:
 - The exact **original block state** (e.g. Grass Block, Podzol, Mycelium, Modded Peat Grass).
 - The **target path block**.
 - The timestamp of the last footstep (`lastTime`).
+- The player creator UUID or the owning colony for civilian-created paths, used to recheck permission before decay.
+
+Original block properties, such as stair facing and waterlogging, survive save/load. Legacy saves that only contain a block ID remain readable, but properties already lost by an older version cannot be recovered.
 
 ### Continuous Traffic Refreshing
-Whenever a player or path creator walks over an existing path block, its `lastTime` timestamp is refreshed to the current game tick. As long as a path is actively used, **it will never decay**.
+Grounded, authorized traffic refreshes the supporting path block's timestamp, at most once every 20 ticks. Refreshing one block does not refresh an entire road or every block overlapped by the entity's footprint.
 
 ### Reversion Logic
 - **Config Option**: `decayTime` (Default: `72000` ticks = 3 in-game Minecraft days).
 - Every 20 ticks (1 second), the server inspects path records.
 - If `(currentTick - data.lastTime) > decayTime`, the path block reverts to its saved `originalState`.
 - If the original state was somehow lost or corrupted, Safepaths safely falls back to `minecraft:dirt` to prevent voids or broken blocks.
+- If restoration would leave falling terrain unsupported or the original state cannot survive, the path and its memory remain until restoration becomes safe. This includes sand and gravel roads directly over water.
+- Replacing a path with a different block invalidates its old record. Decay also rechecks MineColonies ownership and creator permissions before altering claimed ground. Legacy claim records without creator context wait until authorized traffic records a creator.
 
 ---
 
@@ -93,11 +102,14 @@ Safepaths respects server performance:
 - If a chunk containing an old path is currently **unloaded**, Safepaths **does not force-load the chunk**.
 - The record remains safely preserved in world memory until a player returns and loads the chunk, at which point the decay check resumes and restores the block cleanly.
 
+Path positions are indexed by chunk. Maintenance checks chunk availability before visiting its individual records; it does not inspect every unloaded position. Stored records still consume memory, so this is not a guarantee of zero server cost.
+
 ### World Interaction Safety
 To prevent phantom paths or duplicate blocks when players manually modify the world:
 - **Block Break**: Breaking a path or trample block immediately removes it from Safepaths memory.
 - **Explosions**: TNT and Creeper explosions automatically clear path data for all affected blocks.
-- **Pistons**: Pushing or pulling blocks with pistons purges tracking at both source and target positions.
+- **Placement**: Player block placement clears tracking for replaced positions, including multi-block placements.
+- **Pistons**: Pushing or pulling blocks clears tracking for the complete resolved movement chain, its destinations, and destroyed blocks.
 
 ---
 
@@ -108,6 +120,7 @@ Safepaths is engineered to protect valuable builds, farms, and colonies:
 | Protected Element | Safeguard Mechanism |
 | :--- | :--- |
 | **Farmland & Crops** | `minecraft:farmland` and any block containing `farmland` in its ID are completely immune. |
-| **MineColonies Claims** | Blocks belonging to the `minecolonies` namespace cannot be modified by pathing. |
+| **MineColonies Claims** | Player traffic requires break/place permissions. Civilian traffic is restricted to its own colony, and decay rechecks saved creator permissions or colony ownership. |
+| **Block Entities & Colony Blocks** | Containers, machines, and other block entities cannot be trampled. Blocks in the `minecolonies` namespace remain protected. |
 | **Hostile Mobs & Barbarians** | Barbarians, archer barbarians, chief barbarians, and mobs tagged in `#safepaths:path_blocked` cannot create paths. |
 | **Custom Protected Blocks** | Any block tagged under `#safepaths:cannot_become_path` via datapacks is fully protected. |

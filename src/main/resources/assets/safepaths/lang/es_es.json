@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "El propietario administra la configuración del servidor. Edita config/safepaths-common.toml en el servidor; los ajustes locales no configuran este servidor.",
   "fml.menu.mods.info.description.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
   "neoforge.screen.mods.info.description.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",
   "modmenu.descriptionTranslation.safepaths": "El mod Safepaths permite a los jugadores (y a los PNJ amistosos como colonos y visitantes) crear caminos de tierra de forma natural simplemente caminando sobre los mismos bloques repetidamente.",

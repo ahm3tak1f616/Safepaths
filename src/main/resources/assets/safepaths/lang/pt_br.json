@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "As configurações do servidor são gerenciadas pelo proprietário. Edite config/safepaths-common.toml no servidor; as configurações locais não alteram este servidor.",
   "fml.menu.mods.info.description.safepaths": "O mod Safepaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem naturalmente caminhos de terra simplesmente caminhando repetidamente sobre os mesmos blocos.",
   "neoforge.screen.mods.info.description.safepaths": "O mod Safepaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem naturalmente caminhos de terra simplesmente caminhando repetidamente sobre os mesmos blocos.",
   "modmenu.descriptionTranslation.safepaths": "O mod Safepaths permite que jogadores (e NPCs amigáveis, como colonos e visitantes) criem naturalmente caminhos de terra simplesmente caminhando repetidamente sobre os mesmos blocos.",

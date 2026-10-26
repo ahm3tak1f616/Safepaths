@@ -35,7 +35,9 @@ Safepaths is built with full Minecraft datapack support. Modpack creators, serve
   2. Refreshes the decay timer so active paths do not revert.
 - **Default Values**:
   - `minecraft:dirt_path`
-- *Note*: Any block ending in `_path` (e.g., modded dirt paths) and any block registered in `customConversions` is automatically recognized as a path block in code.
+- *Note*: Blocks ending in `_path`, winning conversion targets, and valid self-mapped road blocks are also recognized as paths. Source-only rules and targets discarded by duplicate resolution do not grant road speed.
+
+Block entities, farmland, and MineColonies blocks remain protected from trampling regardless of pathable tags. Tags do not bypass claim permissions, target safety checks, or required ground contact.
 
 ---
 

@@ -121,11 +121,13 @@ dependencies {
     compileOnly "curse.maven:blockui-${blockui_project_id}:${blockui_file_id}"
     compileOnly "curse.maven:domum-ornamentum-${domum_ornamentum_project_id}:${domum_ornamentum_file_id}"
 
-    localRuntime "curse.maven:minecolonies-${minecolonies_project_id}:${minecolonies_file_id}"
-    localRuntime "curse.maven:structurize-${structurize_project_id}:${structurize_file_id}"
-    localRuntime "curse.maven:multi-piston-${multipiston_project_id}:${multipiston_file_id}"
-    localRuntime "curse.maven:blockui-${blockui_project_id}:${blockui_file_id}"
-    localRuntime "curse.maven:domum-ornamentum-${domum_ornamentum_project_id}:${domum_ornamentum_file_id}"
+    if (!providers.gradleProperty('withoutMineColonies').isPresent()) {
+        localRuntime "curse.maven:minecolonies-${minecolonies_project_id}:${minecolonies_file_id}"
+        localRuntime "curse.maven:structurize-${structurize_project_id}:${structurize_file_id}"
+        localRuntime "curse.maven:multi-piston-${multipiston_project_id}:${multipiston_file_id}"
+        localRuntime "curse.maven:blockui-${blockui_project_id}:${blockui_file_id}"
+        localRuntime "curse.maven:domum-ornamentum-${domum_ornamentum_project_id}:${domum_ornamentum_file_id}"
+    }
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

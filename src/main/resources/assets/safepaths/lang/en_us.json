@@ -1,4 +1,5 @@
 {
+  "safepaths.gui.server_config": "Server settings are managed by the server owner. Edit config/safepaths-common.toml on the server; local settings cannot configure this server.",
   "fml.menu.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
   "neoforge.screen.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
   "modmenu.descriptionTranslation.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",

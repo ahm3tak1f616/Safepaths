@@ -11,7 +11,7 @@ When standing or walking on a recognized path, Safepaths applies a movement spee
 - **Modifier ID**: `safepaths:path_speed`
 - **Attribute**: `Attributes.MOVEMENT_SPEED`
 - **Operation**: `AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL`
-- **Transient**: The modifier is registered as transient, ensuring it is never serialized into player NBT or saved to disk. When disconnecting or restarting, there is zero save clutter or speed-stuck glitching.
+- **Transient**: The modifier is not serialized into player NBT, so a saved player does not retain this boost after a restart. Normal path checks reapply it when appropriate.
 
 ### Configuration Controls
 - **`enableSpeedBoost`** *(boolean, default: `true`)*: Master toggle for path speed boosts.
@@ -63,7 +63,7 @@ Introduced in Safepaths 2.0, **Self-Mapping** is a game-changing feature for bui
 ### The Concept
 What if you want built roads—like cobblestone streets, gravel highways, or stone brick plazas—to grant the path speed boost, without ever being trampled into dirt paths or decaying back into raw soil?
 
-By mapping a block to **itself** in the conversion list:
+By mapping an eligible road block to **itself** in the conversion list:
 ```toml
 "minecraft:gravel -> minecraft:gravel"
 "minecraft:stone_bricks -> minecraft:stone_bricks"
@@ -75,6 +75,8 @@ By mapping a block to **itself** in the conversion list:
 2. 🛡️ **Zero Trample Alteration**: The block will **never** convert into a dirt path or undergo transformation.
 3. 🧹 **Zero Memory Overhead**: Self-mapped blocks do not store trample counters or decay timestamps, keeping world save files clean and fast.
 4. 🧱 **Built-in Default**: As of version 2.0.0, `minecraft:gravel -> minecraft:gravel` is enabled by default so gravel roads function as authentic speed highways!
+
+If a newly self-mapped road already has a decay record from an older conversion, maintenance discards that record while leaving the road intact. Self-mapping does not make air, liquids, non-solid blocks, or block entities eligible conversion targets.
 
 ### How to Add Speed Roads
 You can define self-mapped roads in two ways:
