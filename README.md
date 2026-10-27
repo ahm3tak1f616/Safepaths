@@ -6,9 +6,11 @@
 
 <p align="center">
   <a href="https://www.patreon.com/ahmetakif616"><img src="https://img.shields.io/badge/Patreon-Support_Me-FF424D?style=flat-square&logo=patreon&logoColor=white" alt="Patreon"></a>
-  <a href="https://www.minecraft.net/"><img src="https://img.shields.io/badge/Minecraft-1.20.1-228B22?style=flat-square&logo=minecraft&logoColor=white" alt="Minecraft"></a>
+  <a href="https://www.minecraft.net/"><img src="https://img.shields.io/badge/Minecraft-1.21.1%20%7C%201.20.1-228B22?style=flat-square&logo=minecraft&logoColor=white" alt="Minecraft"></a>
+  <a href="https://neoforged.net/"><img src="https://img.shields.io/badge/NeoForge-21.1.235+-E06622?style=flat-square" alt="NeoForge"></a>
   <a href="https://files.minecraftforge.net/"><img src="https://img.shields.io/badge/Forge-47.3.0+-E06622?style=flat-square" alt="Forge"></a>
-  <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-2.0.1-097979?style=flat-square" alt="Version"></a>
+  <a href="https://github.com/ahm3tak1f616/Safepaths/wiki"><img src="https://img.shields.io/badge/Wiki-Documentation-097979?style=flat-square&logo=github&logoColor=white" alt="Wiki"></a>
+  <a href="https://github.com/ahm3tak1f616/Safepaths/releases"><img src="https://img.shields.io/badge/Version-2.0.2-097979?style=flat-square" alt="Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-All_Rights_Reserved-555555?style=flat-square" alt="License"></a>
 </p>
 
@@ -16,6 +18,15 @@
   <b>Natural, immersive path generation for your Minecraft world.</b><br>
   Repeatedly walk over ground blocks to trample them into paths with custom speed boosts.
 </p>
+
+### Supported editions
+
+| Minecraft | Loader | Java | Release file |
+| :--- | :--- | :--- | :--- |
+| 1.21.1 | NeoForge 21.1.235+ | 21 | `safepaths-2.0.2-1.21.1-neoforge.jar` |
+| 1.20.1 | Forge 47.3.0+ | 17 | `safepaths-2.0.2-1.20.1-forge.jar` |
+
+**2.0.2 — Road Safety & Stability** prevents holes caused by restoring unsupported falling terrain, including paths directly over water. It does not reconstruct blocks already missing.
 
 ---
 
@@ -32,6 +43,23 @@
 | 🏛️ **MineColonies Support** | Citizens form paths during daily work routines and benefit from speed boosts. |
 | 🌍 **Mod Compatibility** | Built-in defaults for vanilla soils, *BWG*, *BOP*, and *Regions Unexplored*, plus the supported vanilla terrain blocks used by *Terralith* and *Geophilic*. |
 | 🌐 **9 Languages** | English, German, Spanish, French, Japanese, Russian, Chinese, Turkish, Portuguese. |
+
+---
+
+### 📖 Documentation & Wiki
+
+Comprehensive documentation is hosted on the **[Safepaths GitHub Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki)** and maintained in the [`wiki/`](https://github.com/ahm3tak1f616/Safepaths/tree/main/wiki) directory on `main` for both editions:
+
+| Guide | Description |
+| :--- | :--- |
+| 🚀 **[Getting Started](https://github.com/ahm3tak1f616/Safepaths/wiki/Getting-Started)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Getting-Started)) | Prerequisites, singleplayer & dedicated server installation, first steps. |
+| ⚙️ **[Core Mechanics](https://github.com/ahm3tak1f616/Safepaths/wiki/Core-Mechanics)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Core-Mechanics)) | Step tracking (`getOnPos`), construction time windows, decay restoration, chunk persistence. |
+| ⚡ **[Speed Boosts & Roadways](https://github.com/ahm3tak1f616/Safepaths/wiki/Speed-Boosts-and-Roadways)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Speed-Boosts-and-Roadways)) | Speed modifiers, 15-tick smoothing grace window, self-mapping speed roadways (`A -> A`). |
+| 🎨 **[In-Game GUI & Palette](https://github.com/ahm3tak1f616/Safepaths/wiki/In-Game-Configuration-and-GUI)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/In-Game-Configuration-and-GUI)) | In-game conversion editor, live search, visual block palette, international decimal support. |
+| 📝 **[Configuration Reference](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide)) | Full property definitions for `safepaths-common.toml`, tick conversions, and tuning presets. |
+| 🏷️ **[Block & Entity Tags](https://github.com/ahm3tak1f616/Safepaths/wiki/Block-and-Entity-Tags)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Block-and-Entity-Tags)) | Datapack tags for pathable blocks, protected areas, and NPC path creator entities. |
+| 🌐 **[Compatibility & Integrations](https://github.com/ahm3tak1f616/Safepaths/wiki/Compatibility-and-Integrations)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/Compatibility-and-Integrations)) | Integration with MineColonies, biomes mods (*BWG*, *BOP*, *RU*), *Terralith*, and *Geophilic*. |
+| ❓ **[FAQ & Troubleshooting](https://github.com/ahm3tak1f616/Safepaths/wiki/FAQ-and-Troubleshooting)** ([Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki/FAQ-and-Troubleshooting)) | Performance considerations, chunk loading behavior, common questions, bug reports. |
 
 ---
 
@@ -76,21 +104,24 @@ customConversions = [
 ]
 ```
 
-Air variants, liquids, non-solid blocks, and block entities cannot be conversion targets. Existing block entities are protected from trampling. Conversions and decay wait when their result would fall away or cannot survive at the position, including roads directly above water. Original block-state properties survive world saves; unsupported falling terrain restores only after support returns. MineColonies decay also rechecks the recorded creator's permissions or colony ownership.
+*For more details on tuning and preset examples, see the [Configuration Guide](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide).*
 
-When several explicit conversions use the same source, the first one wins. An explicit conversion overrides a self-mapping rule regardless of order. Self-mapping an already tracked road clears its old decay record without changing the road. Fresh shovel-made paths are not automatically tracked for decay.
+Air variants, liquids, non-solid blocks, and block entities cannot be conversion targets. Existing block entities are protected from trampling. Conversions and decay wait when their result would fall away or cannot survive at the position, including roads directly above water.
 
 ### Development checks
 
-Use Java 17. Run `gradlew.bat build runGameTestServer --console=plain` on Windows, or `./gradlew build runGameTestServer --console=plain` elsewhere. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime and its dependencies. CI and publishing require both test configurations to pass.
+Use Java 21 on `main` (NeoForge 1.21.1), or Java 17 on `1.20.1-forge` (Forge 1.20.1). Run `gradlew.bat build runGameTestServer --console=plain` on Windows, or `./gradlew build runGameTestServer --console=plain` elsewhere. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime and its dependencies. CI and publishing run the GameTests before accepting a build.
 
 ---
 
 ### 📦 Installation
 
-1. Install [Minecraft Forge 47.3.0+](https://files.minecraftforge.net/) for **Minecraft 1.20.1**.
-2. Place `safepaths-x.x.x-1.20.1-forge.jar` into your `.minecraft/mods` directory.
-3. *(Optional)* Install [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies) or any biome mod.
+1. Install [NeoForge 21.1.235+](https://neoforged.net/) for **Minecraft 1.21.1**, or [Forge 47.3.0+](https://files.minecraftforge.net/) for **Minecraft 1.20.1**.
+2. Download the matching release file from the table above and place it into your `.minecraft/mods` directory. Do not mix the two loader editions.
+3. *(Optional)* Install [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies) or a supported biome mod, using the same Minecraft version and loader.
+4. When updating, back up your world, replace the old Safepaths JAR, and restart. Existing configuration and path-memory saves remain compatible.
+
+*See the [Getting Started Guide](https://github.com/ahm3tak1f616/Safepaths/wiki/Getting-Started) for dedicated server setup instructions.*
 
 ---
 

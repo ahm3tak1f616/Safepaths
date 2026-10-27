@@ -2,12 +2,13 @@
 
 ## Supported Versions
 
-Only the latest release targeting Minecraft 1.20.1 on Forge receives active updates and bug/security fixes on this branch.
+The latest Safepaths release receives active bug and security fixes for both supported editions. Use the matching Minecraft version and loader.
 
-| Mod Version | Minecraft Version | Supported          |
-| ----------- | ----------------- | ------------------ |
-| 2.0.1       | 1.20.1            | :white_check_mark: |
-| 2.0.0 and older | 1.20.1        | :x:                |
+| Mod Version | Minecraft | Loader | Supported |
+| --- | --- | --- | --- |
+| 2.0.2 | 1.21.1 | NeoForge 21.1.235+ | :white_check_mark: |
+| 2.0.2 | 1.20.1 | Forge 47.3.0+ | :white_check_mark: |
+| 2.0.1 and older | Either edition | NeoForge / Forge | :x: |
 
 ## Reporting a Vulnerability
 
