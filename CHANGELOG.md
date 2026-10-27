@@ -6,6 +6,10 @@ All notable changes to Safepaths are documented here.
 
 ## [Unreleased]
 
+---
+
+## [2.0.2] — 2026-10-28
+
 ### 🛡️ Fixed
 
 * Fixed holes appearing when unused paths restored sand, red sand, gravel, or other falling terrain above air, liquids, or replaceable blocks, including roads directly over water. Paths now remain intact until support returns, then restore their original terrain automatically.
@@ -22,6 +26,12 @@ All notable changes to Safepaths are documented here.
 
 * Indexed path records by chunk so decay maintenance skips individual unloaded positions without force-loading terrain. Active path timestamps are refreshed at most once per second, and disabled speed boosts skip footprint scanning.
 * Build and publishing workflows now require the in-world GameTests to pass both with and without MineColonies before completing.
+* Publishing now pins the release tag, loader, Minecraft version, Java version, and optional MineColonies dependency, and uploads the same tested JAR to GitHub, Modrinth, and CurseForge.
+
+### Upgrade notes
+
+* Existing configurations and older path-memory saves remain compatible. Back up your world before updating, then replace the mod JAR and restart.
+* The road-safety fix prevents unsupported terrain restoration from creating new holes; it does not rebuild blocks that were already missing.
 
 ---
 

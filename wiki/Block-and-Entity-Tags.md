@@ -2,6 +2,8 @@
 
 Safepaths is built with full Minecraft datapack support. Modpack creators, server administrators, and developers can customize which blocks can become paths, which blocks are protected, and which entities can create paths using standard JSON tags.
 
+The examples below use Minecraft 1.21.1 paths. For Minecraft 1.20.1, replace `tags/block/` with `tags/blocks/` and `tags/entity_type/` with `tags/entity_types/`. Tag identifiers stay the same. Use datapack `pack_format` **48** for 1.21.1 and **15** for 1.20.1.
+
 ---
 
 ## 🧱 Block Tags

@@ -8,8 +8,8 @@ Safepaths includes a comprehensive, interactive in-game visual editor that allow
 
 1. Press `Esc` in-game and navigate to **Mods**.
 2. Select **Safepaths** from the list of loaded mods.
-3. Click **Config** (or open via Mod Menu / NeoForge Config).
-4. Under the **Path Settings** screen, click **Configure Custom Conversions...** to launch the visual palette editor.
+3. Click **Config**. NeoForge uses its configuration screen; Forge 1.20.1 uses Safepaths' dedicated options screen.
+4. Click **Configure Custom Conversions...** to launch the visual palette editor.
 
 While connected to a dedicated server, the config screen instead explains that the server owner must edit `config/safepaths-common.toml` on the server. The editor does not provide remote server configuration.
 
@@ -66,7 +66,7 @@ The GUI is divided into two primary working areas:
 
 ## 🌍 International Locale & Decimal Support
 
-Safepaths 2.0.1 introduces universal decimal number support for the master speed multiplier input:
+Both editions support international decimal input for the master speed multiplier (introduced in 2.0.1):
 - Accepts both standard period (`0.25`) and European comma (`0,25`) decimal separators.
 - Seamlessly validates inputs across all international keyboards and OS locale settings without crashing or resetting to 0.
 - Unsaved speed and search text survive resizing and returning from the defaults confirmation. Non-finite speed values such as `NaN` are ignored.

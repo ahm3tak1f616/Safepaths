@@ -14,7 +14,7 @@ Find answers to common questions and troubleshooting solutions for Safepaths bel
 4. **Transient Modifiers**: Speed bonuses are transient attributes and are never written into entity NBT save files.
 
 ### Q: Does Safepaths need to be installed on both client and server?
-**A: Yes, recommended.**
+**A:** The server runs the gameplay logic; the client install provides the local configuration GUI.
 - The server manages step counting, block changes, and world saves (`safepaths_memory.dat`).
 - Clients require the mod to view and use the in-game configuration screen (`CustomConversionsScreen`) and localized text messages.
 
@@ -43,7 +43,7 @@ Check the following:
 - If editing a dedicated server config, edit the server's file and restart the server to ensure changes apply. `/reload` reloads datapacks and is not a general TOML configuration reload command.
 
 ### Issue: "The in-game config button is disabled."
-- In NeoForge, configuration screens are accessible from the title screen or pause menu via **Mods ➔ Safepaths ➔ Config**.
+- Open the loader's **Mods ➔ Safepaths ➔ Config** screen. NeoForge uses its configuration screen; Forge 1.20.1 uses Safepaths' dedicated options screen.
 - While connected to a dedicated multiplayer server, the config screen shows server-owner instructions instead of a local editor. Ask the server owner to update the server's file.
 
 ### Issue: "A road directly above water developed a missing block."
@@ -57,7 +57,7 @@ Check the following:
 Found a bug or have an idea to make Safepaths even better?
 - **Issue Tracker**: [GitHub Issues](https://github.com/ahm3tak1f616/Safepaths/issues)
 - Please include:
-  1. Minecraft version (`1.21.1`) and NeoForge version.
-  2. Safepaths mod version (e.g., `2.0.1`).
+  1. Minecraft version (`1.21.1` or `1.20.1`), loader (`NeoForge` or `Forge`), and loader version.
+  2. Safepaths mod version (e.g., `2.0.2`).
   3. A list of any other relevant biome or terrain mods.
   4. Your `latest.log` or crash report if an error occurred.

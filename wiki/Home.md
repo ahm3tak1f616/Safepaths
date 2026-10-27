@@ -1,6 +1,8 @@
 # 🌿 Welcome to the Safepaths Wiki
 
-Welcome to the official documentation and wiki for **Safepaths**, the immersive organic path generation mod for Minecraft (NeoForge).
+Welcome to the official documentation and wiki for **Safepaths**, the immersive organic path generation mod for **Minecraft 1.21.1 on NeoForge** and **Minecraft 1.20.1 on Forge**.
+
+The current release is **2.0.2 — Road Safety & Stability** for both editions. Choose the JAR matching your Minecraft version and loader; the two editions are not interchangeable. This release prevents unsupported decay restoration from leaving holes, including roads directly above water. It does not reconstruct blocks already missing.
 
 Safepaths brings Minecraft worlds to life with dynamic desire paths: repeatedly walking over grass, dirt, sand, and modded soils naturally compresses ground into winding trails and dirt paths. As players and friendly colonists travel along these routes, they receive smooth movement speed boosts. Paths that fall into disuse gradually decay and revert to their authentic original ground block, leaving the wilderness untamed.
 
@@ -19,7 +21,7 @@ Explore the wiki by topic using the sections below or through the sidebar:
 | 📝 **[Configuration Reference](Configuration-Guide)** | Full reference for `safepaths-common.toml`, property definitions, valid ranges, and tuning presets. |
 | 🏷️ **[Block & Entity Tags](Block-and-Entity-Tags)** | Datapack tags for custom pathable blocks, protected areas, and NPC path creator entities. |
 | 🌐 **[Compatibility & Integrations](Compatibility-and-Integrations)** | Integration with MineColonies, biomes mods (*BWG*, *BOP*, *Regions Unexplored*), *Terralith*, and *Geophilic*. |
-| ❓ **[FAQ & Troubleshooting](FAQ-and-Troubleshooting)** | Common questions, server compatibility, performance benchmarks, and issue reporting. |
+| ❓ **[FAQ & Troubleshooting](FAQ-and-Troubleshooting)** | Common questions, server compatibility, performance considerations, and issue reporting. |
 
 ---
 

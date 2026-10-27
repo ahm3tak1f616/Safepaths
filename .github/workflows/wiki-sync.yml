@@ -23,13 +23,11 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           WIKI_REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git"
 
-          if git clone "$WIKI_REPO_URL" wiki_clone; then
-            cd wiki_clone
-            find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
-            cp ../wiki/*.md .
-            git add -A
-            if ! git diff-index --quiet HEAD; then
-              git commit -m "docs(wiki): update wiki documentation [skip ci]"
-              git push origin HEAD:master || git push origin HEAD:main
-            fi
+          git clone "$WIKI_REPO_URL" wiki_clone
+          cd wiki_clone
+          cp ../wiki/*.md .
+          git add -- '*.md'
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "docs(wiki): update wiki documentation [skip ci]"
+            git push origin HEAD
           fi

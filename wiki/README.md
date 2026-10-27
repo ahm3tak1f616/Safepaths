@@ -20,7 +20,7 @@ GitHub Wiki uses a dedicated Git repository (`https://github.com/ahm3tak1f616/Sa
 | `Configuration-Guide.md` | `safepaths-common.toml` breakdown, ticks table, presets (`/wiki/Configuration-Guide`) |
 | `Block-and-Entity-Tags.md` | Datapack tags for blocks & entities (`/wiki/Block-and-Entity-Tags`) |
 | `Compatibility-and-Integrations.md` | MineColonies, *BWG*, *BOP*, *RU*, *Terralith*, and shovel heuristics (`/wiki/Compatibility-and-Integrations`) |
-| `FAQ-and-Troubleshooting.md` | Frequently asked questions, performance benchmarks, and issue reporting (`/wiki/FAQ-and-Troubleshooting`) |
+| `FAQ-and-Troubleshooting.md` | Frequently asked questions, performance considerations, and issue reporting (`/wiki/FAQ-and-Troubleshooting`) |
 
 ---
 
