@@ -11,6 +11,8 @@ const body = readme
 const payload = {
     description: "Natural paths from footsteps, configurable road speed, and safe terrain decay. Optional MineColonies support for Minecraft 1.21.1 NeoForge and 1.20.1 Forge.",
     body,
+    client_side: 'optional',
+    server_side: 'required',
     wiki_url: 'https://github.com/ahm3tak1f616/Safepaths/wiki'
 };
 
