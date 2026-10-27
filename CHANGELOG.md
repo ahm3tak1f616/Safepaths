@@ -21,6 +21,7 @@ All notable changes to Safepaths are documented here.
 * Applying a self-mapping rule to an existing tracked road now clears its old decay record without changing the road.
 * Preserved unsaved speed and search inputs when the conversion editor reopens or resizes. Multiplayer clients now receive server configuration instructions instead of editing unrelated local settings.
 * Preserved pending Forge config-screen inputs across resizing and conversion-editor navigation, and rejected non-finite speed input in both editors.
+* Isolated Forge regression-test settings from live configuration-file reloads to prevent intermittent CI failures without weakening road-safety assertions.
 * Prevented jumping or creative flight from counting as additional footsteps on the same ground block.
 
 ### Changed

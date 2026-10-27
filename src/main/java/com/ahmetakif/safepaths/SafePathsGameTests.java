@@ -1,11 +1,14 @@
 package com.ahmetakif.safepaths;
 
 import com.ahmetakif.safepaths.config.PathConfig;
+import com.electronwill.nightconfig.core.CommentedConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.gametest.framework.BeforeBatch;
+import net.minecraft.gametest.framework.AfterBatch;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +20,8 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.level.PistonEvent;
+import net.minecraftforge.fml.config.ConfigTracker;
+import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +34,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SafePathsGameTests {
     private static final BlockPos FLOOR = new BlockPos(2, 0, 2);
     private static final BlockPos DECAY_ROAD = new BlockPos(2, 2, 2);
+    private static CommentedConfig previousConfig;
+
+    @BeforeBatch(batch = "defaultBatch")
+    public static void isolateTestConfig(ServerLevel level) {
+        previousConfig = ConfigTracker.INSTANCE.configSets().get(ModConfig.Type.COMMON).stream()
+                .filter(config -> config.getModId().equals("safepaths"))
+                .findFirst().orElseThrow().getConfigData();
+        PathConfig.SPEC.acceptConfig(CommentedConfig.inMemory());
+    }
+
+    @AfterBatch(batch = "defaultBatch")
+    public static void restoreTestConfig(ServerLevel level) {
+        PathConfig.SPEC.acceptConfig(previousConfig);
+        previousConfig = null;
+    }
 
     @GameTest(template = "platform")
     public static void grassIsPathable(GameTestHelper helper) {
