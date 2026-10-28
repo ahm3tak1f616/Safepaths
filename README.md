@@ -26,7 +26,7 @@
 | 1.21.1 | NeoForge 21.1.235+ | 21 | `safepaths-2.0.2-1.21.1-neoforge.jar` |
 | 1.20.1 | Forge 47.3.0+ | 17 | `safepaths-2.0.2-1.20.1-forge.jar` |
 
-**2.0.2 — Road Safety & Stability** prevents holes caused by restoring unsupported falling terrain, including paths directly over water. It does not reconstruct blocks already missing.
+**2.0.2 — Stability** prevents holes caused by restoring unsupported falling terrain, including paths directly over water. It does not reconstruct blocks already missing.
 
 ---
 

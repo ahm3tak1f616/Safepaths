@@ -1,0 +1,27 @@
+name: Sync project page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+      - '.github/scripts/sync-modrinth.mjs'
+      - '.github/workflows/sync-project.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: modrinth-project-page
+  cancel-in-progress: false
+
+jobs:
+  sync-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Sync Modrinth project page
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: node .github/scripts/sync-modrinth.mjs

@@ -2,7 +2,7 @@
 
 Welcome to the official documentation and wiki for **Safepaths**, the immersive organic path generation mod for **Minecraft 1.21.1 on NeoForge** and **Minecraft 1.20.1 on Forge**.
 
-The current release is **2.0.2 — Road Safety & Stability** for both editions. Choose the JAR matching your Minecraft version and loader; the two editions are not interchangeable. This release prevents unsupported decay restoration from leaving holes, including roads directly above water. It does not reconstruct blocks already missing.
+The current release is **2.0.2 — Stability** for both editions. Choose the JAR matching your Minecraft version and loader; the two editions are not interchangeable. This release prevents unsupported decay restoration from leaving holes, including roads directly above water. It does not reconstruct blocks already missing.
 
 Safepaths brings Minecraft worlds to life with dynamic desire paths: repeatedly walking over grass, dirt, sand, and modded soils naturally compresses ground into winding trails and dirt paths. As players and friendly colonists travel along these routes, they receive smooth movement speed boosts. Paths that fall into disuse gradually decay and revert to their authentic original ground block, leaving the wilderness untamed.
 
