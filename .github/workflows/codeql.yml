@@ -4,6 +4,7 @@ on:
     branches: [main, shared-multiversion]
   pull_request:
     branches: [main, shared-multiversion]
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
@@ -11,24 +12,35 @@ concurrency:
   cancel-in-progress: true
 jobs:
   analyze:
-    name: Scan both editions
+    name: Scan ${{ matrix.language }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: java-kotlin
+            build-mode: manual
+          - language: actions
+            build-mode: none
     permissions:
       actions: read
       contents: read
       security-events: write
     steps:
       - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-build
+      - if: matrix.language == 'java-kotlin'
+        uses: ./.github/actions/setup-build
       - name: Start CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: java-kotlin
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
           queries: security-extended
       - name: Compile both editions for analysis
+        if: matrix.language == 'java-kotlin'
         run: ./gradlew assemble --no-build-cache --console=plain
       - name: Complete the scan
         uses: github/codeql-action/analyze@v4
         with:
-          category: /language:java-kotlin
+          category: /language:${{ matrix.language }}
