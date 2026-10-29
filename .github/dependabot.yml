@@ -1,7 +1,14 @@
 version: 2
 updates:
-  # GitHub Actions güncellemelerini haftalık kontrol et
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
+  - package-ecosystem: gradle
+    directories:
+      - /forge-1.20.1
+      - /neoforge-1.21.1
+    schedule:
+      interval: weekly
+    # Loader upgrades stay manual; security update pull requests remain enabled.
+    open-pull-requests-limit: 0

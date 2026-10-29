@@ -38,3 +38,9 @@ CI and CodeQL cover `main` and `shared-multiversion`. CI tests both editions wit
 Also check both clients: create a path, leave it to decay, walk on dirt paths and gravel, edit conversions, reopen the config screen, and check MineColonies permissions if installed. GameTests do not verify client rendering or input.
 
 Run `node .github/scripts/sync-modrinth.mjs --check` after changing the player-facing README. See [Releasing](RELEASING.md) for distribution.
+
+## Dependency monitoring
+
+The dependency-submission workflow resolves and submits each edition separately. Its snapshots must point to that edition's Gradle files and include its loader dependency. Scanning only the root coordinator misses both mod dependency graphs.
+
+Dependabot uses the two edition directories for Gradle security updates. Routine loader and Minecraft version upgrades remain manual; GitHub Actions version updates continue weekly.
