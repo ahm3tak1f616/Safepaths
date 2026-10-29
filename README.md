@@ -1,7 +1,7 @@
 # 🌿 Safepaths (MineColonies)
 
 <p align="center">
-  <img src="src/main/resources/icon.png" alt="Safepaths Logo" width="128" height="128">
+  <img src="common/src/main/resources/icon.png" alt="Safepaths Logo" width="128" height="128">
 </p>
 
 <p align="center">
@@ -110,7 +110,23 @@ Air variants, liquids, non-solid blocks, and block entities cannot be conversion
 
 ### Development checks
 
-Use Java 21 on `main` (NeoForge 1.21.1), or Java 17 on `1.20.1-forge` (Forge 1.20.1). Run `gradlew.bat build runGameTestServer --console=plain` on Windows, or `./gradlew build runGameTestServer --console=plain` elsewhere. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime and its dependencies. CI and publishing run the GameTests before accepting a build.
+Both editions are maintained together on `main`. Install JDK 17 and JDK 21; use Java 21 to run the root Gradle wrapper. The root build selects Java 17 for Forge and Java 21 for NeoForge (missing toolchains can also be provisioned by Gradle).
+
+Run `gradlew.bat build --console=plain` on Windows, or `./gradlew build --console=plain` elsewhere. This builds both editions, runs both GameTest suites, and collects the two production JARs in `build/libs/`. Add `-PwithoutMineColonies` to repeat the tests without MineColonies and its runtime dependencies.
+
+| Directory | Contents |
+| :--- | :--- |
+| `common/` | Path creation, decay, save format, MineColonies protection, default conversions, translations, and tag definitions. |
+| `forge-1.20.1/` | Forge events, API adapters, configuration, GUI, and GameTests; Gradle 8.7 / Java 17. |
+| `neoforge-1.21.1/` | NeoForge equivalents; Gradle 9.2.1 / Java 21. |
+
+Shared Java sources compile separately against each target's Minecraft API. Forge resource processing translates the shared singular tag/structure directories to the plural names required by 1.20.1. Each edition includes the shared code and resources inside its own JAR; players install one matching JAR.
+
+For one edition, run `gradlew.bat buildForge` or `gradlew.bat buildNeoForge` from the root. Run `testForge` or `testNeoForge` for that edition's build and GameTests. Individual artifacts are in the edition's `build/libs/`; `assemble` builds and collects both without GameTests. Root `clean` removes the collected JARs; run an edition's wrapper with `clean` to clear its own build output.
+
+In IntelliJ, link both edition `build.gradle` files as Gradle projects and select each project's wrapper. Run client/server configurations from the desired edition with its matching JDK. Shared sources appear in both projects; edit the file in `common/` once. Mod version and identity are configured in the root `gradle.properties`; loader and dependency versions live in each edition's properties.
+
+CI tests both editions with and without MineColonies. A release tagged `v<mod_version>` builds and tests both, then publishes a separate file for each Minecraft/loader target.
 
 ---
 

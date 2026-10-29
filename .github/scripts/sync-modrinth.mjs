@@ -5,7 +5,7 @@ const properties = await readFile(new URL('../../gradle.properties', import.meta
 const version = properties.match(/^mod_version=(.+)$/m)?.[1].trim();
 if (!version) throw new Error('Missing mod_version');
 const body = readme
-    .replaceAll('src="src/main/resources/icon.png"', 'src="https://raw.githubusercontent.com/ahm3tak1f616/Safepaths/main/src/main/resources/icon.png"')
+    .replaceAll('src="common/src/main/resources/icon.png"', 'src="https://raw.githubusercontent.com/ahm3tak1f616/Safepaths/main/common/src/main/resources/icon.png"')
     .replaceAll('](CHANGELOG.md)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/CHANGELOG.md)')
     .replaceAll('](LICENSE)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/LICENSE)');
 const payload = {

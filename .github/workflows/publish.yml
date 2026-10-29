@@ -14,7 +14,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
@@ -34,22 +34,24 @@ jobs:
           fi
           echo "MOD_VERSION=$VERSION" >> "$GITHUB_ENV"
 
-      - name: Setup Java 21
+      - name: Setup Java 17 and 21
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: |
+            17
+            21
           distribution: 'temurin'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
 
       - name: Build and test with MineColonies
-        run: ./gradlew build runGameTestServer --console=plain
+        run: ./gradlew build --console=plain
 
       - name: Test without MineColonies
         run: ./gradlew runGameTestServer -PwithoutMineColonies --console=plain
 
-      - name: Publish tested JAR
+      - name: Publish tested NeoForge JAR
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,12 +62,32 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: build/libs/safepaths-${{ env.MOD_VERSION }}-1.21.1-neoforge.jar
           name: ${{ github.event.release.name }}
-          version: ${{ env.MOD_VERSION }}
+          version: ${{ env.MOD_VERSION }}-1.21.1-neoforge
           version-type: ${{ github.event.release.prerelease && 'beta' || 'release' }}
           changelog: ${{ github.event.release.body }}
           loaders: neoforge
           game-versions: '1.21.1'
           java: '21'
+          dependencies: |
+            minecolonies(optional){modrinth:sSr0QEGx}{curseforge:245506}
+
+      - name: Publish tested Forge JAR
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-tag: ${{ github.event.release.tag_name }}
+          modrinth-id: ec6ewft2
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: '1600734'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: build/libs/safepaths-${{ env.MOD_VERSION }}-1.20.1-forge.jar
+          name: ${{ github.event.release.name }}
+          version: ${{ env.MOD_VERSION }}-1.20.1-forge
+          version-type: ${{ github.event.release.prerelease && 'beta' || 'release' }}
+          changelog: ${{ github.event.release.body }}
+          loaders: forge
+          game-versions: '1.20.1'
+          java: '17'
           dependencies: |
             minecolonies(optional){modrinth:sSr0QEGx}{curseforge:245506}
 
