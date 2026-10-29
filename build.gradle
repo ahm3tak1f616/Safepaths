@@ -28,6 +28,8 @@ targets.each { name, target ->
                 def windows = System.getProperty('os.name').toLowerCase().contains('windows')
                 def arguments = [childTask, '--console=plain', '--max-workers=2']
                 if (providers.gradleProperty('withoutMineColonies').isPresent()) arguments.add('-PwithoutMineColonies')
+                if (providers.gradleProperty('modLogLevel').isPresent()) arguments.add("-PmodLogLevel=${providers.gradleProperty('modLogLevel').get()}")
+                arguments.add("--warning-mode=${gradle.startParameter.warningMode.name().toLowerCase(Locale.ROOT)}")
                 if (gradle.startParameter.offline) arguments.add('--offline')
                 if (gradle.startParameter.refreshDependencies) arguments.add('--refresh-dependencies')
                 if (!gradle.startParameter.buildCacheEnabled) arguments.add('--no-build-cache')

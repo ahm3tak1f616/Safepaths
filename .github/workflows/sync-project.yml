@@ -6,6 +6,7 @@ on:
       - README.md
       - gradle.properties
       - common/src/main/resources/icon.png
+      - docs/assets/**
       - .github/scripts/sync-modrinth.mjs
       - .github/workflows/sync-project.yml
   workflow_dispatch:

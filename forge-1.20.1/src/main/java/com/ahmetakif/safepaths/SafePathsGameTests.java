@@ -41,7 +41,9 @@ public class SafePathsGameTests {
         previousConfig = ConfigTracker.INSTANCE.configSets().get(ModConfig.Type.COMMON).stream()
                 .filter(config -> config.getModId().equals("safepaths"))
                 .findFirst().orElseThrow().getConfigData();
-        PathConfig.SPEC.acceptConfig(CommentedConfig.inMemory());
+        CommentedConfig testConfig = CommentedConfig.inMemory();
+        PathConfig.SPEC.correct(testConfig);
+        PathConfig.SPEC.acceptConfig(testConfig);
     }
 
     @AfterBatch(batch = "defaultBatch")

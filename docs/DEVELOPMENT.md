@@ -25,6 +25,8 @@ Use `./gradlew` on Linux and macOS. `build` runs both GameTest suites and jar ve
 
 Use an edition's wrapper with `clean` to clear its own build output. Shared tags and structures use 1.21.1 directory names; Forge resource processing converts them to the 1.20.1 names.
 
+Development runs log at INFO by default. Add `-PmodLogLevel=debug` for detailed Minecraft and loader diagnostics. Add `--warning-mode=all` to inspect Gradle deprecations; the root wrapper forwards both options to the edition builds. Javadoc still checks documentation syntax, references, and accessibility, but does not require comments on every internal member.
+
 ## IntelliJ
 
 Link both edition `build.gradle` files as Gradle projects, using each project's wrapper and matching JDK. Run client and server configurations from the edition you want to test. Changes in `common/` apply to both builds.

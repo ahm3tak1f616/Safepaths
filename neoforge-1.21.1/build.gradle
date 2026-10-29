@@ -21,7 +21,7 @@ sourceSets.main.resources {
 
 repositories {
     maven {
-        url "https://cursemaven.com"
+        url = "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
@@ -40,8 +40,7 @@ java {
 
 runs {
     configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
+        systemProperty 'forge.logging.console.level', providers.gradleProperty('modLogLevel').getOrElse('info')
 
         workingDirectory project.layout.projectDirectory.dir('run').dir(name)
 
@@ -112,13 +111,18 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = "file://${project.projectDir}/repo"
         }
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    options.addBooleanOption('Xdoclint:all,-missing', true)
 }
 
 idea {

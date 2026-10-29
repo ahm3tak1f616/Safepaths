@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="280" viewBox="0 0 1000 280" role="img" aria-labelledby="title desc">
+  <title id="title">Paths form where you walk</title>
+  <desc id="desc">A winding golden trail connects grassy blocks. Safepaths for Minecraft Forge and NeoForge.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1">
+      <stop stop-color="#122c24"/>
+      <stop offset="1" stop-color="#254b32"/>
+    </linearGradient>
+    <pattern id="grass" width="44" height="44" patternUnits="userSpaceOnUse">
+      <rect width="44" height="44" fill="#41683c"/>
+      <path d="M4 8h8v4H4zm21 17h10v5H25zM9 33h5v3H9z" fill="#547d45"/>
+      <path d="M26 3h6v4h-6zM0 23h7v4H0z" fill="#365c33"/>
+    </pattern>
+    <clipPath id="panel"><rect width="1000" height="280" rx="20"/></clipPath>
+    <clipPath id="surface"><path d="m12 99 172-86 216 99-172 86z"/></clipPath>
+  </defs>
+  <g clip-path="url(#panel)">
+    <rect width="1000" height="280" fill="url(#background)"/>
+    <path d="M522-40 1050 80M472 15l578 132M472 83l578 132M472 151l578 132M472 219l578 132" stroke="#a9c394" stroke-opacity=".07" stroke-width="1"/>
+    <g font-family="Segoe UI, Arial, sans-serif">
+      <text x="44" y="48" fill="#adcba7" font-size="12" font-weight="700" letter-spacing="2">MINECRAFT · FORGE + NEOFORGE</text>
+      <text x="42" y="114" fill="#f5f3dd" font-size="42" font-weight="750">Paths form</text>
+      <text x="42" y="163" fill="#f5f3dd" font-size="42" font-weight="750">where you walk.</text>
+      <text x="44" y="208" fill="#bfd2b3" font-size="16">Walk a route. Make a trail. Find your way home.</text>
+      <rect x="44" y="232" width="42" height="3" rx="1.5" fill="#d6b16f"/>
+    </g>
+    <g transform="translate(553 38)">
+      <path d="m20 116 176-89 220 101-171 94z" fill="#091c15" opacity=".4"/>
+      <path d="m12 99 172-86 216 99v34l-172 88L12 133z" fill="#61472f"/>
+      <path d="m228 198 172-86v34l-172 88z" fill="#493a29"/>
+      <path d="m12 99 172-86 216 99-172 86z" fill="url(#grass)"/>
+      <path d="m12 99 216 99 172-86v9l-172 86L12 108z" fill="#7c994a"/>
+      <g clip-path="url(#surface)">
+        <path d="m45 116 83-41 65 30 76-38 79 36-116 58-61-28-79 40z" fill="#b68d52"/>
+        <path d="m59 116 69-34 65 30 76-38 65 29-102 51-61-28-79 39z" fill="#caa568"/>
+        <path d="m100 99 11 5m29-2 11 5m38 17 11-5m31-14 11-5m39-7 11 5m-64 32 11-5m-58 18 11 5m-64-1 11-5" stroke="#947040" stroke-width="3"/>
+      </g>
+      <g fill="#90b86a">
+        <path d="m58 94 5-12 4 10 5-5-2 10zM173 44l5-12 4 10 5-5-2 10zM322 144l5-12 4 10 5-5-2 10z"/>
+        <path d="m210 172 4-10 4 9 5-4-2 8zM354 112l4-10 4 9 5-4-2 8z"/>
+      </g>
+      <g fill="#f0d688">
+        <rect x="67" y="133" width="4" height="4"/>
+        <rect x="278" y="141" width="4" height="4"/>
+        <rect x="200" y="56" width="4" height="4"/>
+      </g>
+      <g fill="#b88c5c" opacity=".5">
+        <path d="m35 124 10 5v5l-10-5zM69 143l7 3v4l-7-3zM163 186l11 5v5l-11-5z"/>
+      </g>
+    </g>
+  </g>
+</svg>

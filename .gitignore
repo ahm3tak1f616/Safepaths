@@ -1,19 +1,17 @@
-### Gradle and Java build output ###
+# Build output and caches
 .gradle/
-/build/
-/out/
-/bin/
+build/
+out/
+bin/
 *.class
-# Keep the Gradle wrapper JAR and source resources versioned.
 
-### IntelliJ IDEA ###
-/.idea/
-/.run/
+# IDE files
+.idea/
+.run/
+.vscode/
 *.iws
 *.iml
 *.ipr
-
-### Eclipse ###
 .apt_generated
 .classpath
 .eclipse/
@@ -22,16 +20,15 @@
 .settings/
 .springBeans
 .sts4-cache/
+local.properties
 
-### VS Code ###
-/.vscode/
+# Local tools
+.agentbridge/
+.agents/
+.codex/
+.gemini/
 
-### Local assistant state and machine-specific configuration ###
-/.agentbridge/
-/.codex/
-/.gemini/
-
-### Operating system and editor temporary files ###
+# OS and editor temporary files
 .DS_Store
 Thumbs.db
 Desktop.ini
@@ -40,7 +37,10 @@ Desktop.ini
 *.swo
 *.tmp
 
-### Logs and JVM diagnostics ###
+# Logs and JVM diagnostics
+logs/
+crash-reports/
+.mixin.out/
 *.log
 *.log.gz
 *.hprof
@@ -48,20 +48,12 @@ Desktop.ini
 hs_err_pid*
 replay_pid*
 
-### Minecraft Modding ###
-/run/
-/run-data/
-/repo/
-/src/generated/**/.cache/
-# Generated resource JSON/NBT files are source assets, so keep them versioned.
+# Minecraft development runs and local Maven output
+run/
+run-data/
+repo/
+*.toml.bak
+*.toml.bak.*
 
-### Edition builds ###
-**/build/
-**/run/
-**/run-data/
-**/repo/
-**/.idea/
-**/.run/
-**/out/
-**/bin/
+# Keep generated resources and all three Gradle wrappers tracked.
 **/src/generated/**/.cache/

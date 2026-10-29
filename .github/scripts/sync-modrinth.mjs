@@ -8,7 +8,8 @@ const repository = process.env.GITHUB_REPOSITORY || 'ahm3tak1f616/Safepaths';
 const ref = encodeURIComponent(process.env.PROJECT_REF || 'main');
 const source = `https://github.com/${repository}/blob/${ref}`;
 const body = readme.split(/\r?\n## Development\r?\n/)[0].trim()
-    .replaceAll('src="common/src/main/resources/icon.png"', `src="https://raw.githubusercontent.com/${repository}/${ref}/common/src/main/resources/icon.png"`)
+    .replace(/src="((?:common\/src\/main\/resources|docs\/assets)\/[^"]+)"/g,
+        (_, asset) => `src="https://raw.githubusercontent.com/${repository}/${ref}/${asset}"`)
     .replaceAll('](CHANGELOG.md)', `](${source}/CHANGELOG.md)`)
     .replaceAll('](LICENSE)', `](${source}/LICENSE)`);
 const payload = {

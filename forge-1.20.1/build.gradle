@@ -28,8 +28,7 @@ minecraft {
         configureEach {
             workingDirectory project.file('run')
 
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            property 'forge.logging.console.level', providers.gradleProperty('modLogLevel').getOrElse('info')
 
             mods {
                 "${mod_id}" {
@@ -66,7 +65,7 @@ sourceSets.main.resources {
 
 repositories {
     maven {
-        url "https://cursemaven.com"
+        url = "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
