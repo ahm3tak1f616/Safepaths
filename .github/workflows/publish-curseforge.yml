@@ -1,0 +1,57 @@
+name: Publish to CurseForge
+on:
+  workflow_call:
+    inputs:
+      mod-version:
+        type: string
+        required: true
+      artifact-name:
+        type: string
+        required: true
+      release-type:
+        type: string
+        required: true
+      changelog:
+        type: string
+        required: true
+    secrets:
+      CURSEFORGE_TOKEN:
+        required: true
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - minecraft: '1.20.1'
+            loader: forge
+            loader-name: Forge
+            java: '17'
+          - minecraft: '1.21.1'
+            loader: neoforge
+            loader-name: NeoForge
+            java: '21'
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: build/libs
+      - name: Publish the tested edition
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: '1600734'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: build/libs/safepaths-${{ inputs.mod-version }}-${{ matrix.minecraft }}-${{ matrix.loader }}.jar
+          name: Safepaths ${{ inputs.mod-version }} (${{ matrix.loader-name }} ${{ matrix.minecraft }})
+          version: ${{ inputs.mod-version }}
+          version-type: ${{ inputs.release-type }}
+          changelog: ${{ inputs.changelog }}
+          loaders: ${{ matrix.loader }}
+          game-versions: ${{ matrix.minecraft }}
+          java: ${{ matrix.java }}
+          dependencies: |
+            minecolonies(optional){modrinth:sSr0QEGx}{curseforge:245506}

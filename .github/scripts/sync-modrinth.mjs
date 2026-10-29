@@ -4,24 +4,27 @@ const readme = await readFile(new URL('../../README.md', import.meta.url), 'utf8
 const properties = await readFile(new URL('../../gradle.properties', import.meta.url), 'utf8');
 const version = properties.match(/^mod_version=(.+)$/m)?.[1].trim();
 if (!version) throw new Error('Missing mod_version');
-const body = readme
-    .replaceAll('src="src/main/resources/icon.png"', 'src="https://raw.githubusercontent.com/ahm3tak1f616/Safepaths/main/src/main/resources/icon.png"')
-    .replaceAll('](CHANGELOG.md)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/CHANGELOG.md)')
-    .replaceAll('](LICENSE)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/LICENSE)');
+const repository = process.env.GITHUB_REPOSITORY || 'ahm3tak1f616/Safepaths';
+const ref = encodeURIComponent(process.env.PROJECT_REF || 'main');
+const source = `https://github.com/${repository}/blob/${ref}`;
+const body = readme.split(/\r?\n## Development\r?\n/)[0].trim()
+    .replaceAll('src="common/src/main/resources/icon.png"', `src="https://raw.githubusercontent.com/${repository}/${ref}/common/src/main/resources/icon.png"`)
+    .replaceAll('](CHANGELOG.md)', `](${source}/CHANGELOG.md)`)
+    .replaceAll('](LICENSE)', `](${source}/LICENSE)`);
 const payload = {
-    description: "Natural paths from footsteps, configurable road speed, and safe terrain decay. Optional MineColonies support for Minecraft 1.21.1 NeoForge and 1.20.1 Forge.",
+    description: "Paths form where you walk. Configurable road speed and optional MineColonies support.",
     body,
     client_side: 'optional',
     server_side: 'required',
     wiki_url: 'https://github.com/ahm3tak1f616/Safepaths/wiki'
 };
 
-if (!body.includes(`safepaths-${version}-1.21.1-neoforge.jar`) || !body.includes(`safepaths-${version}-1.20.1-forge.jar`)) {
+if (!body.includes('-1.21.1-neoforge.jar') || !body.includes('-1.20.1-forge.jar')) {
     throw new Error('The project page must describe both release editions');
 }
 
 if (process.argv.includes('--check')) {
-    console.log('Project page validated for both editions');
+    console.log(`Project page validated for Safepaths ${version}`);
 } else {
     const token = process.env.MODRINTH_TOKEN;
     if (!token) throw new Error('MODRINTH_TOKEN is required');

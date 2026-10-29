@@ -1,0 +1,47 @@
+{
+  "safepaths.gui.server_config": "Le propriétaire gère les paramètres du serveur. Modifiez config/safepaths-common.toml sur le serveur ; les paramètres locaux ne configurent pas ce serveur.",
+  "fml.menu.mods.info.description.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
+  "neoforge.screen.mods.info.description.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
+  "modmenu.descriptionTranslation.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
+
+  "safepaths.configuration.title": "Configuration de Safepaths",
+  "safepaths.configuration.section.safepaths.common.toml": "Configuration générale",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Paramètres généraux de Safepaths",
+  "safepaths.configuration.Path Settings": "Paramètres des chemins",
+  "safepaths.configuration.Path Settings.button": "Paramètres des chemins",
+  "safepaths.configuration.Path Settings.tooltip": "Configurer la création des chemins et le boost de vitesse",
+
+  "safepaths.gui.conversions.configure": "Configurer les conversions...",
+  "safepaths.gui.conversions.title": "Conversions de chemins",
+  "safepaths.gui.conversions.hint": "Sélectionnez une ligne, puis les blocs.",
+  "safepaths.gui.speed_boost.on": "Boost de vitesse : OUI",
+  "safepaths.gui.speed_boost.off": "Boost de vitesse : NON",
+  "safepaths.gui.palette.title": "Palette de blocs (Cliquer pour sélectionner)",
+  "safepaths.gui.palette.search": "Rechercher des blocs...",
+  "safepaths.gui.palette.search_hint": "Filtrer les blocs...",
+  "safepaths.gui.add_conversion": "+ Ajouter une conversion",
+  "safepaths.gui.add_conversion.tooltip": "Ajouter une règle bloc source -> bloc de chemin",
+  "safepaths.gui.delete_conversion": "Supprimer la conversion",
+  "safepaths.gui.restore_defaults": "Restaurer par défaut",
+  "safepaths.gui.restore_defaults.title": "Restaurer les conversions par défaut",
+  "safepaths.gui.restore_defaults.message": "Voulez-vous vraiment restaurer les conversions par défaut ? Vos entrées personnalisées seront effacées.",
+  "safepaths.gui.restore_defaults.confirm": "Restaurer",
+
+  "config.safepaths.requiredPasses": "Pas requis",
+  "config.safepaths.requiredPasses.tooltip": "Nombre de fois qu'il faut marcher sur le même bloc pour le transformer en chemin.",
+
+  "config.safepaths.constructionTime": "Délai de création de chemin",
+  "config.safepaths.constructionTime.tooltip": "Fenêtre de temps pour effectuer les pas requis. En cas d'expiration, la progression est réinitialisée. (24 000 ticks = 1 jour Minecraft).",
+
+  "config.safepaths.enableSpeedBoost": "Activer le boost de vitesse (Interrupteur principal)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Interrupteur principal pour activer la vitesse sur les chemins.",
+
+  "config.safepaths.speedMultiplier": "Multiplicateur de vitesse",
+  "config.safepaths.speedMultiplier.tooltip": "Bonus de vitesse sur les routes. 0.2 ajoute 20 % ; 0 désactive le bonus.",
+
+  "config.safepaths.decayTime": "Temps de dégradation du chemin",
+  "config.safepaths.decayTime.tooltip": "Durée pendant laquelle un chemin inutilisé subsiste avant de disparaître. (24 000 ticks = 1 jour | 72 000 ticks = 3 jours).",
+
+  "config.safepaths.customConversions": "Conversions de blocs personnalisées",
+  "config.safepaths.customConversions.tooltip": "Liste des correspondances 'bloc_source -> bloc_chemin'."
+}

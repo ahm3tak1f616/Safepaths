@@ -54,3 +54,14 @@ replay_pid*
 /repo/
 /src/generated/**/.cache/
 # Generated resource JSON/NBT files are source assets, so keep them versioned.
+
+### Edition builds ###
+**/build/
+**/run/
+**/run-data/
+**/repo/
+**/.idea/
+**/.run/
+**/out/
+**/bin/
+**/src/generated/**/.cache/

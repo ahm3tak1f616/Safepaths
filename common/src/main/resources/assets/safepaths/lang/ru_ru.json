@@ -1,0 +1,47 @@
+{
+  "safepaths.gui.server_config": "Настройками сервера управляет его владелец. Измените config/safepaths-common.toml на сервере; локальные настройки не изменяют этот сервер.",
+  "fml.menu.mods.info.description.safepaths": "Создавайте тропинки, проходя по земле. Настраивайте скорость на дорогах; неиспользуемые тропинки возвращаются к исходному грунту. MineColonies необязателен.",
+  "neoforge.screen.mods.info.description.safepaths": "Создавайте тропинки, проходя по земле. Настраивайте скорость на дорогах; неиспользуемые тропинки возвращаются к исходному грунту. MineColonies необязателен.",
+  "modmenu.descriptionTranslation.safepaths": "Создавайте тропинки, проходя по земле. Настраивайте скорость на дорогах; неиспользуемые тропинки возвращаются к исходному грунту. MineColonies необязателен.",
+
+  "safepaths.configuration.title": "Конфигурация Safepaths",
+  "safepaths.configuration.section.safepaths.common.toml": "Общая конфигурация",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Общие настройки Safepaths",
+  "safepaths.configuration.Path Settings": "Настройки дорожек",
+  "safepaths.configuration.Path Settings.button": "Настройки дорожек",
+  "safepaths.configuration.Path Settings.tooltip": "Настройка создания дорожек и ускорения",
+
+  "safepaths.gui.conversions.configure": "Настроить превращения...",
+  "safepaths.gui.conversions.title": "Превращения дорожек",
+  "safepaths.gui.conversions.hint": "Выберите строку, затем блоки.",
+  "safepaths.gui.speed_boost.on": "Ускорение: ВКЛ",
+  "safepaths.gui.speed_boost.off": "Ускорение: ВЫКЛ",
+  "safepaths.gui.palette.title": "Палитра блоков (Нажмите для выбора)",
+  "safepaths.gui.palette.search": "Поиск блоков...",
+  "safepaths.gui.palette.search_hint": "Фильтр блоков...",
+  "safepaths.gui.add_conversion": "+ Добавить превращение",
+  "safepaths.gui.add_conversion.tooltip": "Добавить новое правило исходный блок -> блок дорожки",
+  "safepaths.gui.delete_conversion": "Удалить превращение",
+  "safepaths.gui.restore_defaults": "Сбросить по умолчанию",
+  "safepaths.gui.restore_defaults.title": "Восстановить настройки по умолчанию",
+  "safepaths.gui.restore_defaults.message": "Вы уверены, что хотите восстановить стандартные превращения? Пользовательские блоки будут сброшены.",
+  "safepaths.gui.restore_defaults.confirm": "Восстановить",
+
+  "config.safepaths.requiredPasses": "Необходимое количество шагов",
+  "config.safepaths.requiredPasses.tooltip": "Сколько раз нужно наступить на один и тот же блок, чтобы утрамбовать его в дорожку.",
+
+  "config.safepaths.constructionTime": "Лимит времени на создание дорожки",
+  "config.safepaths.constructionTime.tooltip": "Окно времени для совершения шагов. По истечении прогресс сбрасывается. (24 000 тактов = 1 день в Minecraft).",
+
+  "config.safepaths.enableSpeedBoost": "Включить ускорение (Главный переключатель)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Главный переключатель для ускорения на дорожках.",
+
+  "config.safepaths.speedMultiplier": "Множитель ускорения",
+  "config.safepaths.speedMultiplier.tooltip": "Бонус скорости на дорогах. 0.2 добавляет 20%; 0 отключает бонус.",
+
+  "config.safepaths.decayTime": "Время исчезновения дорожки",
+  "config.safepaths.decayTime.tooltip": "Сколько времени неиспользуемая дорожка сохраняется до исчезновения. (24 000 тактов = 1 день | 72 000 тактов = 3 дня).",
+
+  "config.safepaths.customConversions": "Пользовательские превращения блоков",
+  "config.safepaths.customConversions.tooltip": "Список правил 'исходный_блок -> блок_дорожки'."
+}

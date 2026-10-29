@@ -1,0 +1,47 @@
+{
+  "safepaths.gui.server_config": "This server's settings are managed by its owner. Edit config/safepaths-common.toml on the server.",
+  "fml.menu.mods.info.description.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
+  "neoforge.screen.mods.info.description.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
+  "modmenu.descriptionTranslation.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
+
+  "safepaths.configuration.title": "Safepaths Settings",
+  "safepaths.configuration.section.safepaths.common.toml": "General Settings",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths Settings",
+  "safepaths.configuration.Path Settings": "Path Settings",
+  "safepaths.configuration.Path Settings.button": "Path Settings",
+  "safepaths.configuration.Path Settings.tooltip": "Configure path creation and speed boost behavior",
+
+  "safepaths.gui.conversions.configure": "Configure Conversions...",
+  "safepaths.gui.conversions.title": "Path Conversions",
+  "safepaths.gui.conversions.hint": "Select a row, then choose blocks.",
+  "safepaths.gui.speed_boost.on": "Speed Boost: ON",
+  "safepaths.gui.speed_boost.off": "Speed Boost: OFF",
+  "safepaths.gui.palette.title": "Block Palette (Click to select)",
+  "safepaths.gui.palette.search": "Search blocks...",
+  "safepaths.gui.palette.search_hint": "Filter blocks...",
+  "safepaths.gui.add_conversion": "+ Add Conversion",
+  "safepaths.gui.add_conversion.tooltip": "Add a new custom source block -> road block conversion entry",
+  "safepaths.gui.delete_conversion": "Delete conversion",
+  "safepaths.gui.restore_defaults": "Restore Defaults",
+  "safepaths.gui.restore_defaults.title": "Restore Default Conversions",
+  "safepaths.gui.restore_defaults.message": "Are you sure you want to restore default conversions? Any custom block entries will be reset.",
+  "safepaths.gui.restore_defaults.confirm": "Restore Defaults",
+
+  "config.safepaths.requiredPasses": "Required Passes",
+  "config.safepaths.requiredPasses.tooltip": "Passes needed to form a path. Standing still or jumping in place does not add passes.",
+
+  "config.safepaths.constructionTime": "Construction Window",
+  "config.safepaths.constructionTime.tooltip": "Time from the first counted step to reach the required passes. Later steps do not extend it. 24,000 ticks is one Minecraft day.",
+
+  "config.safepaths.enableSpeedBoost": "Enable Road Speed Bonus",
+  "config.safepaths.enableSpeedBoost.tooltip": "Give living entities a movement speed bonus on recognized roads.",
+
+  "config.safepaths.speedMultiplier": "Speed Bonus",
+  "config.safepaths.speedMultiplier.tooltip": "Movement speed bonus on roads. 0.2 adds 20%; 0 disables the bonus.",
+
+  "config.safepaths.decayTime": "Time Until Decay",
+  "config.safepaths.decayTime.tooltip": "Ticks without authorized traffic before a tracked path restores its original terrain. 72,000 ticks is three Minecraft days.",
+
+  "config.safepaths.customConversions": "Block Conversions",
+  "config.safepaths.customConversions.tooltip": "Source block -> path block. Use the same block on both sides for a permanent speed road."
+}

@@ -1,0 +1,47 @@
+{
+  "safepaths.gui.server_config": "Die Servereinstellungen werden vom Serverbetreiber verwaltet. Bearbeite config/safepaths-common.toml auf dem Server; lokale Einstellungen ändern diesen Server nicht.",
+  "fml.menu.mods.info.description.safepaths": "Durch wiederholtes Begehen entstehen Pfade. Straßen geben einen einstellbaren Geschwindigkeitsbonus, ungenutzte Pfade werden wieder zu ihrem ursprünglichen Boden. MineColonies ist optional.",
+  "neoforge.screen.mods.info.description.safepaths": "Durch wiederholtes Begehen entstehen Pfade. Straßen geben einen einstellbaren Geschwindigkeitsbonus, ungenutzte Pfade werden wieder zu ihrem ursprünglichen Boden. MineColonies ist optional.",
+  "modmenu.descriptionTranslation.safepaths": "Durch wiederholtes Begehen entstehen Pfade. Straßen geben einen einstellbaren Geschwindigkeitsbonus, ungenutzte Pfade werden wieder zu ihrem ursprünglichen Boden. MineColonies ist optional.",
+
+  "safepaths.configuration.title": "Safepaths-Konfiguration",
+  "safepaths.configuration.section.safepaths.common.toml": "Allgemeine Konfiguration",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths Allgemeine Einstellungen",
+  "safepaths.configuration.Path Settings": "Pfad-Einstellungen",
+  "safepaths.configuration.Path Settings.button": "Pfad-Einstellungen",
+  "safepaths.configuration.Path Settings.tooltip": "Pfaderstellung und Geschwindigkeitsboost konfigurieren",
+
+  "safepaths.gui.conversions.configure": "Konvertierungen konfigurieren...",
+  "safepaths.gui.conversions.title": "Pfad-Konvertierungen",
+  "safepaths.gui.conversions.hint": "Zeile wählen, dann Blöcke auswählen.",
+  "safepaths.gui.speed_boost.on": "Geschwindigkeit: AN",
+  "safepaths.gui.speed_boost.off": "Geschwindigkeit: AUS",
+  "safepaths.gui.palette.title": "Blockpalette (Zum Auswählen anklicken)",
+  "safepaths.gui.palette.search": "Blöcke suchen...",
+  "safepaths.gui.palette.search_hint": "Blöcke filtern...",
+  "safepaths.gui.add_conversion": "+ Konvertierung hinzufügen",
+  "safepaths.gui.add_conversion.tooltip": "Neuen Eintrag für Quellblock -> Pfadblock hinzufügen",
+  "safepaths.gui.delete_conversion": "Konvertierung löschen",
+  "safepaths.gui.restore_defaults": "Standard wiederherstellen",
+  "safepaths.gui.restore_defaults.title": "Standard-Konvertierungen wiederherstellen",
+  "safepaths.gui.restore_defaults.message": "Sind Sie sicher, dass Sie die Standard-Konvertierungen wiederherstellen möchten? Benutzerdefinierte Einträge werden zurückgesetzt.",
+  "safepaths.gui.restore_defaults.confirm": "Wiederherstellen",
+
+  "config.safepaths.requiredPasses": "Erforderliche Schritte",
+  "config.safepaths.requiredPasses.tooltip": "Anzahl der Schritte auf demselben Block, um ihn in einen Pfad zu verwandeln.",
+
+  "config.safepaths.constructionTime": "Zeitlimit für Pfaderstellung",
+  "config.safepaths.constructionTime.tooltip": "Zeitfenster zum Erreichen der Schritte. Verfällt die Zeit, wird der Fortschritt zurückgesetzt. (24.000 Ticks = 1 Minecraft-Tag).",
+
+  "config.safepaths.enableSpeedBoost": "Geschwindigkeitsboost aktivieren (Hauptschalter)",
+  "config.safepaths.enableSpeedBoost.tooltip": "Hauptschalter für den Geschwindigkeitsboost auf Pfaden.",
+
+  "config.safepaths.speedMultiplier": "Geschwindigkeitsboost-Multiplikator",
+  "config.safepaths.speedMultiplier.tooltip": "Geschwindigkeitsbonus auf Straßen. 0.2 erhöht das Tempo um 20%; 0 deaktiviert den Bonus.",
+
+  "config.safepaths.decayTime": "Pfad-Verfallszeit",
+  "config.safepaths.decayTime.tooltip": "Wie lange ein ungenutzter Pfad bleibt, bevor er verfällt. (24.000 Ticks = 1 Tag | 72.000 Ticks = 3 Tage).",
+
+  "config.safepaths.customConversions": "Benutzerdefinierte Block-Konvertierungen",
+  "config.safepaths.customConversions.tooltip": "Liste der 'Quellblock -> Pfadblock'-Zuordnungen."
+}

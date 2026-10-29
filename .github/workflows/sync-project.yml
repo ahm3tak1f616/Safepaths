@@ -1,27 +1,33 @@
 name: Sync project page
-
 on:
   push:
     branches: [main]
     paths:
-      - 'README.md'
-      - '.github/scripts/sync-modrinth.mjs'
-      - '.github/workflows/sync-project.yml'
+      - README.md
+      - gradle.properties
+      - common/src/main/resources/icon.png
+      - .github/scripts/sync-modrinth.mjs
+      - .github/workflows/sync-project.yml
   workflow_dispatch:
-
 permissions:
   contents: read
-
 concurrency:
   group: modrinth-project-page
   cancel-in-progress: false
-
 jobs:
   sync-project:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-      - name: Sync Modrinth project page
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate project page
+        run: node .github/scripts/sync-modrinth.mjs --check
+      - name: Sync project page
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          PROJECT_REF: ${{ github.ref_name }}
         run: node .github/scripts/sync-modrinth.mjs

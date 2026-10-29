@@ -1,0 +1,3 @@
+def shared = new Properties()
+file('../gradle.properties').withInputStream { shared.load(it) }
+shared.findAll { key, value -> key.startsWith('mod_') }.each { key, value -> ext.set(key, value) }
