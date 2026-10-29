@@ -1,27 +1,12 @@
-### 🌿 [Safepaths Wiki](Home)
+# [Safepaths](Home)
 
-- **[Home](Home)**
-- **[Getting Started](Getting-Started)**
+- [Installation](Getting-Started)
+- [Path creation and decay](Core-Mechanics)
+- [Road speed](Speed-Boosts-and-Roadways)
+- [Conversion editor](In-Game-Configuration-and-GUI)
+- [Configuration](Configuration-Guide)
+- [Datapack tags](Block-and-Entity-Tags)
+- [Compatibility](Compatibility-and-Integrations)
+- [Troubleshooting](FAQ-and-Troubleshooting)
 
----
-
-#### 🎮 Mechanics
-- **[Core Mechanics](Core-Mechanics)**
-- **[Speed Boosts & Roadways](Speed-Boosts-and-Roadways)**
-- **[Compatibility & Integrations](Compatibility-and-Integrations)**
-
----
-
-#### 🛠️ Customization
-- **[In-Game GUI & Palette](In-Game-Configuration-and-GUI)**
-- **[Configuration Guide](Configuration-Guide)**
-- **[Block & Entity Tags](Block-and-Entity-Tags)**
-
----
-
-#### ℹ️ Support
-- **[FAQ & Troubleshooting](FAQ-and-Troubleshooting)**
-- **[GitHub Repository](https://github.com/ahm3tak1f616/Safepaths)**
-- **[Changelog](https://github.com/ahm3tak1f616/Safepaths/blob/main/CHANGELOG.md)**
-- **[Issue Tracker](https://github.com/ahm3tak1f616/Safepaths/issues)**
-- **[Patreon Support](https://www.patreon.com/ahmetakif616)**
+[Downloads](https://github.com/ahm3tak1f616/Safepaths/releases) · [Report a problem](https://github.com/ahm3tak1f616/Safepaths/issues)

@@ -1,19 +1,19 @@
 {
-  "safepaths.gui.server_config": "Server settings are managed by the server owner. Edit config/safepaths-common.toml on the server; local settings cannot configure this server.",
-  "fml.menu.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
-  "neoforge.screen.mods.info.description.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
-  "modmenu.descriptionTranslation.safepaths": "Safepaths mod allows players (and friendly NPCs like colonists and visitors) to naturally create dirt paths simply by walking over the same blocks repeatedly.",
+  "safepaths.gui.server_config": "This server's settings are managed by its owner. Edit config/safepaths-common.toml on the server.",
+  "fml.menu.mods.info.description.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
+  "neoforge.screen.mods.info.description.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
+  "modmenu.descriptionTranslation.safepaths": "Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional.",
 
-  "safepaths.configuration.title": "SafePaths Configuration",
-  "safepaths.configuration.section.safepaths.common.toml": "Common Configuration",
-  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Common Settings",
+  "safepaths.configuration.title": "Safepaths Settings",
+  "safepaths.configuration.section.safepaths.common.toml": "General Settings",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths Settings",
   "safepaths.configuration.Path Settings": "Path Settings",
   "safepaths.configuration.Path Settings.button": "Path Settings",
   "safepaths.configuration.Path Settings.tooltip": "Configure path creation and speed boost behavior",
 
   "safepaths.gui.conversions.configure": "Configure Conversions...",
   "safepaths.gui.conversions.title": "Path Conversions",
-  "safepaths.gui.cheat_warning": "⚠ Warning: Any block can be converted. This can be considered cheating!",
+  "safepaths.gui.conversions.hint": "Select a row, then choose blocks.",
   "safepaths.gui.speed_boost.on": "Speed Boost: ON",
   "safepaths.gui.speed_boost.off": "Speed Boost: OFF",
   "safepaths.gui.palette.title": "Block Palette (Click to select)",
@@ -27,21 +27,21 @@
   "safepaths.gui.restore_defaults.message": "Are you sure you want to restore default conversions? Any custom block entries will be reset.",
   "safepaths.gui.restore_defaults.confirm": "Restore Defaults",
 
-  "config.safepaths.requiredPasses": "Required Footsteps",
-  "config.safepaths.requiredPasses.tooltip": "Number of times you must step on the same block to compress it into a path.",
+  "config.safepaths.requiredPasses": "Required Passes",
+  "config.safepaths.requiredPasses.tooltip": "Passes needed to form a path. Standing still or jumping in place does not add passes.",
 
-  "config.safepaths.constructionTime": "Path Construction Time Limit",
-  "config.safepaths.constructionTime.tooltip": "Time window to reach the required footsteps. If you don't reach the target within this time, your progress resets. (24,000 ticks = 1 Minecraft Day).",
+  "config.safepaths.constructionTime": "Construction Window",
+  "config.safepaths.constructionTime.tooltip": "Time from the first counted step to reach the required passes. Later steps do not extend it. 24,000 ticks is one Minecraft day.",
 
-  "config.safepaths.enableSpeedBoost": "Enable Speed Boost (Master Switch)",
-  "config.safepaths.enableSpeedBoost.tooltip": "Master switch to enable speed boost on paths.",
+  "config.safepaths.enableSpeedBoost": "Enable Road Speed Bonus",
+  "config.safepaths.enableSpeedBoost.tooltip": "Give living entities a movement speed bonus on recognized roads.",
 
-  "config.safepaths.speedMultiplier": "Speed Boost Multiplier",
-  "config.safepaths.speedMultiplier.tooltip": "Speed bonus multiplier when walking on paths (0.2 = Speed I / +20% speed).",
+  "config.safepaths.speedMultiplier": "Speed Bonus",
+  "config.safepaths.speedMultiplier.tooltip": "Movement speed bonus on roads. 0.2 adds 20%; 0 disables the bonus.",
 
-  "config.safepaths.decayTime": "Path Decay Time",
-  "config.safepaths.decayTime.tooltip": "How long an unused path stays before reverting. (24,000 ticks = 1 Minecraft Day | 72,000 ticks = 3 Minecraft Days).",
+  "config.safepaths.decayTime": "Time Until Decay",
+  "config.safepaths.decayTime.tooltip": "Ticks without authorized traffic before a tracked path restores its original terrain. 72,000 ticks is three Minecraft days.",
 
-  "config.safepaths.customConversions": "Custom Block Conversions",
-  "config.safepaths.customConversions.tooltip": "List of 'source_block -> target_path_block' mappings. Allows configuring any block to turn into any road or path block."
+  "config.safepaths.customConversions": "Block Conversions",
+  "config.safepaths.customConversions.tooltip": "Source block -> path block. Use the same block on both sides for a permanent speed road."
 }

@@ -26,8 +26,13 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           gh auth setup-git
           git clone "https://github.com/${GITHUB_REPOSITORY}.wiki.git" wiki_clone
-          cp wiki/*.md wiki_clone/
+          for page in wiki/*.md; do
+            if [ "$(basename "$page")" != 'README.md' ]; then
+              cp "$page" wiki_clone/
+            fi
+          done
           cd wiki_clone
+          git rm --ignore-unmatch README.md
           git add -- '*.md'
           if ! git diff --cached --quiet; then
             git commit -m 'docs(wiki): update shared edition documentation [skip ci]'

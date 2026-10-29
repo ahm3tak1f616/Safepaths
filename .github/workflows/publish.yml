@@ -18,7 +18,6 @@ jobs:
     with:
       mod-version: ${{ needs.build.outputs.mod-version }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
-      release-name: ${{ github.event.release.name }}
       release-type: ${{ github.event.release.prerelease && 'beta' || 'release' }}
       changelog: ${{ github.event.release.body }}
     secrets:
@@ -29,7 +28,6 @@ jobs:
     with:
       mod-version: ${{ needs.build.outputs.mod-version }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
-      release-name: ${{ github.event.release.name }}
       release-type: ${{ github.event.release.prerelease && 'beta' || 'release' }}
       changelog: ${{ github.event.release.body }}
     secrets:

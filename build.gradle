@@ -112,7 +112,7 @@ tasks.register('verifyJars') {
 }
 tasks.named('check') { dependsOn 'verifyJars' }
 
-// Keep unrelated files and existing worktrees under the root build directory.
+// Edition wrappers own their build directories; root clean removes collected jars.
 tasks.named('clean', Delete) {
     setDelete([layout.buildDirectory.dir('libs')])
 }

@@ -1,19 +1,19 @@
 {
   "safepaths.gui.server_config": "Le propriétaire gère les paramètres du serveur. Modifiez config/safepaths-common.toml sur le serveur ; les paramètres locaux ne configurent pas ce serveur.",
-  "fml.menu.mods.info.description.safepaths": "Le mod Safepaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement de façon répétée sur les mêmes blocs.",
-  "neoforge.screen.mods.info.description.safepaths": "Le mod Safepaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement de façon répétée sur les mêmes blocs.",
-  "modmenu.descriptionTranslation.safepaths": "Le mod Safepaths permet aux joueurs (et aux PNJ amicaux comme les colons et les visiteurs) de créer naturellement des chemins de terre en marchant simplement de façon répétée sur les mêmes blocs.",
+  "fml.menu.mods.info.description.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
+  "neoforge.screen.mods.info.description.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
+  "modmenu.descriptionTranslation.safepaths": "Créez des sentiers en marchant. Réglez le bonus de vitesse des routes et laissez les sentiers inutilisés retrouver leur terrain d’origine. MineColonies est facultatif.",
 
-  "safepaths.configuration.title": "Configuration de SafePaths",
+  "safepaths.configuration.title": "Configuration de Safepaths",
   "safepaths.configuration.section.safepaths.common.toml": "Configuration générale",
-  "safepaths.configuration.section.safepaths.common.toml.title": "Paramètres généraux de SafePaths",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Paramètres généraux de Safepaths",
   "safepaths.configuration.Path Settings": "Paramètres des chemins",
   "safepaths.configuration.Path Settings.button": "Paramètres des chemins",
   "safepaths.configuration.Path Settings.tooltip": "Configurer la création des chemins et le boost de vitesse",
 
   "safepaths.gui.conversions.configure": "Configurer les conversions...",
   "safepaths.gui.conversions.title": "Conversions de chemins",
-  "safepaths.gui.cheat_warning": "⚠ Avertissement : N'importe quel bloc peut être converti. Cela peut être considéré comme de la triche !",
+  "safepaths.gui.conversions.hint": "Sélectionnez une ligne, puis les blocs.",
   "safepaths.gui.speed_boost.on": "Boost de vitesse : OUI",
   "safepaths.gui.speed_boost.off": "Boost de vitesse : NON",
   "safepaths.gui.palette.title": "Palette de blocs (Cliquer pour sélectionner)",
@@ -37,7 +37,7 @@
   "config.safepaths.enableSpeedBoost.tooltip": "Interrupteur principal pour activer la vitesse sur les chemins.",
 
   "config.safepaths.speedMultiplier": "Multiplicateur de vitesse",
-  "config.safepaths.speedMultiplier.tooltip": "Bonus de vitesse lors de la marche sur les chemins (0.2 = Vitesse I / +20% vitesse).",
+  "config.safepaths.speedMultiplier.tooltip": "Bonus de vitesse sur les routes. 0.2 ajoute 20 % ; 0 désactive le bonus.",
 
   "config.safepaths.decayTime": "Temps de dégradation du chemin",
   "config.safepaths.decayTime.tooltip": "Durée pendant laquelle un chemin inutilisé subsiste avant de disparaître. (24 000 ticks = 1 jour | 72 000 ticks = 3 jours).",

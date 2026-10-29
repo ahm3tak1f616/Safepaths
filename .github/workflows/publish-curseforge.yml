@@ -8,9 +8,6 @@ on:
       artifact-name:
         type: string
         required: true
-      release-name:
-        type: string
-        required: true
       release-type:
         type: string
         required: true
@@ -32,9 +29,11 @@ jobs:
         include:
           - minecraft: '1.20.1'
             loader: forge
+            loader-name: Forge
             java: '17'
           - minecraft: '1.21.1'
             loader: neoforge
+            loader-name: NeoForge
             java: '21'
     steps:
       - uses: actions/download-artifact@v4
@@ -47,8 +46,8 @@ jobs:
           curseforge-id: '1600734'
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: build/libs/safepaths-${{ inputs.mod-version }}-${{ matrix.minecraft }}-${{ matrix.loader }}.jar
-          name: ${{ inputs.release-name }} (${{ matrix.loader }} ${{ matrix.minecraft }})
-          version: ${{ inputs.mod-version }}-${{ matrix.minecraft }}-${{ matrix.loader }}
+          name: Safepaths ${{ inputs.mod-version }} (${{ matrix.loader-name }} ${{ matrix.minecraft }})
+          version: ${{ inputs.mod-version }}
           version-type: ${{ inputs.release-type }}
           changelog: ${{ inputs.changelog }}
           loaders: ${{ matrix.loader }}

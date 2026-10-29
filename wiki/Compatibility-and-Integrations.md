@@ -1,77 +1,32 @@
-# 🌐 Compatibility & Integrations
+# Compatibility
 
-Safepaths is engineered to integrate seamlessly into diverse modded environments, from vanilla+ overhauls to massive colony-building modpacks.
+## MineColonies
 
----
+MineColonies is optional. Citizens, visitors, and mercenaries are included as path creators when their entity types are installed. They can receive road speed bonuses.
 
-## 🏛️ MineColonies Integration
+On claimed ground, players need break and place permissions to create or refresh paths. Civilian path creators must belong to the colony that owns the ground. Decay checks the recorded creator's permissions or colony ownership. Revoked permissions or a change of ownership can pause restoration.
 
-Safepaths was designed with special attention to **[MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies)**, bringing a living, breathing pulse to bustling towns.
+Farmland, block entities, and blocks with a `minecolonies` ID are protected from trampling. Barbarians and entities in `#safepaths:path_blocked` do not create paths.
 
-### 1. Citizen Desire Paths
-In MineColonies, citizens perform daily routines: lumberjacks commute to forests, miners travel to shafts, deliverymen navigate warehouses, and guards walk continuous patrol perimeters.
-- As citizens repeat these commutes day after day, authentic dirt paths organically emerge connecting colony buildings!
-- Friendly NPCs recognized:
-  - `minecolonies:citizen`
-  - `minecolonies:visitor`
-  - `minecolonies:mercenary`
+## Included biome conversions
 
-### 2. Colony Protection System
-Colonies are heavily protected from griefing or unwanted alterations:
-- **Farmland Immunity**: Farmland plots inside and outside colonies cannot be turned into paths.
-- **Colony Block Immunity**: Any block belonging to the `minecolonies` namespace (including town halls, builder huts, barracks, and colony structures) is strictly protected.
-- **Claim Permissions**: Players need both break and place permissions to form paths on claimed ground. Civilian creators may form paths only in their own colony; other tagged mobs cannot modify a claim.
-- **Decay Permissions**: Saved player permissions or civilian colony ownership are rechecked before decay. Newly claimed land and revoked permissions can therefore pause restoration. Legacy claim records without creator context wait for authorized traffic.
-- **Block Entities**: Inventories, machines, and other blocks with block-entity data cannot be trampled.
-- **Barbarian Blacklist**: Raider factions (`minecolonies:barbarian`, `minecolonies:archerbarbarian`, `minecolonies:chiefbarbarian`) are strictly barred from creating paths.
+Defaults cover the following block IDs when both source and target exist in the installed mods. Unavailable IDs are ignored.
 
-### 3. Worker Productivity
-Colony citizens on dirt paths receive the movement speed boost, allowing them to traverse towns faster and deliver resources more efficiently!
+| Mod | Ground | Path |
+| --- | --- | --- |
+| Oh The Biomes We've Gone | `lush_grass_block`, `lush_dirt` | `lush_dirt_path` |
+| Oh The Biomes We've Gone | `sandy_dirt` | `sandy_dirt_path` |
+| Biomes O' Plenty | `origin_grass_block` | `minecraft:dirt_path` |
+| Regions Unexplored | `peat_grass_block`, `peat_dirt` | `peat_dirt_path` |
+| Regions Unexplored | `silt_grass_block`, `silt_dirt` | `silt_dirt_path` |
+| Regions Unexplored | `chalk_grass_block`, `chalk_dirt` | `chalk_dirt_path` |
 
----
+Use companion mod versions for the same Minecraft version and loader. These defaults do not guarantee that every listed biome mod provides the same blocks on both editions.
 
-## 🌲 Biome Mod Support
+## Other terrain mods
 
-Safepaths includes pre-configured conversion defaults for major Minecraft biome mods:
+Terrain mods that place supported vanilla ground, including Terralith and Geophilic, use those ground rules. Other blocks need a conversion or a pathable tag; a soil-like name alone does not make a block eligible.
 
-### 1. Oh The Biomes We've Gone (BWG)
-| Source Block | Target Path |
-| :--- | :--- |
-| `biomeswevegone:lush_grass_block` | `biomeswevegone:lush_dirt_path` |
-| `biomeswevegone:lush_dirt` | `biomeswevegone:lush_dirt_path` |
-| `biomeswevegone:sandy_dirt` | `biomeswevegone:sandy_dirt_path` |
+A modded shovel action is not automatically discovered. Safepaths reads Minecraft's shovel conversion table, then its fallback for eligible pathable blocks. Add an explicit rule when needed.
 
-### 2. Biomes O' Plenty (BOP)
-| Source Block | Target Path |
-| :--- | :--- |
-| `biomesoplenty:origin_grass_block` | `minecraft:dirt_path` |
-
-### 3. Regions Unexplored (RU)
-| Source Block | Target Path |
-| :--- | :--- |
-| `regions_unexplored:peat_grass_block` | `regions_unexplored:peat_dirt_path` |
-| `regions_unexplored:peat_dirt` | `regions_unexplored:peat_dirt_path` |
-| `regions_unexplored:silt_grass_block` | `regions_unexplored:silt_dirt_path` |
-| `regions_unexplored:silt_dirt` | `regions_unexplored:silt_dirt_path` |
-| `regions_unexplored:chalk_grass_block` | `regions_unexplored:chalk_dirt_path` |
-| `regions_unexplored:chalk_dirt` | `regions_unexplored:chalk_dirt_path` |
-
----
-
-## 🗺️ Vanilla-Block Terrain Overhauls
-
-Mods that generate landscapes using the supported vanilla ground blocks need no additional conversion rules:
-- **Terralith** (Starmute)
-- **Geophilic**
-- **Tectonic**
-- **Continents**
-
-All grass types, sands, gravel slopes, and mud flats in these worldgens naturally support pathing and decay.
-
----
-
-## 🪓 Shovel Pathing Heuristic (Third-Party Mods)
-
-For any mod not explicitly covered in the default list:
-1. Safepaths queries vanilla Minecraft's `ShovelItem.getShovelPathingState(state)`, which reads the shovel flattening table. A modded block implementing only tool-action hooks is not automatically discovered by this lookup; add an explicit conversion for it.
-2. For eligible pathable blocks without an explicit or shovel-table conversion, registry identifiers containing `grass`, `dirt`, `soil`, `sand`, or `gravel` fall back to `minecraft:dirt_path`. Safety and claim checks still apply.
+[Conversion editor](In-Game-Configuration-and-GUI) · [Datapack tags](Block-and-Entity-Tags)

@@ -1,19 +1,19 @@
 {
   "safepaths.gui.server_config": "Sunucu ayarlarını sunucu sahibi yönetir. Sunucudaki config/safepaths-common.toml dosyasını düzenleyin; yerel ayarlar bu sunucuyu yapılandıramaz.",
-  "fml.menu.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths modu, oyuncuların (ve kolonistler ile ziyaretçiler gibi dost NPC'lerin) aynı bloklar üzerinde yürüyerek doğal toprak patikalar oluşturmasını sağlar.",
+  "fml.menu.mods.info.description.safepaths": "Yürüdüğünüz zeminde patikalar oluşur. Yol hızını ayarlayın; kullanılmayan patikalar eski zeminine dönsün. MineColonies desteği isteğe bağlıdır.",
+  "neoforge.screen.mods.info.description.safepaths": "Yürüdüğünüz zeminde patikalar oluşur. Yol hızını ayarlayın; kullanılmayan patikalar eski zeminine dönsün. MineColonies desteği isteğe bağlıdır.",
+  "modmenu.descriptionTranslation.safepaths": "Yürüdüğünüz zeminde patikalar oluşur. Yol hızını ayarlayın; kullanılmayan patikalar eski zeminine dönsün. MineColonies desteği isteğe bağlıdır.",
 
-  "safepaths.configuration.title": "SafePaths Yapılandırması",
+  "safepaths.configuration.title": "Safepaths Yapılandırması",
   "safepaths.configuration.section.safepaths.common.toml": "Genel Yapılandırma",
-  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths Genel Ayarları",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths Genel Ayarları",
   "safepaths.configuration.Path Settings": "Patika Ayarları",
   "safepaths.configuration.Path Settings.button": "Patika Ayarları",
   "safepaths.configuration.Path Settings.tooltip": "Patika oluşumu ve hız artışı davranışını yapılandırın",
 
   "safepaths.gui.conversions.configure": "Dönüşümleri Yapılandır...",
   "safepaths.gui.conversions.title": "Patika Dönüşümleri",
-  "safepaths.gui.cheat_warning": "⚠ Uyarı: Herhangi bir blok dönüştürülebilir. Bu hile olarak değerlendirilebilir!",
+  "safepaths.gui.conversions.hint": "Bir satır seçin, sonra blokları belirleyin.",
   "safepaths.gui.speed_boost.on": "Hız Artışı: AÇIK",
   "safepaths.gui.speed_boost.off": "Hız Artışı: KAPALI",
   "safepaths.gui.palette.title": "Blok Paleti (Seçmek için tıkla)",
@@ -37,7 +37,7 @@
   "config.safepaths.enableSpeedBoost.tooltip": "Patikalarda hız artışını sağlayan ana anahtar.",
 
   "config.safepaths.speedMultiplier": "Hız Artış Çarpanı",
-  "config.safepaths.speedMultiplier.tooltip": "Patikalarda yürüme hızı bonusu çarpanı (0.2 = Hız I / +%20 hız).",
+  "config.safepaths.speedMultiplier.tooltip": "Yollardaki hareket hızı bonusu. 0.2 hızı %20 artırır; 0 bonusu kapatır.",
 
   "config.safepaths.decayTime": "Patika Bozulma Süresi",
   "config.safepaths.decayTime.tooltip": "Kullanılmayan bir patikanın eski haline dönmeden önce ne kadar süre kaldığı. (24.000 tick = 1 Gün | 72.000 tick = 3 Gün).",

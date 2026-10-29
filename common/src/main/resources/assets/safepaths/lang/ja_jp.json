@@ -1,19 +1,19 @@
 {
   "safepaths.gui.server_config": "サーバー設定はサーバー管理者が管理します。サーバー上の config/safepaths-common.toml を編集してください。ローカル設定ではこのサーバーを変更できません。",
-  "fml.menu.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
-  "neoforge.screen.mods.info.description.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
-  "modmenu.descriptionTranslation.safepaths": "SafePaths MODを使用すると、プレイヤー（および入植者や訪問者などの友好的なNPC）が同じブロックの上を繰り返し歩くだけで、自然に土の道を作ることができます。",
+  "fml.menu.mods.info.description.safepaths": "地面を繰り返し歩くと道ができます。道の移動速度を設定でき、使われなくなった道は元の地面に戻ります。MineColoniesは任意です。",
+  "neoforge.screen.mods.info.description.safepaths": "地面を繰り返し歩くと道ができます。道の移動速度を設定でき、使われなくなった道は元の地面に戻ります。MineColoniesは任意です。",
+  "modmenu.descriptionTranslation.safepaths": "地面を繰り返し歩くと道ができます。道の移動速度を設定でき、使われなくなった道は元の地面に戻ります。MineColoniesは任意です。",
 
-  "safepaths.configuration.title": "SafePaths 設定",
+  "safepaths.configuration.title": "Safepaths 設定",
   "safepaths.configuration.section.safepaths.common.toml": "共通設定",
-  "safepaths.configuration.section.safepaths.common.toml.title": "SafePaths 共通設定",
+  "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths 共通設定",
   "safepaths.configuration.Path Settings": "小道の設定",
   "safepaths.configuration.Path Settings.button": "小道の設定",
   "safepaths.configuration.Path Settings.tooltip": "小道の生成と速度上昇効果を設定します",
 
   "safepaths.gui.conversions.configure": "変換ルールを設定...",
   "safepaths.gui.conversions.title": "小道の変換設定",
-  "safepaths.gui.cheat_warning": "⚠ 警告: あらゆるブロックを変換できます。これはチートとみなされる場合があります！",
+  "safepaths.gui.conversions.hint": "行を選び、ブロックを指定します。",
   "safepaths.gui.speed_boost.on": "速度上昇: 有効",
   "safepaths.gui.speed_boost.off": "速度上昇: 無効",
   "safepaths.gui.palette.title": "ブロックパレット (クリックで選択)",
@@ -37,7 +37,7 @@
   "config.safepaths.enableSpeedBoost.tooltip": "小道での速度上昇を有効にするマスタースイッチです。",
 
   "config.safepaths.speedMultiplier": "速度上昇倍率",
-  "config.safepaths.speedMultiplier.tooltip": "小道を歩く際の移動速度ボーナス倍率 (0.2 = 移動速度上昇I / +20%)。",
+  "config.safepaths.speedMultiplier.tooltip": "道での移動速度ボーナス。0.2で20%増加、0で無効になります。",
 
   "config.safepaths.decayTime": "小道の風化時間",
   "config.safepaths.decayTime.tooltip": "使われなくなった小道が元のブロックに戻るまでの時間です。(24,000 tick = 1日 | 72,000 tick = 3日)。",

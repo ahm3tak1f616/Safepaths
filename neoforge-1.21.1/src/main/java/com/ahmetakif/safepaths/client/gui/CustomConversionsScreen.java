@@ -219,7 +219,7 @@ public class CustomConversionsScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
 
         graphics.drawCenteredString(this.font, this.title, this.width / 4, 10, 0xFFFFFF);
-        graphics.drawString(this.font, Component.translatable("safepaths.gui.cheat_warning"), 8, 24, 0xFFFF55);
+        graphics.drawString(this.font, Component.translatable("safepaths.gui.conversions.hint"), 8, 24, 0xAAAAAA);
 
         int paletteTitleX = (int) (this.width * 0.54) + 8;
         graphics.drawString(this.font, Component.translatable("safepaths.gui.palette.title"), paletteTitleX, 10, 0xAAAAAA);

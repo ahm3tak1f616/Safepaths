@@ -8,7 +8,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 logoFile="icon.png"
 authors="ahm3tak1f616"
-description='''Safepaths mod allows players (and friendly NPCs like colonists and visitors from Minecolonies) to naturally create dirt paths simply by walking over the same blocks repeatedly'''
+description="Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional."
 
 [[dependencies.safepaths]]
 modId="forge"
