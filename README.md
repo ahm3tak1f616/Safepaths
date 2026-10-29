@@ -110,7 +110,7 @@ Air variants, liquids, non-solid blocks, and block entities cannot be conversion
 
 ### Development checks
 
-Both editions are maintained together on `main`. Install JDK 17 and JDK 21; use Java 21 to run the root Gradle wrapper. The root build selects Java 17 for Forge and Java 21 for NeoForge (missing toolchains can also be provisioned by Gradle).
+Both editions are maintained together in one checkout. Install JDK 17 and JDK 21; use Java 21 to run the root Gradle wrapper. The root build selects Java 17 for Forge and Java 21 for NeoForge (missing toolchains can also be provisioned by Gradle).
 
 Run `gradlew.bat build --console=plain` on Windows, or `./gradlew build --console=plain` elsewhere. This builds both editions, runs both GameTest suites, and collects the two production JARs in `build/libs/`. Add `-PwithoutMineColonies` to repeat the tests without MineColonies and its runtime dependencies.
 
@@ -126,7 +126,9 @@ For one edition, run `gradlew.bat buildForge` or `gradlew.bat buildNeoForge` fro
 
 In IntelliJ, link both edition `build.gradle` files as Gradle projects and select each project's wrapper. Run client/server configurations from the desired edition with its matching JDK. Shared sources appear in both projects; edit the file in `common/` once. Mod version and identity are configured in the root `gradle.properties`; loader and dependency versions live in each edition's properties.
 
-CI tests both editions with and without MineColonies. A release tagged `v<mod_version>` builds and tests both, then publishes a separate file for each Minecraft/loader target.
+CI and CodeQL cover `main` and `shared-multiversion`. The reusable `build-editions.yml` builds and tests both editions with and without MineColonies, verifies the jars, and stores the two production files as one artifact. CI rebuilds location-dependent NeoGradle data and disables the Gradle build cache to avoid reusing paths from the previous layout.
+
+Publishing a GitHub release tagged `v<mod_version>` runs the same validation once. `publish-modrinth.yml` and `publish-curseforge.yml` then upload each tested jar with its own Minecraft version, loader, Java version, and edition-specific version number. Both jars are also attached to that GitHub release. Pushes and pull requests only build and test; publishing runs on a published release. Project-page and wiki synchronization follow `main`, while release-page links point to the release tag.
 
 ---
 

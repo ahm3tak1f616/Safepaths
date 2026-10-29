@@ -1,33 +1,35 @@
 name: Sync Wiki
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'wiki/**'
-      - '.github/workflows/wiki-sync.yml'
+      - wiki/**
+      - .github/workflows/wiki-sync.yml
   workflow_dispatch:
-
 permissions:
   contents: write
-
+concurrency:
+  group: github-wiki
+  cancel-in-progress: false
 jobs:
   sync-wiki:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v7
       - name: Deploy Wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          WIKI_REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git"
-
-          git clone "$WIKI_REPO_URL" wiki_clone
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          gh auth setup-git
+          git clone "https://github.com/${GITHUB_REPOSITORY}.wiki.git" wiki_clone
+          cp wiki/*.md wiki_clone/
           cd wiki_clone
-          cp ../wiki/*.md .
           git add -- '*.md'
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "docs(wiki): update wiki documentation [skip ci]"
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs(wiki): update shared edition documentation [skip ci]'
             git push origin HEAD
           fi

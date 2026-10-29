@@ -4,10 +4,13 @@ const readme = await readFile(new URL('../../README.md', import.meta.url), 'utf8
 const properties = await readFile(new URL('../../gradle.properties', import.meta.url), 'utf8');
 const version = properties.match(/^mod_version=(.+)$/m)?.[1].trim();
 if (!version) throw new Error('Missing mod_version');
+const repository = process.env.GITHUB_REPOSITORY || 'ahm3tak1f616/Safepaths';
+const ref = encodeURIComponent(process.env.PROJECT_REF || 'main');
+const source = `https://github.com/${repository}/blob/${ref}`;
 const body = readme
-    .replaceAll('src="common/src/main/resources/icon.png"', 'src="https://raw.githubusercontent.com/ahm3tak1f616/Safepaths/main/common/src/main/resources/icon.png"')
-    .replaceAll('](CHANGELOG.md)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/CHANGELOG.md)')
-    .replaceAll('](LICENSE)', '](https://github.com/ahm3tak1f616/Safepaths/blob/main/LICENSE)');
+    .replaceAll('src="common/src/main/resources/icon.png"', `src="https://raw.githubusercontent.com/${repository}/${ref}/common/src/main/resources/icon.png"`)
+    .replaceAll('](CHANGELOG.md)', `](${source}/CHANGELOG.md)`)
+    .replaceAll('](LICENSE)', `](${source}/LICENSE)`);
 const payload = {
     description: "Natural paths from footsteps, configurable road speed, and safe terrain decay. Optional MineColonies support for Minecraft 1.21.1 NeoForge and 1.20.1 Forge.",
     body,

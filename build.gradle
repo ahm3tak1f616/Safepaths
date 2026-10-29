@@ -30,6 +30,7 @@ targets.each { name, target ->
                 if (providers.gradleProperty('withoutMineColonies').isPresent()) arguments.add('-PwithoutMineColonies')
                 if (gradle.startParameter.offline) arguments.add('--offline')
                 if (gradle.startParameter.refreshDependencies) arguments.add('--refresh-dependencies')
+                if (!gradle.startParameter.buildCacheEnabled) arguments.add('--no-build-cache')
                 environment 'JAVA_HOME', launcher.get().metadata.installationPath.asFile.absolutePath
                 commandLine(windows ? ['cmd', '/c', 'gradlew.bat'] + arguments : ['sh', './gradlew'] + arguments)
             }
