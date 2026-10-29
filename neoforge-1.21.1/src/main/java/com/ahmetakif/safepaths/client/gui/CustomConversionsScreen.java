@@ -69,7 +69,7 @@ public class CustomConversionsScreen extends Screen {
     @Override
     protected void init() {
         String speedText = this.masterSpeedBox == null
-                ? String.format(Locale.ROOT, "%.2f", PathConfig.SPEED_MULTIPLIER.get()) : this.masterSpeedBox.getValue();
+                ? String.valueOf(PathConfig.SPEED_MULTIPLIER.get()) : this.masterSpeedBox.getValue();
         String searchText = this.searchBox == null ? "" : this.searchBox.getValue();
         int contentTop = 38;
         int footerHeight = 36;
@@ -149,7 +149,7 @@ public class CustomConversionsScreen extends Screen {
         currentBtnX += leftBtnWidth + 4;
         int speedBoxX = currentBtnX + speedIconWidth + 4;
         this.masterSpeedBox = new EditBox(this.font, speedBoxX, buttonY + 1, speedBoxWidth, 18, Component.translatable("config.safepaths.speedMultiplier"));
-        this.masterSpeedBox.setMaxLength(5);
+        this.masterSpeedBox.setMaxLength(32);
         this.masterSpeedBox.setValue(speedText);
         this.masterSpeedBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.speedMultiplier.tooltip")));
         this.addRenderableWidget(this.masterSpeedBox);

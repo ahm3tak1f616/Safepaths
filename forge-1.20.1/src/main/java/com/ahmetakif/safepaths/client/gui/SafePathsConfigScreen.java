@@ -10,8 +10,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-import java.util.Locale;
-
 public class SafePathsConfigScreen extends Screen {
     private final Screen parentScreen;
 
@@ -37,7 +35,7 @@ public class SafePathsConfigScreen extends Screen {
         String decayText = this.decayTimeBox == null ? String.valueOf(PathConfig.DECAY_TIME.get()) : this.decayTimeBox.getValue();
         double configuredSpeed = PathConfig.SPEED_MULTIPLIER.get();
         String speedText = this.speedMultiplierBox == null || Double.compare(this.lastConfiguredSpeed, configuredSpeed) != 0
-                ? String.format(Locale.ROOT, "%.2f", configuredSpeed) : this.speedMultiplierBox.getValue();
+                ? String.valueOf(configuredSpeed) : this.speedMultiplierBox.getValue();
         boolean configuredSpeedBoost = PathConfig.ENABLE_SPEED_BOOST.get();
         if (this.speedBoostBtn == null || this.lastConfiguredSpeedBoost != configuredSpeedBoost) {
             this.speedBoostEnabled = configuredSpeedBoost;
@@ -71,7 +69,7 @@ public class SafePathsConfigScreen extends Screen {
         this.addRenderableWidget(this.constructionTimeBox);
 
         this.speedMultiplierBox = new EditBox(this.font, rightColX, 84, colWidth, boxHeight, Component.translatable("config.safepaths.speedMultiplier"));
-        this.speedMultiplierBox.setMaxLength(6);
+        this.speedMultiplierBox.setMaxLength(32);
         this.speedMultiplierBox.setValue(speedText);
         this.speedMultiplierBox.setTooltip(Tooltip.create(Component.translatable("config.safepaths.speedMultiplier.tooltip")));
         this.addRenderableWidget(this.speedMultiplierBox);

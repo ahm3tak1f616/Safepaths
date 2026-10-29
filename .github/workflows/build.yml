@@ -1,9 +1,9 @@
 name: Build
 on:
   push:
-    branches: [main, shared-multiversion]
+    branches: [main]
   pull_request:
-    branches: [main, shared-multiversion]
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

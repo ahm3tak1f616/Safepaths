@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Preserved the configured speed value when opening and saving the configuration screens.
+- Fixed Forge's server-list compatibility check for servers where clients do not need Safepaths installed.
 - Clearer configuration labels, conversion-editor help, and installation instructions.
 - One release process for the Forge 1.20.1 and NeoForge 1.21.1 downloads.
 

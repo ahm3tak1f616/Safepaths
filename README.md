@@ -19,6 +19,8 @@ Works on its own, with optional MineColonies support for citizen-made paths.
 
 Install the jar for your Minecraft version and loader in the `mods` folder. When updating, back up your world and replace the previous Safepaths jar.
 
+On dedicated servers, install Safepaths on the server; clients do not need it to use the paths or speed bonus.
+
 ## How it works
 
 - Walk a route repeatedly to turn grass, dirt, sand, and other supported ground into paths.

@@ -40,7 +40,7 @@ targets.each { name, target ->
     }
 }
 
-tasks.register('collectJars', Copy) {
+tasks.register('collectJars', Sync) {
     group = 'build'
     description = 'Collects the two production mod jars in build/libs.'
     dependsOn buildTasks
@@ -77,7 +77,10 @@ tasks.register('verifyJars') {
                         "META-INF/${neo ? 'neoforge.mods.toml' : 'mods.toml'}",
                         "data/safepaths/${neo ? 'structure' : 'structures'}/platform.nbt",
                         "data/safepaths/tags/${neo ? 'block' : 'blocks'}/can_become_path.json",
+                        "data/safepaths/tags/${neo ? 'block' : 'blocks'}/cannot_become_path.json",
+                        "data/safepaths/tags/${neo ? 'block' : 'blocks'}/is_path.json",
                         "data/safepaths/tags/${neo ? 'entity_type' : 'entity_types'}/path_creators.json",
+                        "data/safepaths/tags/${neo ? 'entity_type' : 'entity_types'}/path_blocked.json",
                         'icon.png',
                         'com/ahmetakif/safepaths/PathCreationEvent.class',
                         'com/ahmetakif/safepaths/PathMemorySavedData.class',
@@ -94,6 +97,12 @@ tasks.register('verifyJars') {
                 if (zip.getEntry(wrongMetadata) != null) throw new GradleException("Wrong loader metadata in ${artifact.name}")
                 def metadata = zip.getInputStream(zip.getEntry(required.first())).withCloseable { it.getText('UTF-8') }
                 if (metadata.contains('${')) throw new GradleException("Unexpanded metadata in ${artifact.name}")
+                if (!(metadata =~ /(?m)^version\s*=\s*"${java.util.regex.Pattern.quote(mod_version)}"\s*$/).find()) {
+                    throw new GradleException("Wrong mod version in ${artifact.name}")
+                }
+                if (!neo && !metadata.contains('displayTest="IGNORE_SERVER_VERSION"')) {
+                    throw new GradleException("Forge client compatibility must be optional in ${artifact.name}")
+                }
                 zip.entries().each { entry ->
                     if (entry.name.endsWith('.class')) {
                         def major = zip.getInputStream(entry).withCloseable { stream ->

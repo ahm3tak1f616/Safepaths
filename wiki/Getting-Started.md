@@ -13,7 +13,7 @@
 
 MineColonies and biome mods are optional. Their versions must match your Minecraft version and loader.
 
-On a dedicated server, install Safepaths in the server's `mods` folder. The server controls path creation, speed, and decay. A client installation provides the configuration menu; it cannot edit a remote server's settings.
+On a dedicated server, install Safepaths in the server's `mods` folder. The server controls path creation, speed, and decay; clients do not need Safepaths installed. A client installation provides the configuration menu for singleplayer; it cannot edit a remote server's settings.
 
 ## Try it
 

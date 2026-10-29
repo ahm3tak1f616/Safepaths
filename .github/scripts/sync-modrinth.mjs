@@ -12,6 +12,7 @@ const body = readme.split(/\r?\n## Development\r?\n/)[0].trim()
     .replaceAll('](CHANGELOG.md)', `](${source}/CHANGELOG.md)`)
     .replaceAll('](LICENSE)', `](${source}/LICENSE)`);
 const payload = {
+    title: 'Safepaths',
     description: "Paths form where you walk. Configurable road speed and optional MineColonies support.",
     body,
     client_side: 'optional',
