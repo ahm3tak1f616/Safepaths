@@ -33,7 +33,7 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Submit edition dependencies
         id: snapshot
-        uses: gradle/actions/dependency-submission@v6.4.0
+        uses: gradle/actions/dependency-submission@v6.4.1
         with:
           build-root-directory: ${{ matrix.directory }}
           additional-arguments: --no-configuration-cache --no-build-cache --max-workers=2
