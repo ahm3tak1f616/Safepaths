@@ -31,6 +31,10 @@ Development runs log at INFO by default. Add `-PmodLogLevel=debug` for detailed 
 
 Link both edition `build.gradle` files as Gradle projects, using each project's wrapper and matching JDK. Run client and server configurations from the edition you want to test. Changes in `common/` apply to both builds.
 
+The Gradle window shows three linked builds. The root `safepaths` build coordinates both editions, collects jars, and verifies them. The Forge and NeoForge entries expose their own development runs and use their own wrappers and JDKs.
+
+Run data generation from an edition directory with `./gradlew runData -PwithoutMineColonies` (`.\gradlew.bat` on Windows). Use a Gradle run configuration with the same property for IntelliJ Data runs. The optional MineColonies runtime includes Domum Ornamentum, whose data generators require an additional development library. Safepaths data generation uses its own runtime without these optional mods.
+
 The root `gradle.properties` holds mod identity and version. Each edition's properties hold loader, mappings, and dependency versions.
 
 ## Before merging
