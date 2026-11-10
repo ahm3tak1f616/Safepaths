@@ -2,9 +2,14 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.1.38'
+    id 'dev.mixinmcp.decompile' version '1.6.0'
 }
 
 apply from: '../gradle/mod-properties.gradle'
+
+tasks.named('genDependencySources').configure {
+    threads = 1
+}
 
 tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN

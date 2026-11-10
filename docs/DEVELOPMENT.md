@@ -37,6 +37,12 @@ Run data generation from an edition directory with `./gradlew runData -PwithoutM
 
 The root `gradle.properties` holds mod identity and version. Each edition's properties hold loader, mappings, and dependency versions.
 
+### Dependency source tools
+
+Both edition builds use the MixinMCP Gradle plugin 1.6.0. Install the matching MixinMCP IntelliJ plugin from JetBrains Marketplace and restart the IDE to expose its tools through the existing IntelliJ MCP server.
+
+Run `genDependencySources --max-workers=1` with an edition's wrapper to prepare dependency sources manually. The task also runs during IntelliJ Gradle sync. Decompilation uses one thread per worker to limit memory use. Each edition records its classpath in `.gradle/mixinmcp/manifest.json`, with shared generated sources in the user's MixinMCP cache. Initial preparation can take several minutes, while subsequent runs reuse the cache.
+
 ## Before merging
 
 CI and CodeQL run on pushes to `main` and pull requests targeting `main`. CI tests both editions with and without MineColonies. The setup action clears location-dependent NeoGradle data; CI passes `--no-build-cache` to avoid restoring classpaths from an older layout.

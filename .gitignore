@@ -23,10 +23,12 @@ bin/
 local.properties
 
 # Local tools
+.ai/
 .agentbridge/
 .agents/
 .codex/
 .gemini/
+.junie/
 
 # OS and editor temporary files
 .DS_Store
@@ -48,12 +50,12 @@ crash-reports/
 hs_err_pid*
 replay_pid*
 
-# Minecraft development runs and local Maven output
+# Minecraft development and local Maven output
 run/
 run-data/
 repo/
 *.toml.bak
 *.toml.bak.*
 
-# Keep generated resources and all three Gradle wrappers tracked.
+
 **/src/generated/**/.cache/
