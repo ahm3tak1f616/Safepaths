@@ -46,7 +46,7 @@ jobs:
           curseforge-id: '1600734'
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: build/libs/safepaths-${{ inputs.mod-version }}-${{ matrix.minecraft }}-${{ matrix.loader }}.jar
-          name: Safepaths ${{ inputs.mod-version }} (${{ matrix.loader-name }} ${{ matrix.minecraft }})
+          name: v${{ inputs.mod-version }} (${{ matrix.loader-name }} ${{ matrix.minecraft }})
           version: ${{ inputs.mod-version }}
           version-type: ${{ inputs.release-type }}
           changelog: ${{ inputs.changelog }}

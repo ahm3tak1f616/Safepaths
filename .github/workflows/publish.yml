@@ -43,8 +43,11 @@ jobs:
         with:
           name: ${{ needs.build.outputs.artifact-name }}
           path: build/libs
-      - name: Attach both tested jars to the release
+      - name: Apply the standard title and attach both tested jars
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: gh release upload "$RELEASE_TAG" build/libs/*.jar --repo "$GITHUB_REPOSITORY" --clobber
+          RELEASE_TITLE: Safepaths ${{ github.event.release.tag_name }}
+        run: |
+          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --title "$RELEASE_TITLE"
+          gh release upload "$RELEASE_TAG" build/libs/*.jar --repo "$GITHUB_REPOSITORY" --clobber

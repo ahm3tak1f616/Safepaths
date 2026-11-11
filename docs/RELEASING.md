@@ -12,6 +12,16 @@ The same player-facing changelog is used for both editions on all three platform
 
 `mod_description` is the approved short English summary for packaged metadata and local introductions. It is not a release checklist item to rewrite. When a summary change is explicitly requested, update the relevant local copies together and review the result. Local consistency checks do not authorize replacing live project-page content.
 
+## Release title convention
+
+Use this convention for 2.5.0 and every subsequent release:
+
+- **GitHub:** `Safepaths v<mod_version>`, for example `Safepaths v2.5.0`. One release contains both editions. The GitHub publishing job applies this title automatically before attaching the jars.
+- **CurseForge and Modrinth:** `v<mod_version> (<Loader> <Minecraft>)`, for example `v2.5.0 (Forge 1.20.1)` or `v2.5.0 (NeoForge 1.21.1)`. Both publishing workflows generate these names automatically.
+- **Technical version:** `<mod_version>` without the `v`, for example `2.5.0`. The Git tag remains `v<mod_version>`, for example `v2.5.0`.
+
+Keep this format for future versions without adding the mod name to storefront version entries or inventing a different subtitle for each release. Existing published release titles and project-page titles remain unchanged.
+
 ## Files and platform entries
 
 The prepared release version is **2.5.0**. Creating or editing these files does not publish it.
@@ -22,8 +32,8 @@ The banner's editable source is `docs/assets/safepaths-banner.svg`. Keep this st
 
 | Edition | File | Display name on CurseForge and Modrinth |
 | --- | --- | --- |
-| Forge 1.20.1 | `safepaths-2.5.0-1.20.1-forge.jar` | Safepaths 2.5.0 (Forge 1.20.1) |
-| NeoForge 1.21.1 | `safepaths-2.5.0-1.21.1-neoforge.jar` | Safepaths 2.5.0 (NeoForge 1.21.1) |
+| Forge 1.20.1 | `safepaths-2.5.0-1.20.1-forge.jar` | v2.5.0 (Forge 1.20.1) |
+| NeoForge 1.21.1 | `safepaths-2.5.0-1.21.1-neoforge.jar` | v2.5.0 (NeoForge 1.21.1) |
 
 Both entries use mod version `2.5.0`, the same changelog, and the same release channel. Each has its own Minecraft version, loader, Java version, and optional MineColonies dependency.
 
@@ -38,7 +48,7 @@ References: [CurseForge file types](https://support.curseforge.com/support/solut
 1. Merge the reviewed changes into `main` after CI and client checks pass.
 2. Confirm `mod_version=2.5.0` in the root `gradle.properties` and verify the release tag will be `v2.5.0`. Do not reuse a published version.
 3. Review the prepared `2.5.0` section in `CHANGELOG.md`, add the actual release date when publishing, and commit the release preparation to `main`. Keep older release notes intact.
-4. Create a GitHub release from that commit with tag `v<mod_version>`, for example `v2.5.0`. Use a short title such as `Safepaths 2.5.0` and paste the player-facing changelog.
+4. Create a GitHub release from that commit with tag `v<mod_version>`, for example `v2.5.0`. Set the title to `Safepaths v<mod_version>`, for example `Safepaths v2.5.0`, and paste the player-facing changelog.
 5. Publish the GitHub release. For a test release, select the prerelease option; the platforms receive the beta channel.
 6. Open **Actions → Publish both editions** and wait for the build and upload jobs to finish. The GitHub release is visible before the jars finish uploading.
 7. Confirm the release has exactly the two production jars above, and check both entries on both platforms for the correct Minecraft version, loader, title format, and changelog. Verify existing project titles, summaries, descriptions, and branding remain unchanged. CurseForge files may await moderation before appearing publicly.
