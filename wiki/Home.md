@@ -1,6 +1,6 @@
 # Safepaths 2.5.0
 
-Let your journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.
+Let journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.
 
 Supports **Minecraft 1.21.1 with NeoForge** and **Minecraft 1.20.1 with Forge**. Choose the download for your version and loader.
 
