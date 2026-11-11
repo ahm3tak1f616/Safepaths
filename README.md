@@ -1,4 +1,4 @@
-# <img src="common/src/main/resources/icon.png" alt="" width="40" height="40"> Safepaths (MineColonies)
+# Safepaths
 
 <p align="center">
   <img src="docs/assets/safepaths-banner-2.5.png" alt="A golden path winds across a grassy island toward subtle timber-framed settlement silhouettes." width="1000">
