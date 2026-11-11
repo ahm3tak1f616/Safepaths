@@ -36,12 +36,16 @@ public class PathCreationEvent {
     public static final TagKey<EntityType<?>> PATH_BLOCKED = TagKey.create(Registries.ENTITY_TYPE, PathPlatform.id("safepaths", "path_blocked"));
 
     private static final Map<Entity, BlockPos> LAST_POSITIONS = new WeakHashMap<>();
-    private static final Map<Entity, Long> LAST_PATH_TICKS = new WeakHashMap<>();
+    private record RoadContact(long tick, double speed) {}
+    private static final Map<Entity, RoadContact> LAST_PATH_TICKS = new WeakHashMap<>();
 
     private static List<? extends String> lastRawConversions = null;
     private static Map<Block, Block> customConversionMap = Collections.emptyMap();
     private static Set<Block> customTargetBlocks = Collections.emptySet();
     private static Set<Block> speedOnlyBlocks = Collections.emptySet();
+
+    private static Map<Block, PathConversionRule> conversionRules = Collections.emptyMap();
+    private static Map<Block, PathConversionRule> roadRules = Collections.emptyMap();
 
     private static void updateConversionCache() {
         List<? extends String> currentRaw = PathConfig.CUSTOM_CONVERSIONS.get();
@@ -51,51 +55,42 @@ public class PathCreationEvent {
         Map<Block, Block> newMap = new LinkedHashMap<>();
         Set<Block> newSpeedOnly = new HashSet<>();
 
+        Map<Block, PathConversionRule> newRules = new LinkedHashMap<>();
         if (currentRaw != null) {
             for (String rawEntry : currentRaw) {
-                if (rawEntry == null || !rawEntry.contains("->")) continue;
-
-                String entry = rawEntry;
-                if (rawEntry.contains("@")) {
-                    String[] speedParts = rawEntry.split("@");
-                    entry = speedParts[0].trim();
-                }
-
-                String[] parts = entry.split("->");
-                if (parts.length != 2) continue;
-
-                ResourceLocation sourceId = ResourceLocation.tryParse(parts[0].trim());
-                ResourceLocation targetId = ResourceLocation.tryParse(parts[1].trim());
-
-                if (sourceId != null && targetId != null
-                        && BuiltInRegistries.BLOCK.containsKey(sourceId)
-                        && BuiltInRegistries.BLOCK.containsKey(targetId)) {
-                    Block src = BuiltInRegistries.BLOCK.get(sourceId);
-                    Block tgt = BuiltInRegistries.BLOCK.get(targetId);
-                    if (!src.defaultBlockState().isAir() && isSafeRoadState(tgt.defaultBlockState())) {
-                        if (src == tgt) {
-                            if (!newMap.containsKey(src)) {
-                                newSpeedOnly.add(src);
-                            }
-                        } else {
-                            newSpeedOnly.remove(src);
-                            newMap.putIfAbsent(src, tgt);
-                        }
+                PathConversionRule rule = PathConversionRule.parse(rawEntry);
+                if (rule == null || rule.problem() != null) continue;
+                Block source = BuiltInRegistries.BLOCK.get(rule.source());
+                Block target = BuiltInRegistries.BLOCK.get(rule.target());
+                if (source == target) {
+                    if (!newMap.containsKey(source)) {
+                        newSpeedOnly.add(source);
+                        newRules.putIfAbsent(source, rule);
+                    }
+                } else {
+                    newSpeedOnly.remove(source);
+                    if (newMap.putIfAbsent(source, target) == null) {
+                        newRules.put(source, rule);
                     }
                 }
             }
         }
+        Map<Block, PathConversionRule> newRoadRules = new HashMap<>();
+        for (PathConversionRule rule : newRules.values()) {
+            newRoadRules.putIfAbsent(BuiltInRegistries.BLOCK.get(rule.target()), rule);
+        }
+        for (Block block : newSpeedOnly) {
+            newRoadRules.put(block, newRules.get(block));
+        }
+        conversionRules = Collections.unmodifiableMap(newRules);
+        roadRules = Collections.unmodifiableMap(newRoadRules);
         customConversionMap = Collections.unmodifiableMap(newMap);
         customTargetBlocks = Set.copyOf(newMap.values());
         speedOnlyBlocks = Collections.unmodifiableSet(newSpeedOnly);
         lastRawConversions = currentRaw;
     }
 
-    private static boolean isSafeRoadState(BlockState state) {
-        return !state.isAir() && !state.liquid() && state.blocksMotion() && !state.hasBlockEntity();
-    }
-
-    private static boolean canRemainAt(ServerLevel level, BlockPos pos, BlockState state) {
+    static boolean canRemainAt(ServerLevel level, BlockPos pos, BlockState state) {
         return state.canSurvive(level, pos) && (!(state.getBlock() instanceof FallingBlock)
                 || !FallingBlock.isFree(level.getBlockState(pos.below())));
     }
@@ -130,6 +125,9 @@ public class PathCreationEvent {
             return customTarget.defaultBlockState();
         }
 
+        if (originalState.is(Blocks.MUD) || originalState.is(Blocks.MOSS_BLOCK)) {
+            return Blocks.DIRT_PATH.defaultBlockState();
+        }
         BlockState flattened = ShovelItem.getShovelPathingState(originalState);
         if (flattened != null && !flattened.isAir()) {
             return flattened;
@@ -159,15 +157,26 @@ public class PathCreationEvent {
         return type.is(PATH_CREATORS);
     }
 
-    private static boolean isProtectedFromPathing(BlockState state) {
-        if (state.hasBlockEntity() || state.is(Blocks.FARMLAND) || isPathBlock(state) || state.is(CANNOT_BECOME_PATH)) {
-            return true;
-        }
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-        return blockId.getPath().contains("farmland") || blockId.getNamespace().equals("minecolonies");
+    public static boolean isProtectedFromPathing(BlockState state) {
+        return PathConversionRule.isProtectedSource(state) || isPathBlock(state);
     }
 
-    private static boolean isEntityOnOrNearPath(LivingEntity entity, Level level) {
+    public static double speedMultiplier(ServerLevel level, BlockPos pos, BlockState state) {
+        if (!PathConfig.ENABLE_SPEED_BOOST.get() || !isPathBlock(state)) return 0.0;
+        updateConversionCache();
+        Block block = state.getBlock();
+        PathConversionRule rule = roadRules.get(block);
+        PathMemorySavedData.PathData path = PathMemorySavedData.get(level).getPath(pos);
+        if (path != null && path.originalState != null && state.is(path.targetPathBlock) && !speedOnlyBlocks.contains(block)) {
+            PathConversionRule sourceRule = conversionRules.get(path.originalState.getBlock());
+            if (sourceRule != null && BuiltInRegistries.BLOCK.get(sourceRule.target()) == block) {
+                rule = sourceRule;
+            }
+        }
+        return rule != null && rule.speed() != null ? rule.speed() : PathConfig.SPEED_MULTIPLIER.get();
+    }
+
+    private static Double speedOnOrNearPath(LivingEntity entity, ServerLevel level) {
         AABB box = entity.getBoundingBox();
         int minX = Mth.floor(box.minX);
         int maxX = Mth.floor(box.maxX);
@@ -176,28 +185,29 @@ public class PathCreationEvent {
         int minY = Mth.floor(box.minY - 1.0);
         int maxY = Mth.floor(box.minY - 0.05);
 
+        Double speed = null;
         BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
         for (int y = maxY; y >= minY; y--) {
             for (int x = minX; x <= maxX; x++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     mpos.set(x, y, z);
-                    if (isPathBlock(level.getBlockState(mpos))) {
-                        return true;
+                    if (level.isLoaded(mpos) && isPathBlock(level.getBlockState(mpos))) {
+                        double candidate = speedMultiplier(level, mpos, level.getBlockState(mpos));
+                        speed = speed == null ? candidate : Math.max(speed, candidate);
                     }
                 }
             }
         }
-        return false;
+        return speed;
     }
 
-    private static void syncSpeedBoost(LivingEntity livingEntity, Level level, BlockState stateBelow, long currentTick) {
+    private static void syncSpeedBoost(LivingEntity livingEntity, ServerLevel level, BlockState stateBelow, long currentTick) {
         AttributeInstance attribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
         if (attribute == null) {
             return;
         }
 
-        double multiplier = PathConfig.SPEED_MULTIPLIER.get();
-        if (!PathConfig.ENABLE_SPEED_BOOST.get() || !Double.isFinite(multiplier) || multiplier <= 0.0) {
+        if (!PathConfig.ENABLE_SPEED_BOOST.get()) {
             LAST_PATH_TICKS.remove(livingEntity);
             PathPlatform.removeSpeedModifier(attribute);
             return;
@@ -213,17 +223,19 @@ public class PathCreationEvent {
             return;
         }
 
-        if (isPathBlock(stateBelow) || isEntityOnOrNearPath(livingEntity, level)) {
-            LAST_PATH_TICKS.put(livingEntity, currentTick);
+        Double contactSpeed;
+        if (isPathBlock(stateBelow)) {
+            contactSpeed = speedMultiplier(level, livingEntity.getOnPos(), stateBelow);
+        } else {
+            contactSpeed = speedOnOrNearPath(livingEntity, level);
         }
-
-        boolean shouldBoost = false;
-        if (PathConfig.ENABLE_SPEED_BOOST.get() && multiplier > 0.0) {
-            Long lastTick = LAST_PATH_TICKS.get(livingEntity);
-            if (lastTick != null && currentTick - lastTick <= 15) {
-                shouldBoost = true;
-            }
+        if (contactSpeed != null) {
+            LAST_PATH_TICKS.put(livingEntity, new RoadContact(currentTick, contactSpeed));
         }
+        RoadContact lastContact = LAST_PATH_TICKS.get(livingEntity);
+        double multiplier = lastContact == null ? 0.0 : lastContact.speed();
+        boolean shouldBoost = lastContact != null && currentTick - lastContact.tick() <= 15
+                && Double.isFinite(multiplier) && multiplier > 0.0;
 
         AttributeModifier existing = PathPlatform.speedModifier(attribute);
         if (shouldBoost) {
@@ -262,7 +274,7 @@ public class PathCreationEvent {
         BlockState stateBelow = level.getBlockState(posBelow);
         long currentTick = level.getGameTime();
 
-        syncSpeedBoost(livingEntity, level, stateBelow, currentTick);
+        syncSpeedBoost(livingEntity, serverLevel, stateBelow, currentTick);
 
         if (!canCreatePath(livingEntity) || !livingEntity.onGround()
                 || (livingEntity instanceof Player player && player.getAbilities().flying)) {
@@ -287,7 +299,9 @@ public class PathCreationEvent {
         if (lastPos == null || !lastPos.equals(posBelow)) {
             LAST_POSITIONS.put(livingEntity, posBelow);
 
-            if (isProtectedFromPathing(stateBelow)) {
+            if (isProtectedFromPathing(stateBelow) || !PathConfig.ENABLE_PATH_CREATION.get()
+                    || (PathConfig.SNEAK_PREVENTS_PATH_CREATION.get()
+                    && livingEntity instanceof Player player && player.isShiftKeyDown())) {
                 return;
             }
 
@@ -297,7 +311,7 @@ public class PathCreationEvent {
         }
     }
 
-    private static boolean canTrample(ServerLevel level, BlockPos pos, LivingEntity actor) {
+    static boolean canTrample(ServerLevel level, BlockPos pos, LivingEntity actor) {
         return !PathPlatform.isModLoaded("minecolonies") || MineColoniesProtection.canTrample(level, pos, actor);
     }
 
@@ -320,7 +334,7 @@ public class PathCreationEvent {
 
         if (steps >= PathConfig.REQUIRED_PASSES.get()) {
             BlockState pathState = determinePathState(stateBelow);
-            if (pathState != null && isSafeRoadState(pathState) && canRemainAt(level, posBelow, pathState)
+            if (pathState != null && PathConversionRule.isSafeRoad(pathState) && canRemainAt(level, posBelow, pathState)
                     && level.setBlockAndUpdate(posBelow, pathState)) {
                 PathMemorySavedData.PathData path = new PathMemorySavedData.PathData(stateBelow, pathState.getBlock(), currentTick);
                 recordCreator(level, posBelow, actor, path);
@@ -363,7 +377,7 @@ public class PathCreationEvent {
                 return true;
             }
 
-            if (currentTick - data.lastTime > decayTime) {
+            if (PathConfig.ENABLE_PATH_DECAY.get() && currentTick - data.lastTime > decayTime) {
                 if (PathPlatform.isModLoaded("minecolonies") && !MineColoniesProtection.canDecay(serverLevel, pos, data)) {
                     return false;
                 }

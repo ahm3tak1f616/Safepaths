@@ -1,5 +1,7 @@
 # Getting started
 
+These instructions cover **Safepaths 2.5.0** on both supported editions.
+
 ## Install
 
 | Minecraft | Loader | Java | Download ends with |
@@ -27,6 +29,10 @@ Open **Mods → Safepaths → Config** from the loader's Mods menu. On a dedicat
 
 [Settings reference](Configuration-Guide) · [Conversion editor](In-Game-Configuration-and-GUI)
 
-## Update
+The settings tabs control creation, decay, and speed separately. Use **Block Conversions...** to choose source and road blocks and optional per-conversion speed. The main **Done** saves settings and conversions together; **Cancel** discards both.
 
-Back up your world, replace the old Safepaths jar with the matching new one, and restart. Existing configuration and path records remain readable. The safety fixes prevent new holes from unsupported falling terrain; they do not repair missing blocks from older versions.
+Operators can use [`/safepaths inspect`](Inspect-Command) to diagnose path progress, speed, and restoration.
+
+## Update to 2.5.0
+
+Back up your world, replace the old Safepaths jar with the matching new one, and restart. Existing configuration and path records remain readable. New switches use their defaults; older conversions without a speed override keep inheriting the global bonus. GUI speed fields use percentages (enter `12.5` for +12.5%); TOML stores fractions (`0.125`). The safety fixes prevent new holes from unsupported falling terrain; they do not repair missing blocks from older versions.

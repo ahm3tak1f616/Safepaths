@@ -66,10 +66,44 @@ tasks.register('test') {
 tasks.named('check') { dependsOn 'runGameTestServer' }
 tasks.named('assemble') { dependsOn 'collectJars' }
 
+def descriptionKeys = [
+        'fml.menu.mods.info.description.safepaths',
+        'neoforge.screen.mods.info.description.safepaths',
+        'modmenu.descriptionTranslation.safepaths'
+]
+
+tasks.register('verifyDescriptions') {
+    group = 'verification'
+    description = 'Checks project introductions and translated description aliases against their shared sources.'
+    doLast {
+        if (!mod_description || mod_description.length() > 250) {
+            throw new GradleException('mod_description must contain 1–250 characters')
+        }
+        def introductions = [
+                'README.md': ~/(<\/p>\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/,
+                'wiki/Home.md': ~/(^# [^\r\n]+\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/
+        ]
+        introductions.each { path, pattern ->
+            def intro = pattern.matcher(file(path).getText('UTF-8'))
+            if (!intro.find() || intro.group(2) != mod_description) {
+                throw new GradleException("${path} introduction differs from mod_description; run node .github/scripts/sync-descriptions.mjs --write")
+            }
+        }
+        fileTree('common/src/main/resources/assets/safepaths/lang').matching { include '*.json' }.each { language ->
+            def values = new groovy.json.JsonSlurper().parse(language, 'UTF-8')
+            def canonical = language.name == 'en_us.json' ? mod_description : values[descriptionKeys.first()]
+            if (!(canonical instanceof String) || canonical.isBlank() || descriptionKeys.any { values[it] != canonical }) {
+                throw new GradleException("Inconsistent description aliases in ${language.name}")
+            }
+        }
+        logger.lifecycle('Verified shared project descriptions')
+    }
+}
+
 tasks.register('verifyJars') {
     group = 'verification'
     description = 'Checks the production jars contain the correct loader, bytecode, and shared resources.'
-    dependsOn 'collectJars'
+    dependsOn 'collectJars', 'verifyDescriptions'
     doLast {
         targets.each { name, target ->
             def artifact = layout.buildDirectory.file("libs/${mod_id}-${mod_version}-${target.suffix}.jar").get().asFile
@@ -101,6 +135,19 @@ tasks.register('verifyJars') {
                 if (metadata.contains('${')) throw new GradleException("Unexpanded metadata in ${artifact.name}")
                 if (!(metadata =~ /(?m)^version\s*=\s*"${java.util.regex.Pattern.quote(mod_version)}"\s*$/).find()) {
                     throw new GradleException("Wrong mod version in ${artifact.name}")
+                }
+                if (!metadata.contains('description="' + mod_description + '"')) {
+                    throw new GradleException("Wrong project description in ${artifact.name}")
+                }
+                ['de_de', 'en_us', 'es_es', 'fr_fr', 'ja_jp', 'pt_br', 'ru_ru', 'tr_tr', 'zh_cn'].each { language ->
+                    def path = "assets/safepaths/lang/${language}.json"
+                    def source = new groovy.json.JsonSlurper().parse(file("common/src/main/resources/${path}"), 'UTF-8')
+                    def packaged = zip.getInputStream(zip.getEntry(path)).withCloseable {
+                        new groovy.json.JsonSlurper().parseText(it.getText('UTF-8'))
+                    }
+                    if (descriptionKeys.any { packaged[it] != source[descriptionKeys.first()] }) {
+                        throw new GradleException("Wrong ${language} description in ${artifact.name}")
+                    }
                 }
                 if (!neo && !metadata.contains('displayTest="IGNORE_SERVER_VERSION"')) {
                     throw new GradleException("Forge client compatibility must be optional in ${artifact.name}")

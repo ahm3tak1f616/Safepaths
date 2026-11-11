@@ -1,8 +1,8 @@
 package com.ahmetakif.safepaths;
 
 import net.minecraft.core.BlockPos;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -17,6 +17,11 @@ import net.minecraftforge.event.TickEvent;
 
 @Mod.EventBusSubscriber(modid = "safepaths")
 public final class PathEvents {
+    @SubscribeEvent
+    public static void onRegisterCommands(RegisterCommandsEvent event) {
+        PathCommands.register(event.getDispatcher());
+    }
+
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         PathCreationEvent.tickEntity(event.getEntity());

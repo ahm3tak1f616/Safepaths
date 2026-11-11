@@ -5,6 +5,7 @@
 - [Road speed](Speed-Boosts-and-Roadways)
 - [Conversion editor](In-Game-Configuration-and-GUI)
 - [Configuration](Configuration-Guide)
+- [Inspect command](Inspect-Command)
 - [Datapack tags](Block-and-Entity-Tags)
 - [Compatibility](Compatibility-and-Integrations)
 - [Troubleshooting](FAQ-and-Troubleshooting)

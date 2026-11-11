@@ -4,16 +4,20 @@ One mod version covers both editions. One GitHub release starts the build and pu
 
 ## Files and platform entries
 
-For a release such as `2.0.3`:
+The prepared release version is **2.5.0**. Creating or editing these files does not publish it.
+
+The selected branding is the modern icon (option B), stored at `common/src/main/resources/icon.png` and used by both mod menus and the README heading. Use this same PNG for the CurseForge and Modrinth project icons. Its editable source is `docs/assets/safepaths-icon-modern-2.5.svg`; the shared banner is `docs/assets/safepaths-banner-2.5.png`.
+
+The banner's editable source is `docs/assets/safepaths-banner.svg`. Keep this stable path because existing project pages link to it directly. Export its PNG to the versioned banner file used by the README.
 
 | Edition | File | Display name on CurseForge and Modrinth |
 | --- | --- | --- |
-| Forge 1.20.1 | `safepaths-2.0.3-1.20.1-forge.jar` | Safepaths 2.0.3 (Forge 1.20.1) |
-| NeoForge 1.21.1 | `safepaths-2.0.3-1.21.1-neoforge.jar` | Safepaths 2.0.3 (NeoForge 1.21.1) |
+| Forge 1.20.1 | `safepaths-2.5.0-1.20.1-forge.jar` | Safepaths 2.5.0 (Forge 1.20.1) |
+| NeoForge 1.21.1 | `safepaths-2.5.0-1.21.1-neoforge.jar` | Safepaths 2.5.0 (NeoForge 1.21.1) |
 
-Both entries use mod version `2.0.3`, the same changelog, and the same release channel. Each has its own Minecraft version, loader, Java version, and optional MineColonies dependency.
+Both entries use mod version `2.5.0`, the same changelog, and the same release channel. Each has its own Minecraft version, loader, Java version, and optional MineColonies dependency.
 
-- **GitHub:** both jars are assets on one release, tagged `v2.0.3`.
+- **GitHub:** both jars are assets on one release, tagged `v2.5.0`.
 - **CurseForge:** upload two normal files to the same project. Each file needs its own game and loader tags. Do not use Additional Files for the other edition; the CurseForge client does not support those as normal downloads.
 - **Modrinth:** create two version entries in the same project. Each entry has one primary jar and its own game and loader tags. Metadata belongs to the version entry, so combining these jars in one entry would mix incompatible targets. Modrinth permits repeated version numbers; use each entry's version ID or the project's game/loader filters for direct selection.
 
@@ -22,12 +26,14 @@ References: [CurseForge file types](https://support.curseforge.com/support/solut
 ## Release steps
 
 1. Merge the reviewed changes into `main` after CI and client checks pass.
-2. Set the new `mod_version` in the root `gradle.properties`. Use a new version; `2.0.2` is already published.
-3. Move the relevant changelog notes from Unreleased into the new version and commit the release preparation to `main`.
-4. Create a GitHub release from that commit with tag `v<mod_version>`, for example `v2.0.3`. Use a short title such as `Safepaths 2.0.3` and paste the player-facing changelog.
+2. Confirm `mod_version=2.5.0` in the root `gradle.properties` and verify the release tag will be `v2.5.0`. Do not reuse a published version.
+3. Review the prepared `2.5.0` section in `CHANGELOG.md`, add the actual release date when publishing, and commit the release preparation to `main`. Keep older release notes intact.
+4. Create a GitHub release from that commit with tag `v<mod_version>`, for example `v2.5.0`. Use a short title such as `Safepaths 2.5.0` and paste the player-facing changelog.
 5. Publish the GitHub release. For a test release, select the prerelease option; the platforms receive the beta channel.
 6. Open **Actions → Publish both editions** and wait for the build and upload jobs to finish. The GitHub release is visible before the jars finish uploading.
 7. Confirm the release has exactly the two production jars above, and check both entries on both platforms for the correct Minecraft version and loader. CurseForge files may await moderation before appearing publicly.
+
+The wiki source under `wiki/` synchronizes when pushed to `main`. The shared description is `mod_description` in the root `gradle.properties`. Run `node .github/scripts/sync-descriptions.mjs --write` after changing it, then `--check` to check the README, wiki introduction, and language aliases. Both packaged mod descriptions and the Modrinth summary read that same value. Modrinth's long body comes from `README.md`; their workflow also runs on matching changes to `main`. The CurseForge file changelog comes from the GitHub release body; this repository does not automatically replace the CurseForge project description. Use the same `mod_description` for the GitHub About text and CurseForge summary, and the player-facing part of `README.md` for the CurseForge description. These two summaries are updated separately from repository files; editing local sources does not change live pages.
 
 The release workflow builds and tests both editions once, verifies the jars, and stores them as an artifact. The GitHub, Modrinth, and CurseForge jobs download that artifact; they do not rebuild independently. Project-page synchronization runs after uploads finish and links to the release tag.
 

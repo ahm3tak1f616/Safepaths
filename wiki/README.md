@@ -1,6 +1,6 @@
 # Wiki source
 
-These files maintain the [Safepaths wiki](https://github.com/ahm3tak1f616/Safepaths/wiki). Keep instructions valid for both supported editions, and name version-specific differences explicitly.
+These files document **Safepaths 2.5.0** and maintain the [Safepaths wiki](https://github.com/ahm3tak1f616/Safepaths/wiki). Keep instructions valid for both supported editions, and name version-specific differences explicitly.
 
 Changes under `wiki/` sync after they reach `main`. The GitHub wiki repository must exist before the sync workflow runs. `_Sidebar.md` and `_Footer.md` provide wiki navigation.
 

@@ -10,7 +10,7 @@ Farmland, block entities, and blocks with a `minecolonies` ID are protected from
 
 ## Included biome conversions
 
-Defaults cover the following block IDs when both source and target exist in the installed mods. Unavailable IDs are ignored.
+Defaults cover the following block IDs when both source and target exist in the installed mods. Rules for unavailable IDs remain listed in the editor but are inactive until both blocks are installed and the rule is safe.
 
 | Mod | Ground | Path |
 | --- | --- | --- |

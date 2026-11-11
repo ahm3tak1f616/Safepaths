@@ -8,7 +8,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 logoFile="icon.png"
 authors="ahm3tak1f616"
-description="Create paths by walking over ground. Configure road speed and let unused paths return to their original terrain. MineColonies support is optional."
+description="${mod_description}"
 
 [[dependencies.safepaths]]
 modId="neoforge"

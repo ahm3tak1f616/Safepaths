@@ -1,6 +1,7 @@
 package com.ahmetakif.safepaths;
 
 import net.minecraft.core.BlockPos;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LevelAccessor;
@@ -17,6 +18,11 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 @EventBusSubscriber(modid = "safepaths")
 public final class PathEvents {
+    @SubscribeEvent
+    public static void onRegisterCommands(RegisterCommandsEvent event) {
+        PathCommands.register(event.getDispatcher());
+    }
+
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity living) PathCreationEvent.tickEntity(living);

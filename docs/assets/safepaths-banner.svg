@@ -1,52 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="280" viewBox="0 0 1000 280" role="img" aria-labelledby="title desc">
-  <title id="title">Paths form where you walk</title>
-  <desc id="desc">A winding golden trail connects grassy blocks. Safepaths for Minecraft Forge and NeoForge.</desc>
-  <defs>
-    <linearGradient id="background" x2="1" y2="1">
-      <stop stop-color="#122c24"/>
-      <stop offset="1" stop-color="#254b32"/>
-    </linearGradient>
-    <pattern id="grass" width="44" height="44" patternUnits="userSpaceOnUse">
-      <rect width="44" height="44" fill="#41683c"/>
-      <path d="M4 8h8v4H4zm21 17h10v5H25zM9 33h5v3H9z" fill="#547d45"/>
-      <path d="M26 3h6v4h-6zM0 23h7v4H0z" fill="#365c33"/>
-    </pattern>
-    <clipPath id="panel"><rect width="1000" height="280" rx="20"/></clipPath>
-    <clipPath id="surface"><path d="m12 99 172-86 216 99-172 86z"/></clipPath>
-  </defs>
-  <g clip-path="url(#panel)">
-    <rect width="1000" height="280" fill="url(#background)"/>
-    <path d="M522-40 1050 80M472 15l578 132M472 83l578 132M472 151l578 132M472 219l578 132" stroke="#a9c394" stroke-opacity=".07" stroke-width="1"/>
-    <g font-family="Segoe UI, Arial, sans-serif">
-      <text x="44" y="48" fill="#adcba7" font-size="12" font-weight="700" letter-spacing="2">MINECRAFT · FORGE + NEOFORGE</text>
-      <text x="42" y="114" fill="#f5f3dd" font-size="42" font-weight="750">Paths form</text>
-      <text x="42" y="163" fill="#f5f3dd" font-size="42" font-weight="750">where you walk.</text>
-      <text x="44" y="208" fill="#bfd2b3" font-size="16">Walk a route. Make a trail. Find your way home.</text>
-      <rect x="44" y="232" width="42" height="3" rx="1.5" fill="#d6b16f"/>
-    </g>
-    <g transform="translate(553 38)">
-      <path d="m20 116 176-89 220 101-171 94z" fill="#091c15" opacity=".4"/>
-      <path d="m12 99 172-86 216 99v34l-172 88L12 133z" fill="#61472f"/>
-      <path d="m228 198 172-86v34l-172 88z" fill="#493a29"/>
-      <path d="m12 99 172-86 216 99-172 86z" fill="url(#grass)"/>
-      <path d="m12 99 216 99 172-86v9l-172 86L12 108z" fill="#7c994a"/>
-      <g clip-path="url(#surface)">
-        <path d="m45 116 83-41 65 30 76-38 79 36-116 58-61-28-79 40z" fill="#b68d52"/>
-        <path d="m59 116 69-34 65 30 76-38 65 29-102 51-61-28-79 39z" fill="#caa568"/>
-        <path d="m100 99 11 5m29-2 11 5m38 17 11-5m31-14 11-5m39-7 11 5m-64 32 11-5m-58 18 11 5m-64-1 11-5" stroke="#947040" stroke-width="3"/>
-      </g>
-      <g fill="#90b86a">
-        <path d="m58 94 5-12 4 10 5-5-2 10zM173 44l5-12 4 10 5-5-2 10zM322 144l5-12 4 10 5-5-2 10z"/>
-        <path d="m210 172 4-10 4 9 5-4-2 8zM354 112l4-10 4 9 5-4-2 8z"/>
-      </g>
-      <g fill="#f0d688">
-        <rect x="67" y="133" width="4" height="4"/>
-        <rect x="278" y="141" width="4" height="4"/>
-        <rect x="200" y="56" width="4" height="4"/>
-      </g>
-      <g fill="#b88c5c" opacity=".5">
-        <path d="m35 124 10 5v5l-10-5zM69 143l7 3v4l-7-3zM163 186l11 5v5l-11-5z"/>
-      </g>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="480" viewBox="0 0 1600 480" role="img" aria-labelledby="title desc">
+<title id="title">Safepaths — Paths form where you walk</title>
+<desc id="desc">A golden winding trail crosses a grassy island toward a quiet timber-framed settlement. The settlement is a subtle nod to optional MineColonies support.</desc>
+<defs>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d211c"/><stop offset=".6" stop-color="#17362a"/><stop offset="1" stop-color="#31543a"/></linearGradient>
+<linearGradient id="meadow" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#719457"/><stop offset="1" stop-color="#41693f"/></linearGradient>
+<linearGradient id="trail" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dfc28a"/><stop offset="1" stop-color="#b8965b"/></linearGradient>
+<radialGradient id="air"><stop stop-color="#a5be7b" stop-opacity=".16"/><stop offset="1" stop-color="#a5be7b" stop-opacity="0"/></radialGradient>
+<pattern id="grassDetail" width="52" height="36" patternUnits="userSpaceOnUse"><path d="M4 9h10v3H4zm28 17h8v3h-8z" fill="#a1b379" opacity=".45"/><path d="M33 6h8v3h-8zM13 28h7v3h-7z" fill="#294f35" opacity=".5"/></pattern>
+<clipPath id="islandClip"><path d="M0 180 330 28 640 180 310 344Z"/></clipPath>
+<clipPath id="bannerClip"><rect width="1600" height="480" rx="24"/></clipPath>
+</defs>
+<g clip-path="url(#bannerClip)">
+<rect width="1600" height="480" fill="url(#night)"/>
+<ellipse cx="1180" cy="200" rx="570" ry="400" fill="url(#air)"/>
+<g stroke="#c1d0ae" stroke-opacity=".045" fill="none"><path d="m790 0 810 375M790 85l810 375M900 0 700 325M1100 0 500 235M720 0l880 410"/></g>
+<g font-family="Segoe UI, Arial, sans-serif">
+<text x="64" y="78" fill="#aac49e" font-size="18" font-weight="700" letter-spacing="4">SAFEPATHS</text>
+<text x="60" y="169" fill="#f5f3df" font-size="76" font-weight="750" letter-spacing="-2">Paths form</text>
+<text x="60" y="251" fill="#f5f3df" font-size="76" font-weight="750" letter-spacing="-2">where you walk.</text>
+<text x="64" y="311" fill="#c4d4b7" font-size="22">Walk a route. Make a trail. Find your way home.</text>
+<rect x="64" y="356" width="48" height="4" rx="2" fill="#d6b16f"/>
+<text x="64" y="409" fill="#9ab795" font-size="16" font-weight="600" letter-spacing="1.5">MINECRAFT · FORGE + NEOFORGE</text>
+</g>
+<ellipse cx="1190" cy="417" rx="280" ry="22" fill="#061a12" opacity=".38"/>
+<g transform="translate(875 40)"><path d="M0 180 330 28 640 180 310 344v32L0 212Z" fill="#705334"/>
+<path d="m310 344 330-164v32L310 376Z" fill="#453d2a"/>
+<path d="M0 180 310 344v9L0 189Z" fill="#9ca064" opacity=".45"/>
+<path d="M0 180 330 28 640 180 310 344Z" fill="url(#meadow)"/>
+<path d="M0 180 330 28 640 180 310 344Z" fill="url(#grassDetail)" opacity=".35"/><g clip-path="url(#islandClip)">
+<path d="M285 355C226 322 154 289 210 261S352 234 348 199 265 164 284 131 341 96 376 80" fill="none" stroke="#796943" stroke-width="64"/>
+<path d="M285 355C226 322 154 289 210 261S352 234 348 199 265 164 284 131 341 96 376 80" fill="none" stroke="url(#trail)" stroke-width="51"/>
+<path d="m213 271 13 7m48-32 14-6m47-44-12-5m-18-48-11 5m30-40 11-5" stroke="#8d784a" stroke-width="4" opacity=".5"/>
+</g><g transform="translate(352 105) scale(0.65)" opacity="0.52">
+<path d="m0 0-70-34v-70L0-70Z" fill="#809273"/>
+<path d="m0 0 70-34v-70L0-70Z" fill="#526c53"/>
+<path d="M0-70 70-104 35-135Z" fill="#9ca786"/>
+<path d="m-70-104 35-65 70 34L0-70Z" fill="#2b4538" stroke="#789174" stroke-width="2"/>
+<path d="m35-135 35 31-70-34-35-31Z" fill="#41604b"/>
+<path d="M0 0v-70m-70 16 70 34 70-34m-112-37v70m84-89v70m-7-92 3 55" fill="none" stroke="#304d3a" stroke-width="6"/>
+<path d="m-50-68 18 9v22l-18-9Zm75 17 18-9v23l-18 9Z" fill="#dfbf78" opacity=".65"/>
+<path d="m50-25 12-6v21L50-4Z" fill="#294333"/>
+</g><g transform="translate(505 160) scale(0.48)" opacity="0.4">
+<path d="m0 0-70-34v-70L0-70Z" fill="#809273"/>
+<path d="m0 0 70-34v-70L0-70Z" fill="#526c53"/>
+<path d="M0-70 70-104 35-135Z" fill="#9ca786"/>
+<path d="m-70-104 35-65 70 34L0-70Z" fill="#2b4538" stroke="#789174" stroke-width="2"/>
+<path d="m35-135 35 31-70-34-35-31Z" fill="#41604b"/>
+<path d="M0 0v-70m-70 16 70 34 70-34m-112-37v70m84-89v70m-7-92 3 55" fill="none" stroke="#304d3a" stroke-width="6"/>
+<path d="m-50-68 18 9v22l-18-9Zm75 17 18-9v23l-18 9Z" fill="#dfbf78" opacity=".65"/>
+<path d="m50-25 12-6v21L50-4Z" fill="#294333"/>
+</g><g transform="translate(144 163) scale(0.4)" opacity="0.3">
+<path d="m0 0-70-34v-70L0-70Z" fill="#809273"/>
+<path d="m0 0 70-34v-70L0-70Z" fill="#526c53"/>
+<path d="M0-70 70-104 35-135Z" fill="#9ca786"/>
+<path d="m-70-104 35-65 70 34L0-70Z" fill="#2b4538" stroke="#789174" stroke-width="2"/>
+<path d="m35-135 35 31-70-34-35-31Z" fill="#41604b"/>
+<path d="M0 0v-70m-70 16 70 34 70-34m-112-37v70m84-89v70m-7-92 3 55" fill="none" stroke="#304d3a" stroke-width="6"/>
+<path d="m-50-68 18 9v22l-18-9Zm75 17 18-9v23l-18 9Z" fill="#dfbf78" opacity=".65"/>
+<path d="m50-25 12-6v21L50-4Z" fill="#294333"/>
+</g><g fill="#9bb97a" opacity=".75"><path d="m80 186 5-14 4 13 7-6-4 12Zm363-36 5-14 4 13 7-6-4 12ZM372 302l5-14 4 13 7-6-4 12ZM165 146l5-14 4 13 7-6-4 12Z"/></g>
+<g fill="#e0c381" opacity=".8"><rect x="122" y="222" width="5" height="5"/><rect x="463" y="212" width="5" height="5"/><rect x="392" y="254" width="4" height="4"/></g></g>
+<rect x=".5" y=".5" width="1599" height="479" rx="23.5" fill="none" stroke="#bad0a2" stroke-opacity=".12"/>
+</g></svg>

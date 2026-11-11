@@ -197,22 +197,6 @@ public class PathMemorySavedData extends PathSavedDataBridge {
         }
     }
 
-    public void removePathIf(Predicate<Map.Entry<BlockPos, PathData>> filter) {
-        boolean changed = false;
-        Iterator<Map.Entry<BlockPos, PathData>> entries = pathMemory.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<BlockPos, PathData> entry = entries.next();
-            if (filter.test(entry)) {
-                entries.remove();
-                removeChunkPosition(entry.getKey());
-                changed = true;
-            }
-        }
-        if (changed) {
-            setDirty();
-        }
-    }
-
     public void removeLoadedPathsIf(ServerLevel level, Predicate<Map.Entry<BlockPos, PathData>> filter) {
         boolean changed = false;
         Iterator<Map.Entry<Long, Set<BlockPos>>> chunks = pathsByChunk.entrySet().iterator();

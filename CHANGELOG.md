@@ -1,11 +1,24 @@
 # Changelog
 
-## Unreleased
+## 2.5.0
 
+- Added optional speed bonuses per conversion, including permanent roads. Rules without a speed keep using the global bonus.
+- Added separate creation and decay switches, plus an option to prevent path creation while sneaking.
+- Added the operator command `/safepaths inspect [x y z]` to explain progress, road speed, decay, and protection checks.
+- Rebuilt settings into compact creation, decay, and speed tabs, with aligned controls, visible units, source-to-road previews, and an inventory-style searchable block picker.
+- Made speed fields numeric only, with percentages and inherited bonuses shown beside them. Decimal input accepts a dot or comma.
+- Kept settings and conversions in one draft: the main Done saves both, while Cancel discards both. Defaults come from the config specification and wait for confirmation and saving.
+- Kept tab positions stable and gave blocks with missing translations readable fallback names.
+- Kept incomplete editor inputs across resizing and retained inactive rules for optional mods that are not installed.
+- Explained unsafe or conflicting rules in the editor while preserving inventory and farmland protections.
+- Fixed mud and moss being marked pathable without a working default conversion.
 - Preserved the configured speed value when opening and saving the configuration screens.
 - Fixed Forge's server-list compatibility check for servers where clients do not need Safepaths installed.
 - Clearer configuration labels, conversion-editor help, and installation instructions.
-- One release process for the Forge 1.20.1 and NeoForge 1.21.1 downloads.
+- One version and release process for the Forge 1.20.1 and NeoForge 1.21.1 downloads.
+- Updated the mod icon, banner, shared project descriptions, and wiki guides for 2.5.0.
+
+Existing conversion entries without a speed keep inheriting the global bonus. Existing configuration files and path records remain supported. Back up your world before updating.
 
 ## 2.0.2 — 2026-10-28
 

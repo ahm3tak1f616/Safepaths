@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">Safepaths modern icon</title><desc id="desc">A winding golden path through a grassy island, on a deep forest-green background.</desc>
+<defs>
+<linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d211c"/><stop offset=".6" stop-color="#17362a"/><stop offset="1" stop-color="#31543a"/></linearGradient>
+<linearGradient id="meadow" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#719457"/><stop offset="1" stop-color="#41693f"/></linearGradient>
+<linearGradient id="trail" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dfc28a"/><stop offset="1" stop-color="#b8965b"/></linearGradient>
+<radialGradient id="air"><stop stop-color="#a5be7b" stop-opacity=".16"/><stop offset="1" stop-color="#a5be7b" stop-opacity="0"/></radialGradient>
+<pattern id="grassDetail" width="52" height="36" patternUnits="userSpaceOnUse"><path d="M4 9h10v3H4zm28 17h8v3h-8z" fill="#a1b379" opacity=".45"/><path d="M33 6h8v3h-8zM13 28h7v3h-7z" fill="#294f35" opacity=".5"/></pattern>
+<clipPath id="islandClip"><path d="M0 180 330 28 640 180 310 344Z"/></clipPath>
+<clipPath id="bannerClip"><rect width="1600" height="480" rx="24"/></clipPath>
+</defs><rect width="512" height="512" rx="68" fill="url(#night)"/>
+<ellipse cx="260" cy="212" rx="260" ry="250" fill="url(#air)"/>
+<ellipse cx="256" cy="408" rx="207" ry="18" fill="#071a13" opacity=".5"/>
+<g transform="translate(25 88) scale(.72)"><path d="M0 180 330 28 640 180 310 344v32L0 212Z" fill="#705334"/>
+<path d="m310 344 330-164v32L310 376Z" fill="#453d2a"/>
+<path d="M0 180 310 344v9L0 189Z" fill="#9ca064" opacity=".45"/>
+<path d="M0 180 330 28 640 180 310 344Z" fill="url(#meadow)"/>
+<path d="M0 180 330 28 640 180 310 344Z" fill="url(#grassDetail)" opacity=".35"/><g clip-path="url(#islandClip)">
+<path d="M285 355C226 322 154 289 210 261S352 234 348 199 265 164 284 131 341 96 376 80" fill="none" stroke="#796943" stroke-width="64"/>
+<path d="M285 355C226 322 154 289 210 261S352 234 348 199 265 164 284 131 341 96 376 80" fill="none" stroke="url(#trail)" stroke-width="51"/>
+<path d="m213 271 13 7m48-32 14-6m47-44-12-5m-18-48-11 5m30-40 11-5" stroke="#8d784a" stroke-width="4" opacity=".5"/>
+</g><g fill="#9bb97a" opacity=".75"><path d="m80 186 5-14 4 13 7-6-4 12Zm363-36 5-14 4 13 7-6-4 12ZM372 302l5-14 4 13 7-6-4 12ZM165 146l5-14 4 13 7-6-4 12Z"/></g>
+<g fill="#e0c381" opacity=".8"><rect x="122" y="222" width="5" height="5"/><rect x="463" y="212" width="5" height="5"/><rect x="392" y="254" width="4" height="4"/></g></g>
+<rect x="1" y="1" width="510" height="510" rx="67" fill="none" stroke="#c0d2ad" stroke-opacity=".15"/>
+</svg>

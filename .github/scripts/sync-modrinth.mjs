@@ -4,6 +4,9 @@ const readme = await readFile(new URL('../../README.md', import.meta.url), 'utf8
 const properties = await readFile(new URL('../../gradle.properties', import.meta.url), 'utf8');
 const version = properties.match(/^mod_version=(.+)$/m)?.[1].trim();
 if (!version) throw new Error('Missing mod_version');
+const description = properties.match(/^mod_description=(.+)$/m)?.[1].trim();
+if (!description || description.length > 250) throw new Error('mod_description must contain 1–250 characters');
+if (!readme.replaceAll('\r\n', '\n').includes(`\n\n${description}\n\n`)) throw new Error('README introduction differs from mod_description');
 const repository = process.env.GITHUB_REPOSITORY || 'ahm3tak1f616/Safepaths';
 const ref = encodeURIComponent(process.env.PROJECT_REF || 'main');
 const source = `https://github.com/${repository}/blob/${ref}`;
@@ -13,8 +16,7 @@ const body = readme.split(/\r?\n## Development\r?\n/)[0].trim()
     .replaceAll('](CHANGELOG.md)', `](${source}/CHANGELOG.md)`)
     .replaceAll('](LICENSE)', `](${source}/LICENSE)`);
 const payload = {
-    title: 'Safepaths',
-    description: "Paths form where you walk. Configurable road speed and optional MineColonies support.",
+    description,
     body,
     client_side: 'optional',
     server_side: 'required',

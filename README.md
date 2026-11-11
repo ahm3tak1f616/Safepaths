@@ -1,39 +1,45 @@
-# Safepaths
+# <img src="common/src/main/resources/icon.png" alt="" width="40" height="40"> Safepaths
 
 <p align="center">
-  <img src="docs/assets/safepaths-banner.svg" alt="Paths form where you walk: a winding trail through grassy terrain." width="1000">
+  <img src="docs/assets/safepaths-banner-2.5.png" alt="A golden path winds across a grassy island toward subtle timber-framed settlement silhouettes." width="1000">
 </p>
 
-Turn the routes you use into trails. Walk faster on roads, let unused paths return to nature, and choose how your world changes.
+Repeated footsteps form paths. Configure road speed globally or per conversion, control creation and decay separately, and optionally prevent new paths while sneaking. Unused paths restore their original terrain. MineColonies support is optional.
 
 [![CurseForge](https://img.shields.io/badge/CurseForge-Download-F16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/safepaths)
 [![Modrinth](https://img.shields.io/badge/Modrinth-Download-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/safepaths)
 [![GitHub Releases](https://img.shields.io/badge/GitHub-Releases-24292F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ahm3tak1f616/Safepaths/releases)
 
-[Install](#install) · [Settings](#settings) · [Compatibility](#compatibility) · [Build from source](https://github.com/ahm3tak1f616/Safepaths#development) · [Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki)
+[Install](#install) · [Settings](#settings) · [Compatibility](#compatibility) · [Wiki](https://github.com/ahm3tak1f616/Safepaths/wiki)
 
 <table>
 <tr>
 <td width="50%" valign="top">
-<h3>👣 Natural trails</h3>
-Grass, dirt, sand, and other supported ground become paths after repeated use. The default is <strong>20 passes within one Minecraft day</strong>.
+<h3>👣 Trails shaped by your journeys</h3>
+The routes you walk become part of the landscape. Grass, dirt, sand, and other supported ground turn into paths after repeated use — <strong>20 passes within one Minecraft day</strong> by default. Want to keep a patch untouched? Enable ground protection while sneaking.
 </td>
 <td width="50%" valign="top">
-<h3>⚡ Faster roads</h3>
-Dirt paths and gravel roads give a <strong>20% speed bonus</strong> by default. Add your own road blocks and adjust the bonus.
+<h3>⚡ Roads that reward the journey</h3>
+Enjoy a <strong>20% road speed bonus</strong> by default, or set a different bonus for each conversion. Grass and sand can lead to the same path block while keeping their own bonuses. Add permanent roads from your favorite building materials, too.
 </td>
 </tr>
 <tr>
 <td valign="top">
-<h3>🌿 Paths grow back</h3>
-After <strong>three Minecraft days without use</strong>, tracked paths restore their original terrain. Placed and shovel-made paths do not get a decay timer automatically.
+<h3>🌿 Let nature take the path back</h3>
+Unused tracked paths return to their original terrain after <strong>three Minecraft days</strong> by default. Creation and decay have separate switches, so you choose how the landscape changes. Placed and shovel-made paths are not automatically given a decay timer.
 </td>
 <td valign="top">
-<h3>🏘️ Colony support</h3>
-MineColonies citizens can form paths too. Claimed land follows colony permissions; farmland, block entities, and MineColonies blocks are protected. <strong>MineColonies is optional.</strong>
+<h3>🏘️ At home in your colony</h3>
+MineColonies citizens can form paths as they travel. Colony permissions apply, and farmland, inventories, and MineColonies blocks are protected. <strong>MineColonies is optional</strong> — Safepaths also works on its own.
 </td>
 </tr>
 </table>
+
+## New in 2.5.0
+
+- **Make each route your own:** speed bonuses per conversion, separate creation and decay controls, and optional protection while sneaking.
+- **Choose blocks visually:** compact settings tabs, source-to-road previews, and a searchable inventory-style block picker.
+- **Keep changes together:** the main **Done** saves settings and conversions; **Cancel** discards the whole draft.
 
 ## Install
 
@@ -50,33 +56,19 @@ Choose the jar that matches **both** your Minecraft version and loader:
 
 **Playing on a server?** Install Safepaths on the server. Clients do not need it to use the paths or speed bonus. Settings are controlled by the server owner.
 
-**Updating?** Back up your world and replace the previous Safepaths jar. Keep only one installed version.
+**Updating to 2.5.0?** Back up your world and replace the previous Safepaths jar. Keep only one installed version. Existing configs and path records remain supported; conversion entries without `@ speed` keep using the global bonus.
 
 ## Settings
 
-Open **Mods → Safepaths → Config**, or edit `config/safepaths-common.toml`. On a dedicated server, edit the server's file and restart; the client menu cannot change its settings.
+Open **Mods → Safepaths → Config**. Choose **Creation**, **Decay**, or **Speed**, then open **Block Conversions...** to edit your ground and road choices.
 
-<details>
-<summary><strong>Default settings (TOML)</strong></summary>
+**Your roads, your pace.** Enter `12.5` or `12,5` for a +12.5% bonus. Leave a rule's speed empty to use the global bonus, or enter `0` for no bonus. Time values show their tick unit beside the field.
 
-```toml
-["Path Settings"]
-requiredPasses = 20
-constructionTime = 24000
-decayTime = 72000
-enableSpeedBoost = true
-speedMultiplier = 0.2
-```
+**Permanent roads:** choose the same block for source and road. Gravel already works this way by default. Missing-mod rules stay in your list as inactive entries.
 
-`speedMultiplier = 0.2` adds 20% movement speed. Time values use game ticks: **24,000 ticks = one Minecraft day** at normal tick speed. The construction window starts with the first counted pass.
+**Need to inspect a path?** Operators can use `/safepaths inspect` to see progress, the selected speed, decay, and protection status. The command and its messages also work for clients without Safepaths installed.
 
-</details>
-
-**Permanent roads:** map a block to itself, such as `minecraft:stone_bricks -> minecraft:stone_bricks`. It gains the road speed bonus without changing or decaying. Gravel already has this rule.
-
-**Passes:** move between blocks to count more footsteps. Standing still or jumping in place does not build a path. If restoring sand or gravel would make it fall, the path waits for support.
-
-[All settings](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide) · [Conversion editor](https://github.com/ahm3tak1f616/Safepaths/wiki/In-Game-Configuration-and-GUI) · [Troubleshooting](https://github.com/ahm3tak1f616/Safepaths/wiki/FAQ-and-Troubleshooting)
+[All settings](https://github.com/ahm3tak1f616/Safepaths/wiki/Configuration-Guide) · [Conversion editor](https://github.com/ahm3tak1f616/Safepaths/wiki/In-Game-Configuration-and-GUI) · [Inspect command](https://github.com/ahm3tak1f616/Safepaths/wiki/Inspect-Command)
 
 ## Compatibility
 
@@ -125,8 +117,8 @@ The first build downloads Minecraft and the development dependencies. `build` co
 
 ```text
 build/libs/
-├── safepaths-<version>-1.20.1-forge.jar
-└── safepaths-<version>-1.21.1-neoforge.jar
+├── safepaths-2.5.0-1.20.1-forge.jar
+└── safepaths-2.5.0-1.21.1-neoforge.jar
 ```
 
 Use these jars in Minecraft. An edition's `-sources.jar` or `-javadoc.jar` is a developer artifact, not an installable mod.

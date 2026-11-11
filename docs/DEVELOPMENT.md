@@ -35,7 +35,7 @@ The Gradle window shows three linked builds. The root `safepaths` build coordina
 
 Run data generation from an edition directory with `./gradlew runData -PwithoutMineColonies` (`.\gradlew.bat` on Windows). Use a Gradle run configuration with the same property for IntelliJ Data runs. The optional MineColonies runtime includes Domum Ornamentum, whose data generators require an additional development library. Safepaths data generation uses its own runtime without these optional mods.
 
-The root `gradle.properties` holds mod identity and version. Each edition's properties hold loader, mappings, and dependency versions.
+The root `gradle.properties` holds mod identity, version, and the canonical English `mod_description`. Both loader metadata templates and the Modrinth summary use that description. Run `node .github/scripts/sync-descriptions.mjs --write` to refresh the README/wiki introductions and description aliases; translate the first description key in each non-English language file separately. Root `verifyDescriptions` checks consistency, and `verifyJars` checks the packaged descriptions. Each edition's properties hold loader, mappings, and dependency versions.
 
 ### Dependency source tools
 
@@ -47,7 +47,15 @@ Run `genDependencySources --max-workers=1` with an edition's wrapper to prepare 
 
 CI and CodeQL run on pushes to `main` and pull requests targeting `main`. CI tests both editions with and without MineColonies. The setup action clears location-dependent NeoGradle data; CI passes `--no-build-cache` to avoid restoring classpaths from an older layout.
 
-Also check both clients: create a path, leave it to decay, walk on dirt paths and gravel, edit conversions, reopen the config screen, and check MineColonies permissions if installed. Save an unchanged speed value such as `0.125` and confirm it remains unchanged. Check joining a dedicated server without Safepaths installed on the client. GameTests do not verify client rendering, input, or multiplayer connections.
+Also check both clients: create a path, leave it to decay, walk on dirt paths and gravel, edit conversions, reopen the config screen, and check MineColonies permissions if installed. Save an unchanged speed value such as GUI `12.5` (stored as `0.125`) and confirm it remains unchanged. Check joining a dedicated server without Safepaths installed on the client. GameTests do not verify client rendering, input, or multiplayer connections.
+
+Settings and conversions share one draft: the conversion list's Done returns to settings, and the main Done writes both together. Cancel on the main screen discards both. Reset restores the defaults from the config spec and remains pending until Done. Speed fields contain numbers only; units and inherited speed appear beside them.
+
+The settings menu displays speed in percent: a stored multiplier of `0.125` is shown as `12.5`. Conversion rules accept `source -> target @ multiplier`; an omitted multiplier inherits the global value. Verify two source blocks converting to the same target retain different bonuses, and that entering zero immediately removes a previous road bonus. Explicit self-mappings override incoming rules for their material; untracked roads otherwise use the first matching target rule.
+
+Check the settings tabs, rule editor, and block picker at GUI scales 1–4 and Auto, including a 320×240 scaled viewport. Resize with incomplete block IDs and decimal inputs, navigate picker pages after resizing, cancel an edit, and reopen the screen. Missing optional-mod entries must remain listed as inactive; protected sources and unsafe targets must show an explanation. Confirm that no controls overlap or extend outside the screen.
+
+Check creation and decay independently. Sneaking prevention affects new construction passes only; authorized traffic still refreshes existing roads even with creation disabled. Disabling decay retains records and elapsed time, so expired roads may revert when it is enabled again. `/safepaths inspect [x y z]` requires permission level 2 and must not load absent chunks. English fallback messages support unmodded clients.
 
 Run `node .github/scripts/sync-modrinth.mjs --check` after changing the player-facing README. See [Releasing](RELEASING.md) for distribution.
 

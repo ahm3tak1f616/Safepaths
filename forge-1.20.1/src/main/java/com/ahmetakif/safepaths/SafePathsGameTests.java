@@ -341,13 +341,14 @@ public class SafePathsGameTests {
         });
     }
 
-    private static void stepOn(GameTestHelper helper, BlockPos pos) {
+    private static Player stepOn(GameTestHelper helper, BlockPos pos) {
         Player player = helper.makeMockPlayer();
         BlockPos absolute = helper.absolutePos(pos);
         player.setPos(absolute.getX() + 0.5, absolute.getY() + 1, absolute.getZ() + 0.5);
         player.setOnGround(true);
         player.mainSupportingBlockPos = Optional.of(absolute);
         PathEvents.onLivingTick(new LivingEvent.LivingTickEvent(player));
+        return player;
     }
 
     @GameTest(template = "platform")
@@ -508,4 +509,260 @@ public class SafePathsGameTests {
                 "Loaded path maintenance must still work after a world restart");
         helper.succeed();
     }
+    @GameTest(template = "platform")
+    public static void conversionSpeedSyntaxIsBackwardCompatible(GameTestHelper helper) {
+        helper.assertTrue(PathConversionRule.parse("minecraft:dirt -> minecraft:dirt_path").speed() == null,
+                "Existing rules must inherit the global bonus");
+        PathConversionRule rule = PathConversionRule.parse("minecraft:dirt -> minecraft:dirt_path @ 0,125");
+        helper.assertTrue(rule != null && rule.speed() == 0.125
+                && PathConversionRule.parse(rule.serialize()).equals(rule), "Speed rules must round-trip without precision loss");
+        for (String speed : List.of("NaN", "Infinity", "-0.1", "5.01", "", "0.2 @ 0.3")) {
+            helper.assertTrue(PathConversionRule.parse("minecraft:dirt -> minecraft:dirt_path @ " + speed) == null,
+                    "Invalid speed must be rejected: " + speed);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void conversionValidationExplainsProtectedBlocks(GameTestHelper helper) {
+        helper.assertTrue("safepaths.gui.rule.unsafe_target".equals(PathConversionRule.parse("minecraft:dirt -> minecraft:chest").problem()),
+                "Block-entity targets must have an explicit validation reason");
+        helper.assertTrue("safepaths.gui.rule.protected_source".equals(PathConversionRule.parse("minecraft:chest -> minecraft:stone").problem()),
+                "Inventories must never become paths");
+        helper.assertTrue(PathConversionRule.parse("minecraft:farmland -> minecraft:dirt_path").problem() != null,
+                "Farmland must stay protected");
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void missingOptionalRulesRemainConfigured(GameTestHelper helper) {
+        List<? extends String> previous = PathConfig.CUSTOM_CONVERSIONS.get();
+        try {
+            String missing = "safepaths_absent:soil -> safepaths_absent:road @ 0.3";
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of(missing, "minecraft:stone -> minecraft:stone @ 0.4"));
+            helper.assertTrue("safepaths.gui.rule.missing".equals(PathConversionRule.parse(missing).problem()),
+                    "Missing optional blocks must be reported as inactive");
+            helper.assertTrue(PathCreationEvent.isPathBlock(Blocks.STONE.defaultBlockState()), "Valid rules must still load");
+            helper.assertTrue(PathConfig.CUSTOM_CONVERSIONS.get().contains(missing), "Cache refresh must not delete missing rules");
+        } finally {
+            PathConfig.CUSTOM_CONVERSIONS.set(previous);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void sameRoadKeepsSourceSpecificSpeeds(GameTestHelper helper) {
+        List<? extends String> previous = PathConfig.CUSTOM_CONVERSIONS.get();
+        boolean enabled = PathConfig.ENABLE_SPEED_BOOST.get();
+        double global = PathConfig.SPEED_MULTIPLIER.get();
+        ServerLevel level = helper.getLevel();
+        PathMemorySavedData memory = PathMemorySavedData.get(level);
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        try {
+            PathConfig.ENABLE_SPEED_BOOST.set(true);
+            PathConfig.SPEED_MULTIPLIER.set(0.0);
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of("minecraft:dirt -> minecraft:stone @ 0.125", "minecraft:sand -> minecraft:stone @ 0.4"));
+            helper.setBlock(DECAY_ROAD, Blocks.STONE);
+            memory.putPath(pos, new PathMemorySavedData.PathData(Blocks.DIRT.defaultBlockState(), Blocks.STONE, level.getGameTime()));
+            helper.assertTrue(PathCreationEvent.speedMultiplier(level, pos, level.getBlockState(pos)) == 0.125, "Dirt conversion must keep its bonus even with a zero global bonus");
+            memory.putPath(pos, new PathMemorySavedData.PathData(Blocks.SAND.defaultBlockState(), Blocks.STONE, level.getGameTime()));
+            helper.assertTrue(PathCreationEvent.speedMultiplier(level, pos, level.getBlockState(pos)) == 0.4, "Sand conversion must keep its distinct bonus");
+            memory.clearAt(pos);
+            helper.assertTrue(PathCreationEvent.speedMultiplier(level, pos, level.getBlockState(pos)) == 0.125, "Untracked roads must use the first matching target rule");
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of("minecraft:dirt -> minecraft:stone", "minecraft:sand -> minecraft:stone @ 0.4"));
+            PathConfig.SPEED_MULTIPLIER.set(0.2);
+            helper.assertTrue(PathCreationEvent.speedMultiplier(level, pos, level.getBlockState(pos)) == 0.2, "Rules without an override must inherit the global value");
+        } finally {
+            memory.clearAt(pos);
+            PathConfig.CUSTOM_CONVERSIONS.set(previous);
+            PathConfig.ENABLE_SPEED_BOOST.set(enabled);
+            PathConfig.SPEED_MULTIPLIER.set(global);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void permanentRoadSpeedOverridesIncomingRules(GameTestHelper helper) {
+        List<? extends String> previous = PathConfig.CUSTOM_CONVERSIONS.get();
+        boolean enabled = PathConfig.ENABLE_SPEED_BOOST.get();
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        PathMemorySavedData memory = PathMemorySavedData.get(helper.getLevel());
+        try {
+            PathConfig.ENABLE_SPEED_BOOST.set(true);
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of("minecraft:dirt -> minecraft:stone @ 0.4", "minecraft:stone -> minecraft:stone @ 0.1"));
+            helper.setBlock(DECAY_ROAD, Blocks.STONE);
+            memory.putPath(pos, new PathMemorySavedData.PathData(Blocks.DIRT.defaultBlockState(), Blocks.STONE, helper.getLevel().getGameTime()));
+            helper.assertTrue(PathCreationEvent.speedMultiplier(helper.getLevel(), pos, Blocks.STONE.defaultBlockState()) == 0.1,
+                    "Explicit permanent-road speed must win for that material");
+        } finally {
+            memory.clearAt(pos);
+            PathConfig.CUSTOM_CONVERSIONS.set(previous);
+            PathConfig.ENABLE_SPEED_BOOST.set(enabled);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void zeroRoadSpeedRemovesPreviousBonusImmediately(GameTestHelper helper) {
+        List<? extends String> previous = PathConfig.CUSTOM_CONVERSIONS.get();
+        boolean enabled = PathConfig.ENABLE_SPEED_BOOST.get();
+        try {
+            PathConfig.ENABLE_SPEED_BOOST.set(true);
+            PathConfig.CUSTOM_CONVERSIONS.set(List.of("minecraft:stone -> minecraft:stone @ 0.125", "minecraft:cobblestone -> minecraft:cobblestone @ 0"));
+            helper.setBlock(DECAY_ROAD, Blocks.STONE);
+            Player player = stepOn(helper, DECAY_ROAD);
+            var attribute = player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED);
+            helper.assertTrue(PathPlatform.speedModifier(attribute) != null && PathPlatform.amount(PathPlatform.speedModifier(attribute)) == 0.125,
+                    "Walking on a configured road must apply the exact bonus");
+            helper.setBlock(DECAY_ROAD, Blocks.COBBLESTONE);
+            PathCreationEvent.tickEntity(player);
+            helper.assertTrue(PathPlatform.speedModifier(attribute) == null, "A zero-bonus road must replace the previous road contact immediately");
+            helper.setBlock(DECAY_ROAD, Blocks.STONE);
+            PathCreationEvent.tickEntity(player);
+            PathConfig.ENABLE_SPEED_BOOST.set(false);
+            PathCreationEvent.tickEntity(player);
+            helper.assertTrue(PathPlatform.speedModifier(attribute) == null, "The master toggle must also disable per-rule bonuses");
+        } finally {
+            PathConfig.CUSTOM_CONVERSIONS.set(previous);
+            PathConfig.ENABLE_SPEED_BOOST.set(enabled);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void creationTogglePreventsNewPasses(GameTestHelper helper) {
+        boolean creation = PathConfig.ENABLE_PATH_CREATION.get();
+        PathMemorySavedData memory = PathMemorySavedData.get(helper.getLevel());
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        try {
+            helper.setBlock(DECAY_ROAD.below(), Blocks.STONE);
+            helper.setBlock(DECAY_ROAD, Blocks.DIRT);
+            memory.clearAt(pos);
+            PathConfig.ENABLE_PATH_CREATION.set(false);
+            stepOn(helper, DECAY_ROAD);
+            helper.assertTrue(!memory.hasTrample(pos), "Disabled creation must not add construction progress");
+            helper.assertBlockPresent(Blocks.DIRT, DECAY_ROAD);
+        } finally {
+            PathConfig.ENABLE_PATH_CREATION.set(creation);
+            memory.clearAt(pos);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void sneakingSkipsConstructionButRefreshesExistingRoads(GameTestHelper helper) {
+        boolean sneak = PathConfig.SNEAK_PREVENTS_PATH_CREATION.get();
+        boolean creation = PathConfig.ENABLE_PATH_CREATION.get();
+        int required = PathConfig.REQUIRED_PASSES.get();
+        PathMemorySavedData memory = PathMemorySavedData.get(helper.getLevel());
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        try {
+            PathConfig.SNEAK_PREVENTS_PATH_CREATION.set(true);
+            PathConfig.ENABLE_PATH_CREATION.set(true);
+            PathConfig.REQUIRED_PASSES.set(20);
+            helper.setBlock(DECAY_ROAD.below(), Blocks.STONE);
+            helper.setBlock(DECAY_ROAD, Blocks.DIRT);
+            memory.clearAt(pos);
+            Player player = stepOn(helper, DECAY_ROAD);
+            memory.clearAt(pos);
+            player.setShiftKeyDown(true);
+            BlockPos neighbor = pos.east();
+            player.setPos(neighbor.getX() + 0.5, neighbor.getY() + 1, neighbor.getZ() + 0.5);
+            player.mainSupportingBlockPos = Optional.of(neighbor);
+            PathCreationEvent.tickEntity(player);
+            player.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+            player.mainSupportingBlockPos = Optional.of(pos);
+            PathCreationEvent.tickEntity(player);
+            helper.assertTrue(!memory.hasTrample(pos), "Sneaking must not add passes after moving back to eligible terrain");
+            helper.setBlock(DECAY_ROAD, Blocks.DIRT_PATH);
+            PathMemorySavedData.PathData path = new PathMemorySavedData.PathData(Blocks.DIRT.defaultBlockState(), Blocks.DIRT_PATH, helper.getLevel().getGameTime() - 40);
+            memory.putPath(pos, path);
+            PathConfig.ENABLE_PATH_CREATION.set(false);
+            PathCreationEvent.tickEntity(player);
+            helper.assertTrue(path.lastTime == helper.getLevel().getGameTime(), "Sneaking with creation disabled must still refresh an existing road");
+            helper.setBlock(DECAY_ROAD, Blocks.DIRT);
+            memory.clearAt(pos);
+            PathConfig.ENABLE_PATH_CREATION.set(true);
+            PathConfig.SNEAK_PREVENTS_PATH_CREATION.set(false);
+            player.mainSupportingBlockPos = Optional.of(neighbor);
+            PathCreationEvent.tickEntity(player);
+            player.mainSupportingBlockPos = Optional.of(pos);
+            PathCreationEvent.tickEntity(player);
+            helper.assertTrue(memory.hasTrample(pos), "The sneak option must be configurable independently");
+        } finally {
+            PathConfig.SNEAK_PREVENTS_PATH_CREATION.set(sneak);
+            PathConfig.ENABLE_PATH_CREATION.set(creation);
+            PathConfig.REQUIRED_PASSES.set(required);
+            memory.clearAt(pos);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void mudAndMossActuallyFormPaths(GameTestHelper helper) {
+        int required = PathConfig.REQUIRED_PASSES.get();
+        boolean creation = PathConfig.ENABLE_PATH_CREATION.get();
+        boolean sneak = PathConfig.SNEAK_PREVENTS_PATH_CREATION.get();
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        try {
+            PathConfig.REQUIRED_PASSES.set(1);
+            PathConfig.ENABLE_PATH_CREATION.set(true);
+            PathConfig.SNEAK_PREVENTS_PATH_CREATION.set(false);
+            helper.setBlock(DECAY_ROAD.below(), Blocks.STONE);
+            for (Block block : List.of(Blocks.MUD, Blocks.MOSS_BLOCK)) {
+                helper.setBlock(DECAY_ROAD, block);
+                stepOn(helper, DECAY_ROAD);
+                helper.assertBlockPresent(Blocks.DIRT_PATH, DECAY_ROAD);
+                helper.assertTrue(PathMemorySavedData.get(helper.getLevel()).getPath(pos).originalState.is(block), "Original mud or moss must be retained for decay");
+            }
+        } finally {
+            PathConfig.REQUIRED_PASSES.set(required);
+            PathConfig.ENABLE_PATH_CREATION.set(creation);
+            PathConfig.SNEAK_PREVENTS_PATH_CREATION.set(sneak);
+            PathMemorySavedData.get(helper.getLevel()).clearAt(pos);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "platform")
+    public static void decayToggleRetainsRecordsAndResumesExpiredPaths(GameTestHelper helper) {
+        helper.succeedWhen(() -> {
+            helper.assertTrue(helper.getLevel().getGameTime() % 20 == 0, "Wait for the maintenance tick");
+            boolean decay = PathConfig.ENABLE_PATH_DECAY.get();
+            try {
+                createExpiredPath(helper, Blocks.DIRT, Blocks.STONE);
+                PathConfig.ENABLE_PATH_DECAY.set(false);
+                PathCreationEvent.tickLevel(helper.getLevel());
+                assertDecayDeferred(helper, Blocks.DIRT);
+                PathConfig.ENABLE_PATH_DECAY.set(true);
+                PathCreationEvent.tickLevel(helper.getLevel());
+                helper.assertBlockPresent(Blocks.DIRT, DECAY_ROAD);
+                helper.assertTrue(PathMemorySavedData.get(helper.getLevel()).getPath(helper.absolutePos(DECAY_ROAD)) == null,
+                        "Re-enabling decay must restore an expired path without losing its original terrain");
+            } finally {
+                PathConfig.ENABLE_PATH_DECAY.set(decay);
+            }
+        });
+    }
+
+    @GameTest(template = "platform")
+    public static void inspectCommandRequiresOperatorAndSkipsUnloadedChunks(GameTestHelper helper) {
+        var dispatcher = new com.mojang.brigadier.CommandDispatcher<net.minecraft.commands.CommandSourceStack>();
+        PathCommands.register(dispatcher);
+        var source = helper.getLevel().getServer().createCommandSourceStack().withLevel(helper.getLevel());
+        helper.assertTrue(!dispatcher.getRoot().getChild("safepaths").canUse(source.withPermission(0)), "Inspect must require operator permission");
+        BlockPos pos = helper.absolutePos(DECAY_ROAD);
+        try {
+            helper.assertTrue(dispatcher.execute("safepaths inspect " + pos.getX() + " " + pos.getY() + " " + pos.getZ(), source.withPermission(2)) == 1,
+                    "The registered command must inspect loaded terrain");
+        } catch (com.mojang.brigadier.exceptions.CommandSyntaxException exception) {
+            helper.fail(exception.getMessage());
+        }
+        BlockPos unloaded = pos.offset(4096, 0, 4096);
+        helper.assertTrue(!helper.getLevel().isLoaded(unloaded), "The distant chunk must start unloaded");
+        helper.assertTrue(PathCommands.inspect(source, unloaded) == 0 && !helper.getLevel().isLoaded(unloaded),
+                "Inspect must never force-load an absent chunk");
+        helper.succeed();
+    }
+
 }
