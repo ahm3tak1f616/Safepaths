@@ -4,6 +4,8 @@ Repeated footsteps form paths. Configure road speed globally or per conversion, 
 
 Supports **Minecraft 1.21.1 with NeoForge** and **Minecraft 1.20.1 with Forge**. Choose the download for your version and loader.
 
+**Version note:** these guides describe **2.5.0**. Its new switches, sneaking option, and per-rule speed suffix are not available in older 2.0.x jars. Check your installed version and the [published releases](https://github.com/ahm3tak1f616/Safepaths/releases) before using the examples.
+
 ## New in 2.5.0
 
 - Separate creation and decay switches, plus an optional sneaking safeguard.

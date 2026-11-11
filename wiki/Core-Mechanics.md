@@ -14,6 +14,8 @@ When enough passes have been counted, Safepaths uses the configured conversion f
 
 A conversion from a block to itself makes it a permanent speed road. It does not change the block or create a decay record. An explicit conversion to a different block overrides a self-mapping rule; among explicit conversions, the first rule for a source wins.
 
+Valid conversion targets are recognized as road materials even on placed or untracked blocks. Footsteps do not repeatedly convert a recognized road through a chain of rules. If a material is both a source and another rule's target, road recognition can prevent the source from being trampled again.
+
 Air, liquids, non-solid blocks, and block entities are not valid conversion targets. If a target cannot survive or would fall without support, the ground stays unchanged.
 
 ## Decay

@@ -6,7 +6,7 @@ One mod version covers both editions. One GitHub release starts the build and pu
 
 The prepared release version is **2.5.0**. Creating or editing these files does not publish it.
 
-The selected branding is the modern icon (option B), stored at `common/src/main/resources/icon.png` and used by both mod menus and the README heading. Use this same PNG for the CurseForge and Modrinth project icons. Its editable source is `docs/assets/safepaths-icon-modern-2.5.svg`; the shared banner is `docs/assets/safepaths-banner-2.5.png`.
+The selected branding is the modern icon (option B), stored at `common/src/main/resources/icon.png` and used by both mod menus. Use this same PNG for the CurseForge and Modrinth project icons. Its editable source is `docs/assets/safepaths-icon-modern-2.5.svg`; the shared banner is `docs/assets/safepaths-banner-2.5.png`.
 
 The banner's editable source is `docs/assets/safepaths-banner.svg`. Keep this stable path because existing project pages link to it directly. Export its PNG to the versioned banner file used by the README.
 

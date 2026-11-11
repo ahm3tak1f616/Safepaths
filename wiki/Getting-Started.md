@@ -2,6 +2,8 @@
 
 These instructions cover **Safepaths 2.5.0** on both supported editions.
 
+Check the version installed in your Mods list or server log. New 2.5.0 settings and per-rule speed overrides are not provided by older 2.0.x jars; use the [configuration version note](Configuration-Guide#version-scope) when following examples.
+
 ## Install
 
 | Minecraft | Loader | Java | Download ends with |

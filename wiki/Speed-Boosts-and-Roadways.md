@@ -2,6 +2,8 @@
 
 Recognized roads give living entities a movement speed bonus. The global TOML `speedMultiplier` defaults to `0.2` (+20%); the GUI shows `20` with `%` outside the box. `enableSpeedBoost = false` disables every road bonus, including per-rule overrides.
 
+Setting `speedMultiplier = 0` alone only removes the inherited global bonus; positive per-rule overrides still apply. Use the master switch to turn every bonus off. A value of `0.2` adds 20% (a 1.2× factor from Safepaths), rather than setting the total factor to 0.2×.
+
 Dirt paths, blocks in `#safepaths:is_path`, valid conversion targets, permanent speed roads, and blocks whose IDs end in `_path` are recognized as roads.
 
 ## Speed per conversion
