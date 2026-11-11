@@ -95,7 +95,7 @@ Other soils and road materials can be added through the conversion editor or [da
 
 ### Build from source
 
-Install **JDK 17 and JDK 21**, and run the root wrapper with **Java 21**. In IntelliJ, set the root Gradle JVM to Java 21. The build selects Java 17 for Forge and Java 21 for NeoForge.
+Install **JDK 17 and JDK 21**, and run the root wrapper with **Java 21**. Set the root Gradle JVM to Java 21. The build selects Java 17 for Forge and Java 21 for NeoForge.
 
 **Windows / PowerShell**
 
