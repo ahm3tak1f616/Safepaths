@@ -36,6 +36,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/codeql/codeql-config.yml
           queries: security-extended
       - name: Compile both editions for analysis
         if: matrix.language == 'java-kotlin'
