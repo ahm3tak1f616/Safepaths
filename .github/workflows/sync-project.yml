@@ -1,14 +1,5 @@
-name: Sync project page
+name: Update Modrinth project page (manual)
 on:
-  push:
-    branches: [main]
-    paths:
-      - README.md
-      - gradle.properties
-      - common/src/main/resources/icon.png
-      - docs/assets/**
-      - .github/scripts/sync-modrinth.mjs
-      - .github/workflows/sync-project.yml
   workflow_dispatch:
 permissions:
   contents: read
@@ -31,4 +22,4 @@ jobs:
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           PROJECT_REF: ${{ github.ref_name }}
-        run: node .github/scripts/sync-modrinth.mjs
+        run: node .github/scripts/sync-modrinth.mjs --apply

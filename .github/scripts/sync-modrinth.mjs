@@ -29,7 +29,7 @@ if (!body.includes('-1.21.1-neoforge.jar') || !body.includes('-1.20.1-forge.jar'
 
 if (process.argv.includes('--check')) {
     console.log(`Project page validated for Safepaths ${version}`);
-} else {
+} else if (process.argv.includes('--apply')) {
     const token = process.env.MODRINTH_TOKEN;
     if (!token) throw new Error('MODRINTH_TOKEN is required');
     const response = await fetch('https://api.modrinth.com/v2/project/ec6ewft2', {
@@ -43,4 +43,6 @@ if (process.argv.includes('--check')) {
     });
     if (!response.ok) throw new Error(`Modrinth project update failed: HTTP ${response.status}`);
     console.log('Modrinth project page synchronized with README.md');
+} else {
+    throw new Error('Use --check to validate locally, or --apply for an explicitly requested Modrinth project-page update');
 }

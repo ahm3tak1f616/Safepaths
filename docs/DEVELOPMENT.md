@@ -35,7 +35,7 @@ The Gradle window shows three linked builds. The root `safepaths` build coordina
 
 Run data generation from an edition directory with `./gradlew runData -PwithoutMineColonies` (`.\gradlew.bat` on Windows). Use a Gradle run configuration with the same property for IntelliJ Data runs. The optional MineColonies runtime includes Domum Ornamentum, whose data generators require an additional development library. Safepaths data generation uses its own runtime without these optional mods.
 
-The root `gradle.properties` holds mod identity, version, and the canonical English `mod_description`. Both loader metadata templates and the Modrinth summary use that description. Run `node .github/scripts/sync-descriptions.mjs --write` to refresh the README/wiki introductions and description aliases; translate the first description key in each non-English language file separately. Root `verifyDescriptions` checks consistency, and `verifyJars` checks the packaged descriptions. Each edition's properties hold loader, mappings, and dependency versions.
+The root `gradle.properties` holds mod identity, version, and the approved English `mod_description`. Both loader metadata templates use that description. Change it only for an explicitly requested summary update, then run `node .github/scripts/sync-descriptions.mjs --write` to refresh local README/wiki introductions and description aliases; translate the first description key in each non-English language file separately. Root `verifyDescriptions` checks local consistency, and `verifyJars` checks the packaged descriptions. These checks do not modify live project pages. Each edition's properties hold loader, mappings, and dependency versions.
 
 ### Dependency source tools
 
@@ -57,7 +57,7 @@ Check the settings tabs, rule editor, and block picker at GUI scales 1–4 and A
 
 Check creation and decay independently. Sneaking prevention affects new construction passes only; authorized traffic still refreshes existing roads even with creation disabled. Disabling decay retains records and elapsed time, so expired roads may revert when it is enabled again. `/safepaths inspect [x y z]` requires permission level 2 and must not load absent chunks. English fallback messages support unmodded clients.
 
-Run `node .github/scripts/sync-modrinth.mjs --check` after changing the player-facing README. See [Releasing](RELEASING.md) for distribution.
+Run `node .github/scripts/sync-modrinth.mjs --check` after changing the player-facing README. Project-page updates are manual and require an explicit request; pushes and releases preserve existing platform titles, summaries, descriptions, and branding. Keep release titles and changelogs consistent across platforms. See [Releasing](RELEASING.md) for the publishing boundary and manual page-update procedure.
 
 ## Add a Minecraft edition
 

@@ -4,7 +4,7 @@
   <img src="docs/assets/safepaths-banner-2.5.png" alt="A golden path winds across a grassy island toward subtle timber-framed settlement silhouettes." width="1000">
 </p>
 
-Repeated footsteps form paths. Configure road speed globally or per conversion, control creation and decay separately, and optionally prevent new paths while sneaking. Unused paths restore their original terrain. MineColonies support is optional.
+Let your journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.
 
 [![CurseForge](https://img.shields.io/badge/CurseForge-Download-F16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/safepaths)
 [![Modrinth](https://img.shields.io/badge/Modrinth-Download-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/safepaths)

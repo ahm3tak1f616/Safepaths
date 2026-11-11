@@ -48,20 +48,3 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: gh release upload "$RELEASE_TAG" build/libs/*.jar --repo "$GITHUB_REPOSITORY" --clobber
-  project-page:
-    needs: [modrinth, curseforge, github]
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    concurrency:
-      group: modrinth-project-page
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
-      - name: Sync the released project page
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          PROJECT_REF: ${{ github.event.release.tag_name }}
-        run: node .github/scripts/sync-modrinth.mjs

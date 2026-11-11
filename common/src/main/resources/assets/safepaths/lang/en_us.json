@@ -1,9 +1,9 @@
 {
   "safepaths.gui.palette.empty": "No matching blocks",
   "safepaths.gui.server_config": "This server's settings are managed by its owner. Edit config/safepaths-common.toml on the server.",
-  "fml.menu.mods.info.description.safepaths": "Repeated footsteps form paths. Configure road speed globally or per conversion, control creation and decay separately, and optionally prevent new paths while sneaking. Unused paths restore their original terrain. MineColonies support is optional.",
-  "neoforge.screen.mods.info.description.safepaths": "Repeated footsteps form paths. Configure road speed globally or per conversion, control creation and decay separately, and optionally prevent new paths while sneaking. Unused paths restore their original terrain. MineColonies support is optional.",
-  "modmenu.descriptionTranslation.safepaths": "Repeated footsteps form paths. Configure road speed globally or per conversion, control creation and decay separately, and optionally prevent new paths while sneaking. Unused paths restore their original terrain. MineColonies support is optional.",
+  "fml.menu.mods.info.description.safepaths": "Let your journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.",
+  "neoforge.screen.mods.info.description.safepaths": "Let your journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.",
+  "modmenu.descriptionTranslation.safepaths": "Let your journeys shape the world: footsteps form paths, roads speed up travel, and unused trails return to nature. Customize your paths and pace, with optional MineColonies support for citizen-made paths that respect colony permissions.",
   "safepaths.configuration.title": "Safepaths Settings",
   "safepaths.configuration.section.safepaths.common.toml": "General Settings",
   "safepaths.configuration.section.safepaths.common.toml.title": "Safepaths Settings",
