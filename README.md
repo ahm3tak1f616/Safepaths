@@ -113,7 +113,7 @@ cd Safepaths
 ./gradlew build --console=plain
 ```
 
-The first build downloads Minecraft and the development dependencies. `build` compiles both editions, runs their GameTests, verifies the jars, and puts the **two production downloads** in the root `build/libs/`:
+The first build downloads Minecraft and the development dependencies. `build` compiles both editions, verifies the jars, and puts the **two production downloads** in the root `build/libs/`:
 
 ```text
 build/libs/
@@ -129,21 +129,21 @@ Use these jars in Minecraft. An edition's `-sources.jar` or `-javadoc.jar` is a 
 Run from the repository root. On Linux and macOS, replace `.\gradlew.bat` with `./gradlew`.
 
 ```powershell
-# Build and collect both jars without running GameTests
-.\gradlew.bat assemble --console=plain
+# Run GameTests for both editions
+.\gradlew.bat test --console=plain
 
 # Build only one edition; output stays in that edition's build/libs/
 .\gradlew.bat buildForge --console=plain
 .\gradlew.bat buildNeoForge --console=plain
 
 # Test both editions without the optional MineColonies runtime
-.\gradlew.bat runGameTestServer -PwithoutMineColonies --console=plain
+.\gradlew.bat test -PwithoutMineColonies --console=plain
 
 # Show detailed Gradle deprecation warnings
 .\gradlew.bat build --warning-mode=all --console=plain
 
 # Enable detailed Minecraft and loader logs for GameTests
-.\gradlew.bat runGameTestServer -PmodLogLevel=debug --console=plain
+.\gradlew.bat test -PmodLogLevel=debug --console=plain
 ```
 
 </details>

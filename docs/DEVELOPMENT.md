@@ -10,16 +10,17 @@ From the repository root on Windows:
 
 ```powershell
 .\gradlew.bat build --console=plain
-.\gradlew.bat runGameTestServer -PwithoutMineColonies --console=plain
+.\gradlew.bat test --console=plain
 ```
 
-Use `./gradlew` on Linux and macOS. `build` runs both GameTest suites and jar verification, then collects the production jars in `build/libs/`. The second command tests both editions without the optional MineColonies runtime.
+Use `./gradlew` on Linux and macOS. `build` compiles both editions, runs jar verification, and collects the production jars in `build/libs/`. `test` (or `runGameTestServer`) runs the GameTest suites. Add `-PwithoutMineColonies` to test without the optional MineColonies runtime.
 
 | Task | Result |
 | --- | --- |
 | `buildForge` / `buildNeoForge` | Build one edition; jar in its own `build/libs/`. |
+| `test` / `runGameTestServer` | Build and run GameTests for both editions. |
 | `testForge` / `testNeoForge` | Build and run that edition's GameTests. |
-| `assemble` | Build and collect both jars without GameTests. |
+| `assemble` | Build and collect both jars without verification. |
 | `verifyJars` | Check mod version, loader metadata, all shared tags, resources, and Java bytecode versions. |
 | `clean` | Remove the collected root jars. |
 

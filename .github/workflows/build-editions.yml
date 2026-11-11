@@ -33,7 +33,7 @@ jobs:
         run: node .github/scripts/sync-modrinth.mjs --check
       - uses: ./.github/actions/setup-build
       - name: Build and test both editions with MineColonies
-        run: ./gradlew build --no-build-cache --console=plain
+        run: ./gradlew build runGameTestServer --no-build-cache --console=plain
       - name: Test both editions without MineColonies
         run: ./gradlew runGameTestServer -PwithoutMineColonies --no-build-cache --console=plain
       - name: Store tested production jars

@@ -63,7 +63,6 @@ tasks.register('test') {
     group = 'verification'
     dependsOn 'runGameTestServer'
 }
-tasks.named('check') { dependsOn 'runGameTestServer' }
 tasks.named('assemble') { dependsOn 'collectJars' }
 
 def descriptionKeys = [
@@ -80,8 +79,8 @@ tasks.register('verifyDescriptions') {
             throw new GradleException('mod_description must contain 1–250 characters')
         }
         def introductions = [
-                'README.md': ~/(<\/p>\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/,
-                'wiki/Home.md': ~/(^# [^\r\n]+\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/
+                'README.md': ~(/(<\/p>\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/),
+                'wiki/Home.md': ~(/(^# [^\r\n]+\r?\n\r?\n)([^\r\n]+)(?=\r?\n)/)
         ]
         introductions.each { path, pattern ->
             def intro = pattern.matcher(file(path).getText('UTF-8'))
