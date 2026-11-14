@@ -150,4 +150,4 @@ Run from the repository root. On Linux and macOS, replace `.\gradlew.bat` with `
 
 **Where to edit:** shared behavior and resources live in `common/`. Loader events, screens, and API adapters live in `forge-1.20.1/` and `neoforge-1.21.1/`. Both are maintained on `main`, with one `mod_version` in the root `gradle.properties`.
 
-[Development guide](docs/DEVELOPMENT.md) · [Publish both jars in one release](docs/RELEASING.md)
+[Development guide](docs/DEVELOPMENT.md)
